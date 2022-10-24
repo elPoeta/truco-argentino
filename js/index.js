@@ -1,9 +1,9 @@
 /** @type {HTMLCanvasElement} */
-import { canvas, ctx } from "./app.js";
+import { canvas, ctx, deckImage } from "./app.js";
 
 const animate = (timeStamp) => {
-  const originalWidth = deckImg.width;
-  const originalHeight = deckImg.height;
+  const originalWidth = deckImage.width;
+  const originalHeight = deckImage.height;
   const frameX = 0;
   const frameY = 0;
   const deckW = originalWidth / 12;
@@ -11,7 +11,7 @@ const animate = (timeStamp) => {
   ctx.clearRect(0, 0, canvas.width, canvas.height);
   ctx.drawImage(boardImg, 0, 0, canvas.width, canvas.height);
   ctx.drawImage(
-    deckImg,
+    deckImage,
     frameX * deckW,
     frameY * deckH,
     deckW,
@@ -21,11 +21,10 @@ const animate = (timeStamp) => {
     deckW,
     deckH
   );
-
   ctx.drawImage(
-    deckImg,
-    2 * deckW,
-    2 * deckH,
+    deckImage,
+    1 * deckW,
+    0 * deckH,
     deckW,
     deckH,
     deckW + 50,
