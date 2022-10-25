@@ -11,3 +11,6 @@ body {
 img {
   display: none;
 }
+.container {
+  position: relative;
+}
