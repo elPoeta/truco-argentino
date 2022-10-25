@@ -1,5 +1,5 @@
 /** @type {HTMLCanvasElement} */
-import { isMobile } from "./utils/checkDevice.js";
+import { isMobile } from "./utils/helpers.js";
 import { canvas, ctx } from "./app.js";
 
 const animate = (timeStamp) => {
