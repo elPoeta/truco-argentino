@@ -5,15 +5,17 @@ export const SPRITE_HEIGHT = 319;
 export const MAX_FRAME_X = 12;
 export const MAX_FRAME_y = 5;
 export const SCALE = 0.7;
-export const IA_CARD_1 = CANVAS_WIDTH / 2 - SPRITE_WIDTH / 2 - SPRITE_WIDTH;
-export const IA_CARD_2 =
-  CANVAS_WIDTH / 2 - SPRITE_WIDTH / 2 - SPRITE_WIDTH + IA_CARD_1 / 2;
-export const IA_CARD_3 =
+export const TOP_CARD_Y = 10;
+export const BOTTOM_CARD_Y = CANVAS_HEIGHT - SPRITE_HEIGHT + 85;
+export const POS_CARD_1 = CANVAS_WIDTH / 2 - SPRITE_WIDTH / 2 - SPRITE_WIDTH;
+export const POS_CARD_2 =
+  CANVAS_WIDTH / 2 - SPRITE_WIDTH / 2 - SPRITE_WIDTH + POS_CARD_1 / 2;
+export const POS_CARD_3 =
   CANVAS_WIDTH / 2 -
   SPRITE_WIDTH / 2 -
   SPRITE_WIDTH +
-  IA_CARD_1 / 4 +
-  IA_CARD_2 / 2;
+  POS_CARD_1 / 4 +
+  POS_CARD_2 / 2;
 
 export const isMobile = (() => {
   let check = false;
