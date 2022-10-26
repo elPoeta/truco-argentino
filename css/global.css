@@ -11,9 +11,24 @@ body {
   overflow: hidden;
   background-color: #06160a;
 }
+
 img {
   display: none;
 }
+
 .container {
   position: relative;
+  width: 100wv;
+  height: 100vh;
+}
+
+#canvas1 {
+  background-color: #166534;
+  border: 5px solid #713f12;
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  max-width: 100%;
+  max-height: 100%;
 }
