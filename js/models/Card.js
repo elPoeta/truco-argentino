@@ -1,12 +1,14 @@
+import { MAX_FRAME_X, MAX_FRAME_y } from "../utils/helpers.js";
+
 export class Card {
-  constructor(game, x, y, frameX, frameY) {
+  constructor({ game, x, y, frameX, frameY }) {
     this.game = game;
     this.scale = this.game.scale;
     this.image = deckImg;
     this.originalWidth = this.image.width;
     this.originalHeight = this.image.height;
-    this.spriteWidth = this.originalWidth / 12;
-    this.spriteHeight = this.originalHeight / 5;
+    this.spriteWidth = this.originalWidth / MAX_FRAME_X;
+    this.spriteHeight = this.originalHeight / MAX_FRAME_y;
     this.width = this.spriteWidth;
     this.height = this.spriteHeight;
     this.x = x;

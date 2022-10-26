@@ -1,17 +1,18 @@
-import { Card } from "./Card.js";
+import { SCALE } from "../utils/helpers.js";
+import { IA } from "./IA.js";
 export class Game {
-  constructor(canvasWidth, canvasHeight) {
+  constructor({ canvasWidth, canvasHeight }) {
     this.canvasWidth = canvasWidth;
     this.canvasHeight = canvasHeight;
-    this.scale = 0.8;
-    this.cards = [new Card(this, 10, 10, 0, 0)];
+    this.scale = SCALE;
+    this.players = [new IA({ game: this, name: "elPoeta" })];
   }
 
   update() {
-    [...this.cards].forEach((card) => card.update());
+    [...this.players].forEach((player) => player.update());
   }
 
   draw(ctx) {
-    [...this.cards].forEach((card) => card.draw(ctx));
+    [...this.players].forEach((player) => player.draw(ctx));
   }
 }

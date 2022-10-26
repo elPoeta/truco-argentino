@@ -1,15 +1,18 @@
 import { Game } from "./models/Game.js";
+import { CANVAS_HEIGHT, CANVAS_WIDTH } from "./utils/helpers.js";
 const canvas = document.querySelector("#canvas1");
 const ctx = canvas.getContext("2d");
 
-canvas.width = 1600;
-canvas.height = 900;
+canvas.width = CANVAS_WIDTH;
+canvas.height = CANVAS_HEIGHT;
 
 ctx.ImageSmoothingEnabled = false;
 ctx.webkitImageSmoothingEnabled = false;
 ctx.mozImageSmoothingEnabled = false;
 
-//const deckImage = downScaleImage(deckImg, 0.3);
-const game = new Game(canvas.width, canvas.height);
+const game = new Game({
+  canvasWidth: canvas.width,
+  canvasHeight: canvas.height,
+});
 
 export { canvas, ctx, game };

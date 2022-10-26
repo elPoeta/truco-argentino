@@ -1,3 +1,20 @@
+export const CANVAS_WIDTH = 1600;
+export const CANVAS_HEIGHT = 900;
+export const SPRITE_WIDTH = 208;
+export const SPRITE_HEIGHT = 319;
+export const MAX_FRAME_X = 12;
+export const MAX_FRAME_y = 5;
+export const SCALE = 0.7;
+export const IA_CARD_1 = CANVAS_WIDTH / 2 - SPRITE_WIDTH / 2 - SPRITE_WIDTH;
+export const IA_CARD_2 =
+  CANVAS_WIDTH / 2 - SPRITE_WIDTH / 2 - SPRITE_WIDTH + IA_CARD_1 / 2;
+export const IA_CARD_3 =
+  CANVAS_WIDTH / 2 -
+  SPRITE_WIDTH / 2 -
+  SPRITE_WIDTH +
+  IA_CARD_1 / 4 +
+  IA_CARD_2 / 2;
+
 export const isMobile = (() => {
   let check = false;
   (function (a) {
