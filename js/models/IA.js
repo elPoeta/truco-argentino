@@ -1,4 +1,9 @@
-import { IA_CARD_1, IA_CARD_2, IA_CARD_3 } from "../utils/helpers.js";
+import {
+  POS_CARD_1,
+  POS_CARD_2,
+  POS_CARD_3,
+  TOP_CARD_Y,
+} from "../utils/helpers.js";
 import { Card } from "./Card.js";
 import { Player } from "./Player.js";
 
@@ -6,9 +11,9 @@ export class IA extends Player {
   constructor({ game, name }) {
     super({ game, name });
     this.cards = [
-      new Card({ game, x: IA_CARD_1, y: 10, frameX: 1, frameY: 4 }),
-      new Card({ game, x: IA_CARD_2, y: 10, frameX: 1, frameY: 4 }),
-      new Card({ game, x: IA_CARD_3, y: 10, frameX: 1, frameY: 4 }),
+      new Card({ game, x: POS_CARD_1, y: TOP_CARD_Y, frameX: 1, frameY: 4 }),
+      new Card({ game, x: POS_CARD_2, y: TOP_CARD_Y, frameX: 1, frameY: 4 }),
+      new Card({ game, x: POS_CARD_3, y: TOP_CARD_Y, frameX: 1, frameY: 4 }),
     ];
   }
 }
