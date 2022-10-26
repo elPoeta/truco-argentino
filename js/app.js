@@ -2,8 +2,8 @@ import { Game } from "./models/Game.js";
 const canvas = document.querySelector("#canvas1");
 const ctx = canvas.getContext("2d");
 
-canvas.width = window.innerWidth;
-canvas.height = window.innerHeight;
+canvas.width = 1600;
+canvas.height = 900;
 
 ctx.ImageSmoothingEnabled = false;
 ctx.webkitImageSmoothingEnabled = false;
