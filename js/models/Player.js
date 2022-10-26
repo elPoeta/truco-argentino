@@ -3,10 +3,10 @@ export class Player {
     this.game = game;
     this.name = name;
     this.cards = [];
+    this.score = 0;
   }
 
   update() {
-    //console.log(">>>>>>", this.cards);
     [...this.cards].forEach((card) => card.update());
   }
 
