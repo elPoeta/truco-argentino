@@ -2,7 +2,6 @@ export class Player {
   constructor({ game, name }) {
     this.game = game;
     this.name = name;
-    this.cards = [];
     this.score = 0;
   }
 
