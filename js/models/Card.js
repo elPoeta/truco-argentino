@@ -1,7 +1,17 @@
 import { MAX_FRAME_X, MAX_FRAME_y } from "../utils/helpers.js";
 
 export class Card {
-  constructor({ game, x, y, frameX, frameY }) {
+  constructor({
+    game,
+    x,
+    y,
+    frameX,
+    frameY,
+    cardValue,
+    cardNumber,
+    cardSuit,
+    envidoPoints,
+  }) {
     this.game = game;
     this.scale = this.game.scale;
     this.image = deckImg;
@@ -16,6 +26,15 @@ export class Card {
     this.frameX = frameX;
     this.frameY = frameY;
     this.isGrabbed = false;
+
+    this.value = cardValue || 0;
+    this.envidoPoints = envidoPoints || 0;
+    this.number = cardNumber || 0;
+    this.suit = cardSuit || "";
+  }
+
+  getName() {
+    return `${this.number} de ${this.suit}`;
   }
 
   update({ x, y }) {
