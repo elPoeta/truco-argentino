@@ -40,8 +40,6 @@ export const PLAYED_AREA_Y = 250;
 export const PLAYED_AREA_W = POS_CARD_1 + 146;
 export const PLAYED_AREA_H = 400;
 
-// DASEH RECT POS_CARD_1, 250, POS_CARD_1 + 146, 400
-
 export const isMobile = (() => {
   let check = false;
   (function (a) {
