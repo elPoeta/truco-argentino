@@ -15,9 +15,13 @@ export class Card {
     this.y = y;
     this.frameX = frameX;
     this.frameY = frameY;
+    this.isGrabbed = false;
   }
 
-  update() {}
+  update({ x, y }) {
+    this.x = x;
+    this.y = y;
+  }
 
   draw(ctx) {
     ctx.drawImage(
@@ -31,5 +35,31 @@ export class Card {
       this.width * this.scale,
       this.height * this.scale
     );
+  }
+
+  isTouching(x, y) {
+    //console.log("CarX-Y", this.x, this.y);
+    if (
+      this.x < x &&
+      x < this.x + this.width * this.scale &&
+      this.y < y &&
+      y < this.y + this.height * this.scale
+    ) {
+      return true;
+    } else {
+      return false;
+    }
+  }
+
+  isColliding(o) {
+    if (this.x < o.x + o.w && o.x < this.x + this.width) {
+      if (this.y < o.y + o.h && o.y < this.y + this.height) {
+        return true;
+      } else {
+        return false;
+      }
+    } else {
+      return false;
+    }
   }
 }

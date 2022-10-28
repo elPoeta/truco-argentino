@@ -6,7 +6,7 @@ export class Player {
   }
 
   update() {
-    [...this.cards].forEach((card) => card.update());
+    // [...this.cards].forEach((card) => card.update());
   }
 
   draw(ctx) {
