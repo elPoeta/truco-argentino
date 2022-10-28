@@ -17,23 +17,23 @@ export const POS_CARD_3 =
   POS_CARD_1 / 4 +
   POS_CARD_2 / 2;
 
-export const POS_PLAYED_CARD_1_X = POS_CARD_1 + 10;
-export const POS_PLAYED_CARD_1_Y = TOP_CARD_Y + 300;
+export const POS_PLAYED_CARD_0_X = POS_CARD_1 + 10;
+export const POS_PLAYED_CARD_0_Y = TOP_CARD_Y + 300;
 
-export const POS_PLAYED_CARD_2_X = POS_CARD_1 + 40;
-export const POS_PLAYED_CARD_2_Y = BOTTOM_CARD_Y - 300;
+export const POS_PLAYED_CARD_1_X = POS_CARD_1 + 40;
+export const POS_PLAYED_CARD_1_Y = BOTTOM_CARD_Y - 300;
 
-export const POS_PLAYED_CARD_3_X = POS_CARD_1 + 10 + 218;
-export const POS_PLAYED_CARD_3_Y = TOP_CARD_Y + 300;
+export const POS_PLAYED_CARD_2_X = POS_CARD_1 + 10 + 218;
+export const POS_PLAYED_CARD_2_Y = TOP_CARD_Y + 300;
 
-export const POS_PLAYED_CARD_4_X = POS_CARD_1 + 40 + 218;
-export const POS_PLAYED_CARD_4_Y = BOTTOM_CARD_Y - 300;
+export const POS_PLAYED_CARD_3_X = POS_CARD_1 + 40 + 218;
+export const POS_PLAYED_CARD_3_Y = BOTTOM_CARD_Y - 300;
 
-export const POS_PLAYED_CARD_5_X = POS_CARD_1 + 10 + 218 * 2;
-export const POS_PLAYED_CARD_5_Y = TOP_CARD_Y + 300;
+export const POS_PLAYED_CARD_4_X = POS_CARD_1 + 10 + 218 * 2;
+export const POS_PLAYED_CARD_4_Y = TOP_CARD_Y + 300;
 
-export const POS_PLAYED_CARD_6_X = POS_CARD_1 + 40 + 218 * 2;
-export const POS_PLAYED_CARD_6_Y = BOTTOM_CARD_Y - 300;
+export const POS_PLAYED_CARD_5_X = POS_CARD_1 + 40 + 218 * 2;
+export const POS_PLAYED_CARD_5_Y = BOTTOM_CARD_Y - 300;
 
 export const PLAYED_AREA_X = POS_CARD_1;
 export const PLAYED_AREA_Y = 250;
