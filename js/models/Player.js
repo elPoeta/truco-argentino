@@ -1,5 +1,5 @@
 export class Player {
-  constructor({ game, name }) {
+  constructor({ game, name, itIsHand, hisTurn }) {
     this.game = game;
     this.name = name;
     this.score = 0;
@@ -9,6 +9,9 @@ export class Player {
     this.revire = [];
     this.faltaEnvido = [];
     this.playedCards = [];
+    this.hands = 0;
+    this.itIsHand = itIsHand;
+    this.hisTurn = hisTurn;
   }
 
   // update() {
