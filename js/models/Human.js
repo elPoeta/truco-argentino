@@ -33,7 +33,7 @@ export class Human extends Player {
       return;
     const card = this.cardsInHand[index];
     const len =
-      this.playedCards.length + this.game.playerTwo.playedCards.length;
+      this.playedCards.length + this.game.IAPlayer.playedCards.length;
     const { x, y } = playedCardCoords[len];
     card.x = x;
     card.y = y;
