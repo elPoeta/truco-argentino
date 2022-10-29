@@ -39,3 +39,7 @@ export const playedCardCoords = {
     y: POS_PLAYED_CARD_5_Y,
   },
 };
+
+export const generateRandomInteger = (max) => {
+  return Math.floor(Math.random() * max) + 1;
+}

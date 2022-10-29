@@ -1,4 +1,5 @@
 import { EventHandler } from "../controllers/EventHandler.js";
+import { generateRandomInteger } from "../utils/gameHelper.js";
 import {
   PLAYED_AREA_H,
   PLAYED_AREA_W,
@@ -9,16 +10,17 @@ import {
 
 import { Human } from "./Human.js";
 import { IA } from "./IA.js";
+
+
+const randomHand = generateRandomInteger(100) < 50;
 export class Game {
   constructor({ canvasWidth, canvasHeight }) {
     this.canvasWidth = canvasWidth;
     this.canvasHeight = canvasHeight;
     this.scale = SCALE;
     this.renderDashedArea = false;
-    this.players = [
-      new IA({ game: this, name: "elPoeta" }),
-      new Human({ game: this, name: "Player 1" }),
-    ];
+    this.playerOne = new Human({ game: this, name: "Player 1", itIsHand: randomHand, hisTurn: !randomHand });
+    this.playerTwo = new IA({ game: this, name: "elPoeta", itIsHand: !randomHand, hisTurn: randomHand });
     this.eventHandler = new EventHandler({ game: this });
   }
 
@@ -28,7 +30,7 @@ export class Game {
 
   draw(ctx) {
     this.drawDahedArea(ctx);
-    [...this.players].forEach((player) => player.draw(ctx));
+    [...[this.playerOne, this.playerTwo]].forEach((player) => player.draw(ctx));
   }
 
   drawDahedArea(ctx) {
