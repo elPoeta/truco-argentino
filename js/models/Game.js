@@ -6,6 +6,7 @@ import {
   PLAYED_AREA_Y,
   SCALE,
 } from "../utils/helpers.js";
+
 import { Human } from "./Human.js";
 import { IA } from "./IA.js";
 export class Game {
