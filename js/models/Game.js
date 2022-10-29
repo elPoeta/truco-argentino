@@ -19,8 +19,8 @@ export class Game {
     this.canvasHeight = canvasHeight;
     this.scale = SCALE;
     this.renderDashedArea = false;
-    this.playerOne = new Human({ game: this, name: "Player 1", itIsHand: randomHand, hisTurn: !randomHand });
-    this.playerTwo = new IA({ game: this, name: "elPoeta", itIsHand: !randomHand, hisTurn: randomHand });
+    this.humanPlayer = new Human({ game: this, name: "Player 1", itIsHand: randomHand, hisTurn: !randomHand });
+    this.IAPlayer = new IA({ game: this, name: "elPoeta", itIsHand: !randomHand, hisTurn: randomHand });
     this.eventHandler = new EventHandler({ game: this });
   }
 
@@ -30,7 +30,7 @@ export class Game {
 
   draw(ctx) {
     this.drawDahedArea(ctx);
-    [...[this.playerOne, this.playerTwo]].forEach((player) => player.draw(ctx));
+    [...[this.humanPlayer, this.IAPlayer]].forEach((player) => player.draw(ctx));
   }
 
   drawDahedArea(ctx) {

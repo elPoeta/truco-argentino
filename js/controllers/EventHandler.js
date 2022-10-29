@@ -20,7 +20,7 @@ export class EventHandler {
     const rect = canvas.getBoundingClientRect();
     this.mouseX = ev.clientX - rect.left;
     this.mouseY = ev.clientY - rect.top;
-    this.game.playerOne.cardsInHand = this.game.playerOne.cardsInHand.map(
+    this.game.humanPlayer.cardsInHand = this.game.humanPlayer.cardsInHand.map(
       (card) => {
         if (card.isTouching(this.mouseX, this.mouseY)) {
           card.isGrabbed = true;
@@ -36,7 +36,7 @@ export class EventHandler {
     const rect = canvas.getBoundingClientRect();
     this.mouseX = ev.clientX - rect.left;
     this.mouseY = ev.clientY - rect.top;
-    this.game.playerOne.cardsInHand = this.game.playerOne.cardsInHand.map(
+    this.game.humanPlayer.cardsInHand = this.game.humanPlayer.cardsInHand.map(
       (card) => {
         if (card.isGrabbed) {
           card.update({
@@ -57,7 +57,7 @@ export class EventHandler {
 
   handleMouseUp(ev) {
     let index = -1;
-    this.game.playerOne.cardsInHand = this.game.playerOne.cardsInHand.map(
+    this.game.humanPlayer.cardsInHand = this.game.humanPlayer.cardsInHand.map(
       (card, i) => {
         if (card.isGrabbed) index = i;
         card.isGrabbed = false;
@@ -65,7 +65,7 @@ export class EventHandler {
       }
     );
     this.game.renderDashedArea = false;
-    const card = this.game.playerOne.playCard(index);
+    const card = this.game.humanPlayer.playCard(index);
     console.log("CARD ", card);
   }
 }

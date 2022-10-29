@@ -6,6 +6,7 @@ import {
 } from "../utils/helpers.js";
 import { Card } from "./Card.js";
 import { Player } from "./Player.js";
+import { Probability } from "./Probability.js";
 
 export class IA extends Player {
   constructor({ game, name, itIsHand, hisTurn }) {
@@ -16,5 +17,6 @@ export class IA extends Player {
       // new Card({ game, x: POS_CARD_3, y: TOP_CARD_Y, frameX: 1, frameY: 4 }),
     ];
     this.cards = [];
+    this.probability = new Probability({ game })
   }
 }
