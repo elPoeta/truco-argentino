@@ -21,8 +21,8 @@ export class Card {
     this.spriteHeight = this.originalHeight / MAX_FRAME_y;
     this.width = this.spriteWidth;
     this.height = this.spriteHeight;
-    this.x = x;
-    this.y = y;
+    this.x = x || 0;
+    this.y = y || 0;
     this.frameX = frameX;
     this.frameY = frameY;
     this.isGrabbed = false;
@@ -57,7 +57,6 @@ export class Card {
   }
 
   isTouching(x, y) {
-    //console.log("CarX-Y", this.x, this.y);
     if (
       this.x < x &&
       x < this.x + this.width * this.scale &&
