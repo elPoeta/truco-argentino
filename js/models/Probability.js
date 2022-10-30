@@ -45,12 +45,12 @@ export class Probability {
   }
 
   // TODO IMPLEMENT
-  deductCard({ points, plays }) {
-    let posibles = [];
+  deductCard({ points, playedCards }) {
+    let posibleCards = [];
     if (points <= 7) {
-      this.posiblesCardsLow8({ points, plays, posibles });
+      this.posiblesCardsLow8({ points, playedCards, posibleCards });
     } else {
-      if (plays.length === 2 && plays[0].suit === plays[1].suit) {
+      if (playedCards.length === 2 && playedCards[0].suit === playedCards[1].suit) {
         // TODO SET POSIBLES
       }
       else return null;
@@ -59,22 +59,22 @@ export class Probability {
 
 
 
-    for (let j = 0; j < plays.length; j++)
-      for (let i = posibles.length - 1; i >= 0; i--) {
-        if (posibles[i] != undefined && plays[j].number === posibles[i].number && plays[j].suit === posibles[i].suit) {
-          posibles.splice(i);
+    for (let j = 0; j < playedCards.length; j++)
+      for (let i = posibleCards.length - 1; i >= 0; i--) {
+        if (posibleCards[i] != undefined && playedCards[j].number === posibleCards[i].number && playedCards[j].suit === posibleCards[i].suit) {
+          posibleCards.splice(i);
           break;
         }
       }
-    return posibles;
+    return posibleCards;
   }
 
-  posiblesCardsLow8({ points, plays, posibles }) {
-    posibles = this.cards.filter(card => card.envidoPoints === points);
-    for (let j = 0; j < plays.length; j++)
-      for (let i = posibles.length - 1; i >= 0; i--) {
-        if (posibles[i] !== undefined && plays[j].palo === posibles[i].suit) {
-          posibles[i] = undefined;
+  posiblesCardsLow8({ points, playedCards, posibleCards }) {
+    posibleCards = this.cards.filter(card => card.envidoPoints === points);
+    for (let j = 0; j < playedCards.length; j++)
+      for (let i = posibleCards.length - 1; i >= 0; i--) {
+        if (posibleCards[i] !== undefined && playedCards[j].palo === posibleCards[i].suit) {
+          posibleCards[i] = undefined;
         }
       }
   }
