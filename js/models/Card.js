@@ -80,4 +80,7 @@ export class Card {
       return false;
     }
   }
+
+  // TODO IMPLEMENT
+  winnerProbability() { }
 }

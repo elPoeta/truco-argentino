@@ -7,6 +7,7 @@ import {
   PLAYED_AREA_Y,
   SCALE,
 } from "../utils/helpers.js";
+import { Deck } from "./Deck.js";
 
 import { Human } from "./Human.js";
 import { IA } from "./IA.js";
@@ -22,6 +23,7 @@ export class Game {
     this.humanPlayer = new Human({ game: this, name: "Player 1", itIsHand: randomHand, hisTurn: !randomHand });
     this.IAPlayer = new IA({ game: this, name: "elPoeta", itIsHand: !randomHand, hisTurn: randomHand });
     this.eventHandler = new EventHandler({ game: this });
+
   }
 
   update() {
