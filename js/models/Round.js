@@ -45,7 +45,7 @@ export class Round {
     if (this.playerTurn instanceof Human) {
       this.playerTurn = this.game.IAPlayer;
     } else {
-      this.playerTurn = this.game.Human;
+      this.playerTurn = this.game.humanPlayer;
     }
     this.playsOnHands++;
   }
@@ -118,5 +118,49 @@ export class Round {
     }
   }
 
-  continue() {}
+  continue(playerWinner) {
+    while (!playerWinner) {
+      if (this.playsOnHands === 2 || this.playerDoesNotWant != null) {
+        if (this.playsOnHands === 2) {
+          this.canEnvido = false;
+          this.playsOnHands = 0;
+          this.playerTurn = this.winningHand(this.numberOfHands);
+        }
+        playerWinner = this.winningRound();
+        this.numberOfHands++;
+        if (this.numberOfHands === 3 || playerWinner !== null) {
+          break;
+        }
+      }
+
+      if (this.playerEnvido === null && this.playerTruco === null)
+        this.chooseCard();
+      else if (this.playerEnvido !== null) this.chooseEnvido();
+      else this.chooseTruco();
+
+      if (this.waiting === true) break;
+    }
+    if (playerWinner) {
+      // TODO
+    }
+  }
+
+  winningHand(numberOfHands) {}
+
+  winningRound() {}
+
+  chooseCard() {
+    if (this.playerTurn instanceof Human) {
+      console.log("Humano choose card");
+      this.waiting = true;
+    } else {
+      console.log("IA play");
+
+      this.swapTurn();
+    }
+  }
+
+  chooseEnvido() {}
+
+  chooseTruco() {}
 }
