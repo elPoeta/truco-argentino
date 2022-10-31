@@ -32,13 +32,18 @@ export class Human extends Player {
     )
       return;
     const card = this.cardsInHand[index];
-    const len =
-      this.playedCards.length + this.game.IAPlayer.playedCards.length;
+    const len = this.playedCards.length + this.game.IAPlayer.playedCards.length;
     const { x, y } = playedCardCoords[len];
     card.x = x;
     card.y = y;
     this.playedCards.push(card);
     this.cardsInHand.splice(index, 1);
     return card;
+  }
+
+  removeAllCards() {
+    this.cards = [];
+    this.cardsInHand = [];
+    this.playedCards = [];
   }
 }
