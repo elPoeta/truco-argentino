@@ -10,7 +10,7 @@ import {
 
 import { Human } from "./Human.js";
 import { IA } from "./IA.js";
-
+import { Round } from "./Round.js";
 
 const randomHand = generateRandomInteger(100) < 50;
 export class Game {
@@ -19,11 +19,22 @@ export class Game {
     this.canvasHeight = canvasHeight;
     this.scale = SCALE;
     this.renderDashedArea = false;
-    this.humanPlayer = new Human({ game: this, name: "Player 1", itIsHand: randomHand, hisTurn: !randomHand });
-    this.IAPlayer = new IA({ game: this, name: "elPoeta", itIsHand: !randomHand, hisTurn: randomHand });
+    this.humanPlayer = new Human({
+      game: this,
+      name: "Player 1",
+      itIsHand: randomHand,
+      hisTurn: !randomHand,
+    });
+    this.IAPlayer = new IA({
+      game: this,
+      name: "elPoeta",
+      itIsHand: !randomHand,
+      hisTurn: randomHand,
+    });
     this.eventHandler = new EventHandler({ game: this });
-
-
+    this.scoreLimit = 30;
+    this.round = new Round({ game: this });
+    this.round.start();
   }
 
   update() {
@@ -32,7 +43,9 @@ export class Game {
 
   draw(ctx) {
     this.drawDahedArea(ctx);
-    [...[this.humanPlayer, this.IAPlayer]].forEach((player) => player.draw(ctx));
+    [...[this.humanPlayer, this.IAPlayer]].forEach((player) =>
+      player.draw(ctx)
+    );
   }
 
   drawDahedArea(ctx) {
