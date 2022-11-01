@@ -18,7 +18,5 @@ const animate = (timeStamp) => {
 animate(0);
 
 window.addEventListener("resize", (e) => {
-  const { top, left } = canvas.getBoundingClientRect();
-  game.ui.panel.style.left = `${left + 10}px`;
-  game.ui.panel.style.bottom = `${top + 10}px`;
+  game.ui.panel.cssPosition();
 });
