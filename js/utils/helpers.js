@@ -8,7 +8,6 @@ export const SCALE = 0.7;
 export const TOP_CARD_Y = 10;
 export const BOTTOM_CARD_Y = CANVAS_HEIGHT - SPRITE_HEIGHT + 85;
 export const POS_CARD_1 = CANVAS_WIDTH / 2 - SPRITE_WIDTH / 2 - SPRITE_WIDTH;
-console.log(POS_CARD_1);
 export const POS_CARD_2 =
   CANVAS_WIDTH / 2 - SPRITE_WIDTH / 2 - SPRITE_WIDTH + POS_CARD_1 / 2;
 export const POS_CARD_3 =
