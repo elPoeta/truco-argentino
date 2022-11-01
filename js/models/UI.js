@@ -1,10 +1,12 @@
 import { canvas } from "../app.js";
+import { ButtonHandler } from "../controllers/ButtonHandler.js";
 export class UI {
   constructor({ game }) {
     this.game = game;
     this.panel = document.querySelector(".panel");
     this.voicePanel = document.querySelector(".voice-panel");
     this.cssPosition();
+    new ButtonHandler({ game: game, ui: this });
   }
 
   cssPosition() {

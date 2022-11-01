@@ -111,6 +111,12 @@
  .btn-label {
     display: none;
  }
+ .btn:hover{
+  background-color: #0f0f0f;
+}
+.btn:hover .btn-label{
+  background-color: #0f0f0f;
+} 
  .panel-icon {
     padding: .3rem;
     border-radius: 50%;
@@ -118,6 +124,9 @@
   .panel-svg-icon {
     width: 1.5rem;
   }
+  .panel-icon:hover{
+    background-color: #0f0f0f;
+  } 
 }
 
 @media (max-width: 900px) and (orientation: landscape) { 
@@ -137,6 +146,12 @@
   .btn-label {
     display: none;
   }
+  .btn:hover{
+    background-color: #0f0f0f;
+  }
+  .btn:hover .btn-label{
+  background-color: #0f0f0f;
+} 
   .panel-icon {
     padding: .3rem;
     border-radius: 50%;
@@ -144,4 +159,7 @@
   .panel-svg-icon {
     width: 1.5rem;
   }
+  .panel-icon:hover{
+    background-color: #0f0f0f;
+  } 
 }
