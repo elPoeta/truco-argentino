@@ -18,5 +18,5 @@ const animate = (timeStamp) => {
 animate(0);
 
 window.addEventListener("resize", (e) => {
-  game.ui.panel.cssPosition();
+  game.ui.cssPosition();
 });
