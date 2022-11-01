@@ -14,7 +14,7 @@ export class UI {
     this.panel.style.bottom = `${top + 10}px`;
     this.panel.classList.remove("hide");
 
-    this.voicePanel.style.left = `${right - 75}px`;
+    this.voicePanel.style.left = `${right - 135}px`;
     this.voicePanel.style.bottom = `${top + 10}px`;
     this.voicePanel.classList.remove("hide");
   }
