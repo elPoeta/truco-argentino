@@ -1,0 +1,83 @@
+.panel {
+  position: absolute;
+  z-index: 999;
+ 
+}
+.btn-container{
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 10px;
+  align-items: center;
+  justify-content: center;
+}
+.btn {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  border: 0;
+  outline: none;
+  background-color: #0f172a;
+  color: #d97706;
+  cursor: pointer;
+  padding: 20px 25px;
+  position: relative;
+  margin: 10px 0;
+  font-family: Bangers;
+  font-size: 1.2rem;
+  text-transform: uppercase;
+  clip-path: polygon(89% 0, 100% 27%, 100% 100%, 10% 100%, 0% 72%, 0 0);
+  border: 2px solid #d97706;
+  cursor: pointer;
+}
+.btn:hover{
+  background-color: #334155;
+}
+.btn::before {
+  content: "";
+  width: 24px;
+  height: 24px;
+  position: absolute;
+  bottom: -14px;
+  left: -13px;
+  background-color: #0f172a;
+  border-top: 2px solid #d97706;
+  transform: rotate(45deg);
+}
+
+.btn::after {
+  content: "";
+  width: 24px;
+  height: 24px;
+  position: absolute;
+  top: -14px;
+  right: -13px;
+  background-color: #0f0f0f;
+  border-bottom: 2px solid #d97706;
+  transform: rotate(45deg);
+}
+.btn__content {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  position: absolute;
+  top: 2px;
+  left: 2px;
+  right: 2px;
+  bottom: 2px;
+  background-color: #0f0f0f;
+  clip-path: polygon(89% 0, 100% 27%, 100% 100%, 10% 100%, 0% 72%, 0 0);
+}
+.btn-label {
+  height: 19px;
+  font-size: 1.1rem;
+  position: absolute;
+  bottom: -4px;
+  right: 8%;
+  padding: 0 5px;
+  background-color: #0f0f0f;
+  z-index: 3;
+  letter-spacing: 2px;
+}
+.btn:hover .btn-label{
+  background-color: #334155;
+}
