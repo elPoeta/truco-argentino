@@ -11,6 +11,7 @@ import {
 import { Human } from "./Human.js";
 import { IA } from "./IA.js";
 import { Round } from "./Round.js";
+import { UI } from "./UI.js";
 
 const randomHand = generateRandomInteger(100) < 50;
 export class Game {
@@ -31,6 +32,7 @@ export class Game {
       itIsHand: !randomHand,
       hisTurn: randomHand,
     });
+    this.ui = new UI({ game: this });
     this.eventHandler = new EventHandler({ game: this });
     this.scoreLimit = 30;
     this.round = new Round({ game: this });
