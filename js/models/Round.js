@@ -142,6 +142,7 @@ export class Round {
     }
     if (playerWinner) {
       // TODO
+      console.log("WINNER ", playerWinner);
     }
   }
 
@@ -150,9 +151,11 @@ export class Round {
   winningRound() {}
 
   chooseCard() {
+    console.log("CHOOSE ", this.playerTurn);
     if (this.playerTurn instanceof Human) {
       console.log("Humano choose card");
       this.waiting = true;
+      this.humanCanSayEnvido();
     } else {
       console.log("IA play");
 
@@ -160,7 +163,43 @@ export class Round {
     }
   }
 
-  chooseEnvido() {}
+  humanCanSayEnvido() {
+    if (this.canEnvido) {
+      const envidoButtons = document.querySelector("#envido-buttons");
+      if (envidoButtons.classList.contains("hide"))
+        envidoButtons.classList.remove("hide");
+    }
+  }
 
-  chooseTruco() {}
+  chooseEnvido() {
+    console.log("ENVIDO");
+    if (this.playerEnvido instanceof Human) {
+      this.waiting = true;
+    } else {
+      const card = this.game.humanPlayer.cardsInHand.getLast();
+      // GET ACTION
+      console.log("IA RESPONSE", card);
+      // Si ia quiere Y || N
+      // LOG CANTO
+      // PLAY ENVIDO
+      //this.playEnvido(true)
+
+      // SINO cantar envido
+
+      //this.chants.push("EE");
+      //this.whoSang.push("IA");
+      // LOG
+      // this.playerEnvido = this.waitingPlayer(this.playerTurn);
+      this.waiting = true;
+    }
+  }
+
+  chooseTruco() {
+    console.log("TRUCO");
+  }
+
+  playEnvido(action) {
+    this.canEnvido = false;
+    this.playerEnvido = null;
+  }
 }

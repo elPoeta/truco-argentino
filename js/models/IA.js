@@ -12,7 +12,6 @@ export class IA extends Player {
   constructor({ game, name, itIsHand, hisTurn }) {
     super({ game, name, itIsHand, hisTurn });
     this.cardsInHand = this.setCardsInHand();
-    this.cards = [];
     this.strategyGame = null;
     this.probability = new Probability({ game });
   }

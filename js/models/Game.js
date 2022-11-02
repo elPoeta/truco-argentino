@@ -38,11 +38,6 @@ export class Game {
     this.scoreLimit = 30;
     this.round = new Round({ game: this });
     this.round.start();
-    console.log(this.humanPlayer);
-    this.humanPlayer.cardsInHand.forEach((card) => {
-      console.log("XXXXXXX ", card.x + card.width * this.scale);
-      console.log("YYYYYYY ", card.y + card.height * this.scale);
-    });
   }
 
   update() {
