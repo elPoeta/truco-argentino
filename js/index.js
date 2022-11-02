@@ -1,6 +1,14 @@
 /** @type {HTMLCanvasElement} */
 import { canvas, ctx, game } from "./app.js";
 
+Array.prototype.getLast = function () {
+  if (this.length > 0) {
+    return this[this.length - 1];
+  } else {
+    return undefined;
+  }
+};
+
 const animate = (timeStamp) => {
   ctx.clearRect(0, 0, canvas.width, canvas.height);
 

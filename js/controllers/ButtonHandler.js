@@ -20,12 +20,10 @@ export class ButtonHandler {
     if (!id) return;
     switch (id) {
       case "envido":
-        break;
       case "faltaEnvido":
-        break;
       case "realEnvido":
-        break;
       case "FaltaEnvido":
+        this.handleEnvidoActions({ id, target });
         break;
       case "truco":
         break;
@@ -42,6 +40,22 @@ export class ButtonHandler {
       default:
         break;
     }
+  }
+
+  handleEnvidoActions({ id, target }) {
+    const dataEnvido = target.dataset.envido;
+    console.log("DATA", dataEnvido);
+    this.game.round.canEnvido = false;
+    this.game.round.chants.push(dataEnvido);
+    this.game.round.whoSang.push("HUMAN");
+    this.game.round.waiting = false;
+    this.game.round.playerEnvido = this.game.round.waitingPlayer(
+      this.game.round.playerTurn
+    );
+    // WRITE LOG TEXT
+    document.querySelector("#envido-buttons").classList.add("hide");
+    // this.game.round.swapTurn();
+    this.game.round.continue();
   }
 
   handleVoicePanel(ev) {
