@@ -10,9 +10,12 @@ ctx.ImageSmoothingEnabled = false;
 ctx.webkitImageSmoothingEnabled = false;
 ctx.mozImageSmoothingEnabled = false;
 
+const canvasPosition = canvas.getBoundingClientRect();
+
 const game = new Game({
   canvasWidth: canvas.width,
   canvasHeight: canvas.height,
+  canvasPosition: canvasPosition,
 });
 
 export { canvas, ctx, game };

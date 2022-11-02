@@ -1,5 +1,6 @@
 import { canvas } from "../app.js";
 import {
+  isEmpty,
   PLAYED_AREA_H,
   PLAYED_AREA_W,
   PLAYED_AREA_X,
@@ -11,15 +12,69 @@ export class EventHandler {
     this.game = game;
     this.mouseX = 0;
     this.mouseY = 0;
+    this.lastTouch = null;
     canvas.addEventListener("mousedown", this.handleMouseDown.bind(this), true);
     canvas.addEventListener("mousemove", this.handleMouseMove.bind(this), true);
     canvas.addEventListener("mouseup", this.handleMouseUp.bind(this), true);
+    canvas.addEventListener(
+      "touchstart",
+      this.handleTouchStart.bind(this),
+      true
+    );
+    canvas.addEventListener("touchmove", this.handleTouchMove.bind(this), true);
+    canvas.addEventListener("touchend", this.handleTouchEnd.bind(this), true);
+  }
+
+  setMousePos(ev) {
+    const { top, left, width, height } = this.game.canvasPosition;
+    const scaleX = canvas.width / width;
+    const scaleY = canvas.height / height;
+    this.mouseX = (ev.clientX - left) * scaleX;
+    this.mouseY = (ev.clientY - top) * scaleY;
+  }
+
+  dispatchMouseEvent(props) {
+    const { touch, type, element } = props;
+    const options = !isEmpty(touch)
+      ? { clientX: touch.clientX, clientY: touch.clientY }
+      : touch;
+    element.dispatchEvent(new MouseEvent(type, options));
+  }
+
+  handleTouchStart(ev) {
+    ev.preventDefault();
+    const touch = ev.touches[0];
+    console.log("TOUCH ", touch);
+    this.lastTouch = touch;
+    this.dispatchMouseEvent({
+      touch,
+      type: "mousedown",
+      element: canvas,
+    });
+  }
+
+  handleTouchMove(ev) {
+    ev.preventDefault();
+    const touch = ev.touches[0];
+    this.lastTouch = touch;
+    this.dispatchMouseEvent({
+      touch,
+      type: "mousemove",
+      element: canvas,
+    });
+  }
+
+  handleTouchEnd(ev) {
+    ev.preventDefault();
+    this.dispatchMouseEvent({
+      touch: this.lastTouch,
+      type: "mouseup",
+      element: canvas,
+    });
   }
 
   handleMouseDown(ev) {
-    const rect = canvas.getBoundingClientRect();
-    this.mouseX = ev.clientX - rect.left;
-    this.mouseY = ev.clientY - rect.top;
+    this.setMousePos(ev);
     this.game.humanPlayer.cardsInHand = this.game.humanPlayer.cardsInHand.map(
       (card) => {
         if (card.isTouching(this.mouseX, this.mouseY)) {
@@ -33,9 +88,7 @@ export class EventHandler {
   }
 
   handleMouseMove(ev) {
-    const rect = canvas.getBoundingClientRect();
-    this.mouseX = ev.clientX - rect.left;
-    this.mouseY = ev.clientY - rect.top;
+    this.setMousePos(ev);
     this.game.humanPlayer.cardsInHand = this.game.humanPlayer.cardsInHand.map(
       (card) => {
         if (card.isGrabbed) {

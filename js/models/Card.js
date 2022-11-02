@@ -1,5 +1,5 @@
 import { MAX_FRAME_X, MAX_FRAME_y } from "../utils/helpers.js";
-
+import { Human } from "./Human.js";
 export class Card {
   constructor({
     game,
@@ -82,5 +82,5 @@ export class Card {
   }
 
   // TODO IMPLEMENT
-  winnerProbability() { }
+  winnerProbability() {}
 }
