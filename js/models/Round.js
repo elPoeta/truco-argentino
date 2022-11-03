@@ -30,7 +30,6 @@ export class Round {
     this.playerDoesNotWant = null;
     this.truco = [];
     this.deck = new Deck({ game });
-    console.log(Action.ENVIDO);
   }
 
   waitingPlayer(player) {
@@ -59,7 +58,7 @@ export class Round {
     this.game.IAPlayer.strategyGame = null;
     this.game.IAPlayer.envidoWinnerPoints = 0;
 
-    const cards = this.dealCards();
+    this.dealCards();
 
     if (this.game.humanPlayer.itIsHand) {
       this.game.humanPlayer.hisTurn = true;
@@ -99,8 +98,6 @@ export class Round {
       }
       roundDeck.splice(index, 1);
     }
-
-    return roundDeck.length;
   }
 
   getCardCoords(handPlayer, player, count, i) {

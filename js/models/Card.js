@@ -1,4 +1,5 @@
 import { MAX_FRAME_X, MAX_FRAME_y } from "../utils/helpers.js";
+import { Deck } from "./Deck.js";
 import { Human } from "./Human.js";
 export class Card {
   constructor({
@@ -81,6 +82,18 @@ export class Card {
     }
   }
 
-  // TODO IMPLEMENT
-  winnerProbability() {}
+  winnerProbability() {
+    const deck = new Deck({ game: this.game });
+    const cards = deck.generate();
+    let deckLength = cards.length;
+    cards.forEach((card) => {
+      if (
+        card.value >= this.value &&
+        !(card.suit === this.suit && card.number === this.number)
+      )
+        deckLength--;
+    });
+
+    return deckLength / cards.length;
+  }
 }
