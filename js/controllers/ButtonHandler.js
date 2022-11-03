@@ -1,3 +1,4 @@
+import { Action } from "../models/Action.js";
 import { Fullscreen } from "./fullScreen.js";
 
 export class ButtonHandler {
@@ -23,7 +24,7 @@ export class ButtonHandler {
       case "faltaEnvido":
       case "realEnvido":
       case "FaltaEnvido":
-        this.handleEnvidoActions({ id, target });
+        this.handleEnvidoActions({ target });
         break;
       case "truco":
         break;
@@ -37,17 +38,19 @@ export class ButtonHandler {
         break;
       case "irAlMazo":
         break;
+      case "menu":
+        break;
       default:
         break;
     }
   }
 
-  handleEnvidoActions({ id, target }) {
+  handleEnvidoActions({ target }) {
     const dataEnvido = target.dataset.envido;
     console.log("DATA", dataEnvido);
     this.game.round.canEnvido = false;
     this.game.round.chants.push(dataEnvido);
-    this.game.round.whoSang.push("HUMAN");
+    this.game.round.whoSang.push(Action.HUMAN);
     this.game.round.waiting = false;
     this.game.round.playerEnvido = this.game.round.waitingPlayer(
       this.game.round.playerTurn

@@ -9,7 +9,7 @@ import {
   TOP_CARD_Y,
   BOTTOM_CARD_Y,
 } from "../utils/helpers.js";
-import { Envido } from "./Envido.js";
+import { Action } from "./Action.js";
 export class Round {
   constructor({ game }) {
     this.game = game;
@@ -30,6 +30,7 @@ export class Round {
     this.playerDoesNotWant = null;
     this.truco = [];
     this.deck = new Deck({ game });
+    console.log(Action.ENVIDO);
   }
 
   waitingPlayer(player) {
@@ -147,9 +148,9 @@ export class Round {
     }
   }
 
-  winningHand(numberOfHands) { }
+  winningHand(numberOfHands) {}
 
-  winningRound() { }
+  winningRound() {}
 
   chooseCard() {
     console.log("CHOOSE ", this.playerTurn);
@@ -200,27 +201,30 @@ export class Round {
     let loser = 0;
     for (const c in this.chants) {
       switch (this.chants[c]) {
-        case Envido.ENVIDO:
+        case Action.ENVIDO:
           winner += 2;
           loser += 1;
           break;
-        case Envido.ENVIDO_ENVIDO:
+        case Action.ENVIDO_ENVIDO:
           winner += 2;
           loser += 1;
           break;
-        case Envido.REAL_ENVIDO:
+        case Action.REAL_ENVIDO:
           winner += 3;
           loser += 1;
           break;
-        case Envido.FALTA_ENVIDO:
-          winner = this.game.scoreLimit - (this.game.humanPlayer.points < this.game.IAPlayer.points ? this.game.IAPlayer.points : this.game.humanPlayer.points);          // GANA EL PARTIDO POR EL MOMENTO
+        case Action.FALTA_ENVIDO:
+          winner =
+            this.game.scoreLimit -
+            (this.game.humanPlayer.points < this.game.IAPlayer.points
+              ? this.game.IAPlayer.points
+              : this.game.humanPlayer.points); // GANA EL PARTIDO POR EL MOMENTO
           loser += 1;
           break;
       }
     }
-    return { winner, loser }
+    return { winner, loser };
   }
-
 
   playEnvido(action) {
     this.canEnvido = false;
