@@ -33,6 +33,19 @@ export class EventHandler {
     this.mouseY = (ev.clientY - top) * scaleY;
   }
 
+  changeCursor() {
+    this.game.humanPlayer.cardsInHand.forEach((card) => {
+      if (!card.isTouching(this.mouseX, this.mouseY)) {
+        canvas.style.cursor = "default";
+      }
+    });
+    this.game.humanPlayer.cardsInHand.forEach((card) => {
+      if (card.isTouching(this.mouseX, this.mouseY)) {
+        canvas.style.cursor = "pointer";
+      }
+    });
+  }
+
   dispatchMouseEvent(props) {
     const { touch, type, element } = props;
     const options = !isEmpty(touch)
@@ -89,6 +102,7 @@ export class EventHandler {
 
   handleMouseMove(ev) {
     this.setMousePos(ev);
+    this.changeCursor();
     this.game.humanPlayer.cardsInHand = this.game.humanPlayer.cardsInHand.map(
       (card) => {
         if (card.isGrabbed) {
