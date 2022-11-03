@@ -17,6 +17,10 @@ export const POS_CARD_3 =
   POS_CARD_1 / 4 +
   POS_CARD_2 / 2;
 
+export const LOG_TEXT_X = CANVAS_WIDTH / 2;
+export const LOG_TEXT_Y_TOP = 280;
+export const LOG_TEXT_Y_BOTTOM = 650;
+
 export const POS_PLAYED_CARD_0_X = POS_CARD_1 + 10;
 export const POS_PLAYED_CARD_0_Y = TOP_CARD_Y + 300;
 
