@@ -8,7 +8,7 @@ export class Player {
     this.envidoWinnerPoints = 0;
     this.envidoS = [];
     this.realEnvido = [];
-    this.revire = [];
+    this.envidoEnvido = [];
     this.faltaEnvido = [];
     this.playedCards = [];
     this.hands = 0;
@@ -41,7 +41,7 @@ export class Player {
     this.cards.forEach((card) => {
       pair[card.suit].push(card.envidoPoints);
     });
-
+    console.log("PAIR ", pair);
     let points = 0;
     for (const prop in pair) {
       if (pair.hasOwnProperty(prop)) {
@@ -51,7 +51,7 @@ export class Player {
               return b - a;
             });
           }
-          points = 20 + points[prop][0] + points[prop][1];
+          points = 20 + pair[prop][0] + pair[prop][1];
           break;
         }
       }
