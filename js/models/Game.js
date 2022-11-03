@@ -10,6 +10,7 @@ import {
 
 import { Human } from "./Human.js";
 import { IA } from "./IA.js";
+import { LogMessage } from "./LogMessage.js";
 import { Round } from "./Round.js";
 import { UI } from "./UI.js";
 
@@ -34,6 +35,7 @@ export class Game {
       hisTurn: randomHand,
     });
     this.ui = new UI({ game: this });
+    this.logMessage = new LogMessage({ game: this });
     this.eventHandler = new EventHandler({ game: this });
     this.scoreLimit = 30;
     this.round = new Round({ game: this });
@@ -46,8 +48,8 @@ export class Game {
 
   draw(ctx) {
     this.drawDahedArea(ctx);
-    [...[this.humanPlayer, this.IAPlayer]].forEach((player) =>
-      player.draw(ctx)
+    [...[this.humanPlayer, this.IAPlayer], ...[this.logMessage]].forEach(
+      (element) => element.draw(ctx)
     );
   }
 
