@@ -51,12 +51,16 @@ export class ButtonHandler {
     console.log("DATA", dataEnvido);
     if (lastSang === Action.ENVIDO && dataEnvido === Action.ENVIDO)
       dataEnvido = Action.ENVIDO_ENVIDO;
+    this.game.logMessage.show({
+      player: Action.HUMAN,
+      action: dataEnvido,
+    });
     this.game.round.canEnvido = false;
     this.game.round.chants.push(dataEnvido);
     this.game.round.whoSang.push(Action.HUMAN);
     this.game.round.waiting = false;
     this.game.round.playerEnvido = this.game.round.waitingPlayer(
-      this.game.round.playerEnvido
+      this.game.round.playerTurn
     );
     // WRITE LOG TEXT
     const envidoButtons = document.querySelector("#envido-buttons");
