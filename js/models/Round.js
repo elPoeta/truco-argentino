@@ -9,6 +9,7 @@ import {
   TOP_CARD_Y,
   BOTTOM_CARD_Y,
 } from "../utils/helpers.js";
+import { Envido } from "./Envido.js";
 export class Round {
   constructor({ game }) {
     this.game = game;
@@ -135,8 +136,8 @@ export class Round {
 
       if (this.playerEnvido === null && this.playerTruco === null)
         this.chooseCard();
-      else if (this.playerEnvido !== null) this.chooseEnvido();
-      else this.chooseTruco();
+      else if (this.playerEnvido !== null) this.envidoResponse();
+      else this.trucoResponse();
 
       if (this.waiting === true) break;
     }
@@ -146,9 +147,9 @@ export class Round {
     }
   }
 
-  winningHand(numberOfHands) {}
+  winningHand(numberOfHands) { }
 
-  winningRound() {}
+  winningRound() { }
 
   chooseCard() {
     console.log("CHOOSE ", this.playerTurn);
@@ -171,7 +172,7 @@ export class Round {
     }
   }
 
-  chooseEnvido() {
+  envidoResponse() {
     console.log("ENVIDO");
     if (this.playerEnvido instanceof Human) {
       this.waiting = true;
@@ -194,12 +195,39 @@ export class Round {
     }
   }
 
-  chooseTruco() {
-    console.log("TRUCO");
+  calculateEnvidoPoints() {
+    let winner = 0;
+    let loser = 0;
+    for (const c in this.chants) {
+      switch (this.chants[c]) {
+        case Envido.ENVIDO:
+          winner += 2;
+          loser += 1;
+          break;
+        case Envido.ENVIDO_ENVIDO:
+          winner += 2;
+          loser += 1;
+          break;
+        case Envido.REAL_ENVIDO:
+          winner += 3;
+          loser += 1;
+          break;
+        case Envido.FALTA_ENVIDO:
+          winner = this.game.scoreLimit - (this.game.humanPlayer.points < this.game.IAPlayer.points ? this.game.IAPlayer.points : this.game.humanPlayer.points);          // GANA EL PARTIDO POR EL MOMENTO
+          loser += 1;
+          break;
+      }
+    }
+    return { winner, loser }
   }
+
 
   playEnvido(action) {
     this.canEnvido = false;
     this.playerEnvido = null;
+  }
+
+  trucoResponse() {
+    console.log("TRUCO");
   }
 }
