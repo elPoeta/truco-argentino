@@ -59,7 +59,7 @@ export class IA extends Player {
 
     const posible = this.probability.viewedCard({ card: lastCard });
     const value = this.probability.weightPoints({ points });
-    const random = getRandomInt(0, 100);
+    let random = getRandomInt(0, 100);
     const { loser } = this.game.round.calculateEnvidoPoints();
     const unwantedPoints = loser;
 

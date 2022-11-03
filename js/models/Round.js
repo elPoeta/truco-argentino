@@ -221,8 +221,11 @@ export class Round {
       lastCard: card,
     });
     if (action === "") return false;
-    //log
     this.canEnvido = false;
+    this.game.logMessage.show({
+      player: Action.IA,
+      action,
+    });
     this.chants.push(action);
     this.whoSang.push(Action.IA);
     this.playerEnvido = this.waitingPlayer(this.playerTurn);
@@ -265,17 +268,16 @@ export class Round {
       lastCard: card,
     });
 
-    console.log("##### ACTION ######", action);
-
     if (action !== "") {
-      // Audio
+      this.game.logMessage.show({
+        player: Action.IA,
+        action,
+      });
       if (action === Action.QUIERO || action === Action.NO_QUIERO) {
-        console.log("ENVIDO: IA SAY ", action);
         this.playEnvido(action === Action.QUIERO);
       } else {
         this.chants.push(action);
         this.whoSang.push(Action.IA);
-        // LOG sang
         this.playerEnvido = this.waitingPlayer(this.playerEnvido);
       }
     }
@@ -331,7 +333,11 @@ export class Round {
         envidoPoints2 = second.getEnvidoPoints(second.cards);
       }
 
-      //log
+      this.game.logMessage.show({
+        player: first instanceof Human ? Action.HUMAN : Action.IA,
+        action: envidoPoints1,
+      });
+
       if (this.envidoStatsFlag && first instanceof Human) {
         this.game.IAPlayer.statsEnvido(
           this.chants,
@@ -343,7 +349,11 @@ export class Round {
       }
 
       if (envidoPoints1 > envidoPoints2) {
-        // LOG
+        this.game.logMessage.show({
+          player: second instanceof Human ? Action.HUMAN : Action.IA,
+          action: envidoPoints2,
+        });
+
         if (this.envidoStatsFlag && second instanceof Human) {
           this.game.IAPlayer.statsEnvido(
             this.chants,
