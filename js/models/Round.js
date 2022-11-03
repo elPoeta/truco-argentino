@@ -117,7 +117,41 @@ export class Round {
     }
   }
 
+  // continue(playerWinner) {
+  //   console.log("HAND-NUMBER ", this.numberOfHands);
+  //   if (!playerWinner) {
+  //     if (this.playsOnHands === 2 || this.playerDoesNotWant != null) {
+  //       if (this.playsOnHands === 2) {
+  //         this.canEnvido = false;
+  //         this.playsOnHands = 0;
+  //         this.playerTurn = this.winningHand(this.numberOfHands);
+  //       }
+  //       playerWinner = this.winningRound();
+  //       this.numberOfHands++;
+  //       if (this.numberOfHands === 3 || playerWinner !== null) {
+  //         this.checkWinner(playerWinner);
+  //         return;
+  //       }
+  //     }
+
+  //     if (this.playerEnvido === null && this.playerTruco === null) {
+  //       this.chooseCard();
+  //     } else if (this.playerEnvido !== null) {
+  //       this.envidoResponse();
+  //     } else {
+  //       this.trucoResponse();
+  //     }
+  //   }
+
+  //   if (playerWinner) {
+  //     // TODO
+  //     console.log("WINNER ", playerWinner);
+  //     this.checkWinner(playerWinner);
+  //   }
+  // }
+
   continue(playerWinner) {
+    console.log("HAND-NUMBER ", this.numberOfHands);
     while (!playerWinner) {
       if (this.playsOnHands === 2 || this.playerDoesNotWant != null) {
         if (this.playsOnHands === 2) {
@@ -149,47 +183,101 @@ export class Round {
 
   winningRound() {}
 
+  checkWinner(playerWinner) {}
+
   chooseCard() {
     console.log("CHOOSE ", this.playerTurn);
     if (this.playerTurn instanceof Human) {
       console.log("Humano choose card");
       this.waiting = true;
-      this.humanCanSayEnvido();
+      if (this.canEnvido) {
+        this.humanCanSayEnvido();
+        return;
+      }
     } else {
       console.log("IA play");
-
+      if (this.canEnvido) {
+        if (this.IACanSayEnvido()) return;
+      }
       this.swapTurn();
     }
   }
 
   humanCanSayEnvido() {
-    if (this.canEnvido) {
-      const envidoButtons = document.querySelector("#envido-buttons");
-      if (envidoButtons.classList.contains("hide"))
-        envidoButtons.classList.remove("hide");
-    }
+    console.log("CAN-ENVIDO ", this.canEnvido);
+    const envidoButtons = document.querySelector("#envido-buttons");
+    envidoButtons.querySelectorAll("button").forEach((button) => {
+      if (button.classList.contains("hide")) button.classList.remove("hide");
+    });
+  }
+
+  IACanSayEnvido() {
+    const len = this.game.humanPlayer.playedCards.length;
+    const card = this.game.humanPlayer.playedCards[len - 1];
+    const { winner } = this.calculateEnvidoPoints();
+    let action = this.game.IAPlayer.envido({
+      lastSang: this.chants.length[this.chants.length - 1],
+      pointsAccumulate: winner,
+      lastCard: card,
+    });
+    if (action === "") return false;
+    //log
+    this.canEnvido = false;
+    this.chants.push(action);
+    this.whoSang.push(Action.IA);
+    this.playerEnvido = this.waitingPlayer(this.playerTurn);
+    //log
+    return true;
   }
 
   envidoResponse() {
-    console.log("ENVIDO");
+    console.log("ENVIDO-response", this.playerEnvido);
     if (this.playerEnvido instanceof Human) {
-      this.waiting = true;
+      this.humanEnvidoResponse();
     } else {
-      const card = this.game.humanPlayer.cardsInHand.getLast();
-      // GET ACTION
-      console.log("IA RESPONSE", card);
-      // Si ia quiere Y || N
-      // LOG CANTO
-      // PLAY ENVIDO
-      //this.playEnvido(true)
+      this.IAEnvidoResponse();
+    }
+  }
 
-      // SINO cantar envido
+  humanEnvidoResponse() {
+    console.log("CHANTS ", this.chants);
+    const lastSang = this.chants.length[this.chants.length - 1];
+    const envidoButtons = document.querySelector("#envido-buttons");
+    const responseButtons = document.querySelector("#response-buttons");
+    responseButtons.classList.remove("hide");
+    switch (lastSang) {
+      case Action.ENVIDO:
+        envidoButtons.querySelector("#envido").classList.remove("hide");
+      case Action.ENVIDO_ENVIDO:
+        envidoButtons.querySelector("#realEnvido").classList.remove("hide");
+      case Action.REAL_ENVIDO:
+        envidoButtons.querySelector("#faltaEnvido").classList.remove("hide");
+    }
+    this.waiting = true;
+  }
 
-      //this.chants.push("EE");
-      //this.whoSang.push("IA");
-      // LOG
-      // this.playerEnvido = this.waitingPlayer(this.playerTurn);
-      this.waiting = true;
+  IAEnvidoResponse() {
+    const card = this.game.humanPlayer.cardsInHand.getLast();
+    const { winner } = this.calculateEnvidoPoints();
+    let action = this.game.IAPlayer.envido({
+      lastSang: this.chants.getLast(),
+      pointsAccumulate: winner,
+      lastCard: card,
+    });
+
+    console.log("##### ACTION ######", action);
+
+    if (action !== "") {
+      // Audio
+      if (action === Action.QUIERO || action === Action.NO_QUIERO) {
+        console.log("ENVIDO: IA SAY ", action);
+        this.playEnvido(action === Action.QUIERO);
+      } else {
+        this.chants.push(action);
+        this.whoSang.push(Action.IA);
+        // LOG sang
+        this.playerEnvido = this.waitingPlayer(this.playerEnvido);
+      }
     }
   }
 
@@ -215,7 +303,7 @@ export class Round {
             this.game.scoreLimit -
             (this.game.humanPlayer.points < this.game.IAPlayer.points
               ? this.game.IAPlayer.points
-              : this.game.humanPlayer.points); // GANA EL PARTIDO POR EL MOMENTO
+              : this.game.humanPlayer.points);
           loser += 1;
           break;
       }
@@ -224,6 +312,58 @@ export class Round {
   }
 
   playEnvido(action) {
+    console.log("PLAY-ENVIDO ", action);
+    const points = this.calculateEnvidoPoints();
+    let first;
+    let second;
+    let envidoPoints1;
+    let envidoPoints2;
+    if (action) {
+      if (this.game.humanPlayer.itIsHand) {
+        first = this.game.humanPlayer;
+        envidoPoints1 = first.getEnvidoPoints(first.cards);
+        second = this.game.IAPlayer;
+        envidoPoints2 = second.getEnvidoPoints(second.cards);
+      } else {
+        first = this.game.IAPlayer;
+        envidoPoints1 = first.getEnvidoPoints(first.cards);
+        second = this.game.humanPlayer;
+        envidoPoints2 = second.getEnvidoPoints(second.cards);
+      }
+
+      //log
+      if (this.envidoStatsFlag && first instanceof Human) {
+        this.game.IAPlayer.statsEnvido(
+          this.chants,
+          this.whoSang,
+          envidoPoints1
+        );
+        this.savedPoints = envidoPoints1;
+        this.envidoStatsFlag = false;
+      }
+
+      if (envidoPoints1 > envidoPoints2) {
+        // LOG
+        if (this.envidoStatsFlag && second instanceof Human) {
+          this.game.IAPlayer.statsEnvido(
+            this.chants,
+            this.whoSang,
+            envidoPoints2
+          );
+          this.savedPoints = envidoPoints2;
+          this.envidoStatsFlag = false;
+        }
+        second.envidoWinnerPoints = points.winner;
+        second.score += points.winner;
+      } else {
+        first.score += points.winner;
+        first.envidoWinnerPoints = points.winner;
+      }
+    } else {
+      const winner = this.waitingPlayer(this.playerEnvido);
+      winner.score += points.loser;
+      winner.envidoWinnerPoints = points.loser;
+    }
     this.canEnvido = false;
     this.playerEnvido = null;
   }

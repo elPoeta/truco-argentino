@@ -46,17 +46,23 @@ export class ButtonHandler {
   }
 
   handleEnvidoActions({ target }) {
-    const dataEnvido = target.dataset.envido;
+    const lastSang = this.game.round.chants.getLast();
+    let dataEnvido = target.dataset.envido;
     console.log("DATA", dataEnvido);
+    if (lastSang === Action.ENVIDO && dataEnvido === Action.ENVIDO)
+      dataEnvido = Action.ENVIDO_ENVIDO;
     this.game.round.canEnvido = false;
     this.game.round.chants.push(dataEnvido);
     this.game.round.whoSang.push(Action.HUMAN);
     this.game.round.waiting = false;
     this.game.round.playerEnvido = this.game.round.waitingPlayer(
-      this.game.round.playerTurn
+      this.game.round.playerEnvido
     );
     // WRITE LOG TEXT
-    document.querySelector("#envido-buttons").classList.add("hide");
+    const envidoButtons = document.querySelector("#envido-buttons");
+    envidoButtons.querySelectorAll("button").forEach((button) => {
+      button.classList.add("hide");
+    });
     // this.game.round.swapTurn();
     this.game.round.continue();
   }
@@ -77,3 +83,19 @@ export class ButtonHandler {
     }
   }
 }
+
+// _quiero.unbind("click").click(function (event) {
+//   _rondaActual.logCantar(_rondaActual.equipoEnvido.jugador, "S");
+//   _rondaActual.jugarEnvido(true);
+//   _rondaActual.enEspera = false;
+//   $(this).unbind("click");
+//   _rondaActual.continuarRonda();
+// });
+
+// _noQuiero.unbind("click").click(function (event) {
+//   _rondaActual.logCantar(_rondaActual.equipoEnvido.jugador, "N");
+//   _rondaActual.jugarEnvido(false);
+//   _rondaActual.enEspera = false;
+//   $(this).unbind("click");
+//   _rondaActual.continuarRonda();
+// });
