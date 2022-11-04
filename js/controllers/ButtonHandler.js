@@ -33,8 +33,8 @@ export class ButtonHandler {
       case "vale4":
         break;
       case "quiero":
-        break;
       case "noQuiero":
+        this.handleResponseAction({ target });
         break;
       case "irAlMazo":
         break;
@@ -48,7 +48,6 @@ export class ButtonHandler {
   handleEnvidoActions({ target }) {
     const lastSang = this.game.round.chants.getLast();
     let dataEnvido = target.dataset.envido;
-    console.log("DATA", dataEnvido);
     if (lastSang === Action.ENVIDO && dataEnvido === Action.ENVIDO)
       dataEnvido = Action.ENVIDO_ENVIDO;
     this.game.logMessage.show({
@@ -62,15 +61,51 @@ export class ButtonHandler {
     this.game.round.playerEnvido = this.game.round.waitingPlayer(
       this.game.round.playerTurn
     );
-    // WRITE LOG TEXT
     const envidoButtons = document.querySelector("#envido-buttons");
     envidoButtons.querySelectorAll("button").forEach((button) => {
       button.classList.add("hide");
     });
-    // this.game.round.swapTurn();
     this.game.round.continue();
   }
 
+  handleResponseAction({ target }) {
+    const dataResponse = target.dataset.response;
+    const executeAction = this.getExecuteAction();
+    this[executeAction](dataResponse);
+    document.querySelector("#response-buttons")
+      .classList.add("hide");
+    this.game.round.waiting = false;
+    this.game.round.continue();
+  }
+
+  executeResponseEnvido(dataResponse) {
+    this.game.logMessage.show({
+      player: Action.HUMAN,
+      action: dataResponse,
+    });
+    this.game.round.playEnvido(dataResponse === Action.QUIERO);
+  }
+
+
+  executeResponseTruco(dataResponse) {
+  }
+
+
+  getExecuteAction() {
+    const lastSang = this.game.round.chants.getLast();
+    switch (lastSang) {
+      case Action.ENVIDO:
+      case Action.ENVIDO_ENVIDO:
+      case Action.REAL_ENVIDO:
+      case Action.FALTA_ENVIDO:
+        return 'executeResponseEnvido';
+      case Action.TRUCO:
+      case Action.RE_TRUCO:
+      case Action.VALE_4:
+        return 'executeResponseTruco';
+
+    }
+  }
   handleVoicePanel(ev) {
     const target = ev.target.closest(".panel-icon");
     if (!target) return;
@@ -87,19 +122,3 @@ export class ButtonHandler {
     }
   }
 }
-
-// _quiero.unbind("click").click(function (event) {
-//   _rondaActual.logCantar(_rondaActual.equipoEnvido.jugador, "S");
-//   _rondaActual.jugarEnvido(true);
-//   _rondaActual.enEspera = false;
-//   $(this).unbind("click");
-//   _rondaActual.continuarRonda();
-// });
-
-// _noQuiero.unbind("click").click(function (event) {
-//   _rondaActual.logCantar(_rondaActual.equipoEnvido.jugador, "N");
-//   _rondaActual.jugarEnvido(false);
-//   _rondaActual.enEspera = false;
-//   $(this).unbind("click");
-//   _rondaActual.continuarRonda();
-// });
