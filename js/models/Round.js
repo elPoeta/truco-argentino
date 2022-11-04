@@ -179,11 +179,11 @@ export class Round {
     }
   }
 
-  winningHand(numberOfHands) { }
+  winningHand(numberOfHands) {}
 
-  winningRound() { }
+  winningRound() {}
 
-  checkWinner(playerWinner) { }
+  checkWinner(playerWinner) {}
 
   chooseCard() {
     console.log("CHOOSE ", this.playerTurn);
@@ -303,9 +303,9 @@ export class Round {
         case Action.FALTA_ENVIDO:
           winner =
             this.game.scoreLimit -
-            (this.game.humanPlayer.points < this.game.IAPlayer.points
-              ? this.game.IAPlayer.points
-              : this.game.humanPlayer.points);
+            (this.game.humanPlayer.score < this.game.IAPlayer.score
+              ? this.game.IAPlayer.score
+              : this.game.humanPlayer.score);
           loser += 1;
           break;
       }
@@ -341,7 +341,6 @@ export class Round {
         action: envidoPoints2,
       });
 
-
       if (this.envidoStatsFlag && first instanceof Human) {
         this.game.IAPlayer.statsEnvido(
           this.chants,
@@ -352,7 +351,7 @@ export class Round {
         this.envidoStatsFlag = false;
       }
 
-      if (envidoPoints1 > envidoPoints2) {
+      if (envidoPoints2 > envidoPoints1) {
         if (this.envidoStatsFlag && second instanceof Human) {
           this.game.IAPlayer.statsEnvido(
             this.chants,

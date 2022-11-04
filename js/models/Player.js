@@ -16,10 +16,6 @@ export class Player {
     this.hisTurn = hisTurn;
   }
 
-  // update() {
-  //   [...this.cards].forEach((card) => card.update());
-  // }
-
   draw(ctx) {
     [...this.cardsInHand, ...this.playedCards].forEach((card) =>
       card.draw(ctx)
