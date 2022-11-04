@@ -28,14 +28,13 @@ export class ButtonHandler {
         this.handleEnvidoActions({ target });
         break;
       case "truco":
-        break;
       case "reTruco":
-        break;
       case "vale4":
+        this.handleTrucoActions({ target });
         break;
       case "quiero":
       case "noQuiero":
-        this.handleResponseAction({ target });
+        this.handleResponseActions({ target });
         break;
       case "irAlMazo":
         break;
@@ -69,7 +68,25 @@ export class ButtonHandler {
     this.game.round.continue();
   }
 
-  handleResponseAction({ target }) {
+  handleTrucoActions({ target }) {
+    const dataTruco = target.dataset.truco;
+    this.game.round.truco.push(dataTruco);
+    this.game.round.playerTruco = this.game.round.waitingPlayer(
+      this.game.round.playerTurn
+    );
+    this.game.logMessage.show({
+      player: Action.HUMAN,
+      action: dataTruco,
+    });
+    this.game.round.waiting = false;
+    const trucoButtons = document.querySelector("#truco-buttons");
+    trucoButtons.querySelectorAll("button").forEach((button) => {
+      button.classList.add("hide");
+    });
+    this.game.round.continue();
+  }
+
+  handleResponseActions({ target }) {
     const dataResponse = target.dataset.response;
     const executeAction = this.getExecuteAction();
     this[executeAction](dataResponse);
