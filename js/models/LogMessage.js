@@ -4,8 +4,6 @@ import {
   LOG_TEXT_Y_TOP,
 } from "../utils/helpers.js";
 import { Action } from "./Action.js";
-import { Human } from "./Human.js";
-
 export class LogMessage {
   constructor({ game }) {
     this.game = game;
@@ -33,7 +31,6 @@ export class LogMessage {
   }
 
   getMessage(action) {
-    console.log("Action LOG ", action);
     switch (action) {
       case Action.ENVIDO:
       case Action.ENVIDO_ENVIDO:

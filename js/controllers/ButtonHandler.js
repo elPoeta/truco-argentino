@@ -1,4 +1,5 @@
 import { Action } from "../models/Action.js";
+import { Score } from "../models/Score.js";
 import { Fullscreen } from "./fullScreen.js";
 
 export class ButtonHandler {
@@ -72,8 +73,7 @@ export class ButtonHandler {
     const dataResponse = target.dataset.response;
     const executeAction = this.getExecuteAction();
     this[executeAction](dataResponse);
-    document.querySelector("#response-buttons")
-      .classList.add("hide");
+    document.querySelector("#response-buttons").classList.add("hide");
     this.game.round.waiting = false;
     this.game.round.continue();
   }
@@ -86,10 +86,7 @@ export class ButtonHandler {
     this.game.round.playEnvido(dataResponse === Action.QUIERO);
   }
 
-
-  executeResponseTruco(dataResponse) {
-  }
-
+  executeResponseTruco(dataResponse) {}
 
   getExecuteAction() {
     const lastSang = this.game.round.chants.getLast();
@@ -98,12 +95,11 @@ export class ButtonHandler {
       case Action.ENVIDO_ENVIDO:
       case Action.REAL_ENVIDO:
       case Action.FALTA_ENVIDO:
-        return 'executeResponseEnvido';
+        return "executeResponseEnvido";
       case Action.TRUCO:
       case Action.RE_TRUCO:
       case Action.VALE_4:
-        return 'executeResponseTruco';
-
+        return "executeResponseTruco";
     }
   }
   handleVoicePanel(ev) {
