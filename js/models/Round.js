@@ -194,6 +194,9 @@ export class Round {
         this.humanCanSayEnvido();
         return;
       }
+      if (this.canTruco === null || this.canTruco instanceof Human) {
+        this.humanCanSayTruco();
+      }
     } else {
       console.log("IA play");
       if (this.canEnvido) {
@@ -204,7 +207,6 @@ export class Round {
   }
 
   humanCanSayEnvido() {
-    console.log("CAN-ENVIDO ", this.canEnvido);
     const envidoButtons = document.querySelector("#envido-buttons");
     envidoButtons.querySelectorAll("button").forEach((button) => {
       if (button.classList.contains("hide")) button.classList.remove("hide");
@@ -374,6 +376,26 @@ export class Round {
     }
     this.canEnvido = false;
     this.playerEnvido = null;
+  }
+
+  humanCanSayTruco() {
+    const lastSang = !this.truco.length
+      ? ""
+      : this.truco[this.truco.length - 1];
+    const trucoButtons = document.querySelector("#truco-buttons");
+    switch (lastSang) {
+      case Action.TRUCO:
+        trucoButtons.querySelector("#reTruco").classList.remove("hide");
+        break;
+      case Action.RE_TRUCO:
+        trucoButtons.querySelector("#vale4").classList.remove("hide");
+        break;
+      case Action.VALE_4:
+        break;
+      default:
+        trucoButtons.querySelector("#truco").classList.remove("hide");
+        break;
+    }
   }
 
   trucoResponse() {
