@@ -200,4 +200,109 @@ export class IA extends Player {
       }
     return;
   }
+
+  truco({ response, lastSang }) {
+    const handNumber = this.game.round.numberOfHands;
+    const possibleCards =
+      this.game.round.savedPoints !== null
+        ? this.probability
+            .deductCard({
+              points: this.game.round.savedPoints,
+              playedCards: this.game.humanPlayer.playedCards,
+            })
+            .sort((a, b) => b.value - a.value)
+        : null;
+
+    const inHand = this.cardsInHand;
+    const IABoard =
+      this.playedCards.length === handNumber + 1
+        ? this.playedCards[handNumber]
+        : null;
+    const humanBoard =
+      this.game.humanPlayer.playedCards.length === handNumber + 1
+        ? this.game.humanPlayer.playedCards[handNumber]
+        : null;
+    const { high, media, low } = this.classifyCards(this.cardsInHand);
+
+    const mediumHigh = high + media;
+
+    const humanScore = this.game.humanPlayer.score;
+    const iaScore = this.score;
+    const diff = iaScore - humanScore;
+    const missing =
+      this.game.scoreLimit - (humanScore > iaScore ? humanScore : iaScore);
+    const pointInStake = this.pointInStake(lastSang);
+    if (response) {
+      return this.responseTruco({ handNumber });
+    } else if (lastSang === null || lastSang === undefined || lastSang === "") {
+      return this.sayTruco({ handNumber });
+    } else {
+      return this.iaChoice({ handNumber });
+    }
+    //RETURN QIUERO - NO QUIERO -T - RT - V4
+  }
+
+  responseTruco({ handNumber }) {
+    switch (handNumber) {
+      case 0:
+        return "";
+      case 1:
+        return "";
+      case 2:
+        return "";
+    }
+  }
+
+  sayTruco({ handNumber }) {
+    switch (handNumber) {
+      case 0:
+        return "";
+      case 1:
+        return "";
+      case 2:
+        return "";
+    }
+  }
+
+  iaChoice({ handNumber }) {
+    switch (handNumber) {
+      case 0:
+        return "";
+      case 1:
+        return "";
+      case 2:
+        return "";
+    }
+  }
+
+  classifyCards(cards) {
+    const classification = {
+      media: 0,
+      high: 0,
+      low: 0,
+    };
+    cards.forEach((card) => {
+      if (card.value <= 6) {
+        classification.low++;
+      } else if (card.value <= 10) {
+        classification.media++;
+      } else {
+        classification.high++;
+      }
+    });
+    return classification;
+  }
+
+  pointInStake(lastSang) {
+    switch (lastSang) {
+      case Action.TRUCO:
+        return { currentPoints: 2, nextAction: Action.RE_TRUCO, nextPoints: 3 };
+      case Action.RE_TRUCO:
+        return { currentPoints: 3, nextAction: Action.VALE_4, nextPoints: 4 };
+      case Action.VALE_4:
+        return { currentPoints: 4, nextAction: "", nextPoints: 4 };
+      default:
+        return { currentPoints: 1, nextAction: Action.TRUCO, nextPoints: 2 };
+    }
+  }
 }
