@@ -30,6 +30,7 @@ export class Round {
     this.playerDoesNotWant = null;
     this.truco = [];
     this.deck = new Deck({ game });
+    this.currentResponse = null;
   }
 
   waitingPlayer(player) {
@@ -194,7 +195,7 @@ export class Round {
         this.humanCanSayEnvido();
         return;
       }
-      if (this.canTruco === null || this.canTruco instanceof Human) {
+      if (this.canTruco === null || this.canTruco === this.playerTurn) {
         this.humanCanSayTruco();
       }
     } else {
@@ -202,7 +203,7 @@ export class Round {
       if (this.canEnvido) {
         if (this.IACanSayEnvido()) return;
       }
-      if (this.canTruco === null || this.canTruco instanceof IA) {
+      if (this.canTruco === null || this.canTruco === this.playerTurn) {
         if (this.IACanSayTruco()) return;
       }
       this.swapTurn();
@@ -253,6 +254,7 @@ export class Round {
     const envidoButtons = document.querySelector("#envido-buttons");
     const responseButtons = document.querySelector("#response-buttons");
     responseButtons.classList.remove("hide");
+    this.currentResponse = Action.ENVIDO;
     switch (lastSang) {
       case Action.ENVIDO:
         envidoButtons.querySelector("#envido").classList.remove("hide");
@@ -386,6 +388,7 @@ export class Round {
       ? ""
       : this.truco[this.truco.length - 1];
     const trucoButtons = document.querySelector("#truco-buttons");
+    this.currentResponse = Action.TRUCO;
     switch (lastSang) {
       case Action.TRUCO:
         trucoButtons.querySelector("#reTruco").classList.remove("hide");
@@ -423,11 +426,13 @@ export class Round {
     const lastSang = !this.truco.length
       ? ""
       : this.truco[this.truco.length - 1];
+    console.log("!!! RESP TRUCO ", lastSang);
     if (this.playerTruco instanceof Human) {
       const trucoButtons = document.querySelector("#truco-buttons");
       trucoButtons
         .querySelectorAll("button")
         .forEach((button) => button.classList.add("hide"));
+      this.currentResponse = Action.TRUCO;
       switch (lastSang) {
         case Action.truco:
           trucoButtons.querySelector("#reTruco").classList.remove("hide");
@@ -443,6 +448,8 @@ export class Round {
         player: Action.IA,
         action: response,
       });
+      console.log("IA RESP TRUCO ", response);
+
       switch (response) {
         case Action.QUIERO:
           this.canTruco = this.game.IAPlayer;
@@ -453,7 +460,7 @@ export class Round {
           break;
         default:
           this.truco.push(response);
-          this.playerTruco = this.waitingPlayer(this.playerTruco);
+          this.playerTruco = this.waitingPlayer(this.game.humanPlayer);
           break;
       }
     }
