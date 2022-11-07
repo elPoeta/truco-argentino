@@ -103,7 +103,21 @@ export class ButtonHandler {
     this.game.round.playEnvido(dataResponse === Action.QUIERO);
   }
 
-  executeResponseTruco(dataResponse) {}
+  executeResponseTruco(dataResponse) {
+    if (dataResponse === Action.QUIERO) {
+      this.game.round.playerTruco = null;
+
+      this.game.round.canTruco = this.game.humanPlayer;
+    } else {
+      this.game.round.playerDoesNotWant = this.game.round.playerTruco;
+    }
+    this.game.logMessage.show({
+      player: Action.HUMAN,
+      action: dataResponse,
+    });
+    this.game.round.waiting = false;
+    this.game.round.continue();
+  }
 
   getExecuteAction() {
     const lastSang = this.game.round.chants.getLast();

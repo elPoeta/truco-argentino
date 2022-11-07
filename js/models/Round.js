@@ -202,6 +202,9 @@ export class Round {
       if (this.canEnvido) {
         if (this.IACanSayEnvido()) return;
       }
+      if (this.canTruco === null || this.canTruco instanceof IA) {
+        if (this.IACanSayTruco()) return;
+      }
       this.swapTurn();
     }
   }
@@ -398,7 +401,61 @@ export class Round {
     }
   }
 
+  IACanSayTruco() {
+    const lastSang = !this.truco.length
+      ? ""
+      : this.truco[this.truco.length - 1];
+    const IASang = this.game.IAPlayer.truco({ response: false, lastSang });
+    if (IASang !== "") {
+      this.game.logMessage.show({
+        player: Action.IA,
+        action: IASang,
+      });
+      this.truco.push(IASang);
+      this.playerTruco = this.waitingPlayer(this.playerTurn);
+      this.canTruco = this.waitingPlayer(this.playerTurn);
+      return true;
+    }
+    return false;
+  }
+
   trucoResponse() {
-    console.log("TRUCO");
+    const lastSang = !this.truco.length
+      ? ""
+      : this.truco[this.truco.length - 1];
+    if (this.playerTruco instanceof Human) {
+      const trucoButtons = document.querySelector("#truco-buttons");
+      trucoButtons
+        .querySelectorAll("button")
+        .forEach((button) => button.classList.add("hide"));
+      switch (lastSang) {
+        case Action.truco:
+          trucoButtons.querySelector("#reTruco").classList.remove("hide");
+          break;
+        case Action.RE_TRUCO:
+          trucoButtons.querySelector("#vale4").classList.remove("hide");
+          break;
+      }
+      this.waiting = true;
+    } else {
+      const response = this.game.IAPlayer.truco({ response: true, lastSang });
+      this.game.logMessage.show({
+        player: Action.IA,
+        action: response,
+      });
+      switch (response) {
+        case Action.QUIERO:
+          this.canTruco = this.game.IAPlayer;
+          this.playerTruco = null;
+          break;
+        case Action.NO_QUIERO:
+          this.playerDoesNotWant = this.playerTruco;
+          break;
+        default:
+          this.truco.push(response);
+          this.playerTruco = this.waitingPlayer(this.playerTruco);
+          break;
+      }
+    }
   }
 }
