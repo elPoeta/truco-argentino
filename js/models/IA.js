@@ -233,17 +233,76 @@ export class IA extends Player {
       this.game.scoreLimit - (humanScore > iaScore ? humanScore : iaScore);
     const pointInStake = this.pointInStake(lastSang);
     if (response) {
-      return this.responseTruco({ handNumber });
+      return this.responseTruco({
+        lastSang,
+        high,
+        media,
+        low,
+        mediumHigh,
+        diff,
+      });
     } else if (lastSang === null || lastSang === undefined || lastSang === "") {
-      return this.sayTruco({ handNumber });
+      return this.sayTruco({ lastSang });
     } else {
-      return this.iaChoice({ handNumber });
+      return this.iaChoice({ lastSang });
     }
     //RETURN QIUERO - NO QUIERO -T - RT - V4
   }
 
-  responseTruco({ handNumber }) {
-    switch (handNumber) {
+  responseTruco({ lastSang, high, media, low, mediumHigh, diff }) {
+    switch (this.game.round.numberOfHands) {
+      case 0:
+        return this.responseTrucoHand_0({
+          lastSang,
+          high,
+          low,
+          mediumHigh,
+          diff,
+        });
+      case 1:
+        return this.responseTrucoHand_1({ lastSang });
+      case 2:
+        return this.responseTrucoHand_2({ lastSang });
+    }
+  }
+
+  responseTrucoHand_0({ lastSang, high, low, mediumHigh, diff }) {
+    const random = getRandomInt(0, 100);
+    console.log("RESP #### ", lastSang);
+    switch (lastSang) {
+      case Action.TRUCO:
+        if (this.envidoWinnerPoints < 2 && mediumHigh >= 2 && high >= 1)
+          return Action.QUIERO;
+        if (low === 3 && random <= 50) return Action.RE_TRUCO;
+        if (mediumHigh >= 2 && diff < 0) return Action.RE_TRUCO;
+        if (mediumHigh >= 1 && diff > 0) return Action.QUIERO;
+        return random < 66 ? Action.NO_QUIERO : Action.QUIERO;
+
+      case Action.RE_TRUCO:
+      case Action.VALE_4:
+        if (high >= 2) return Action.QUIERO;
+        if (mediumHigh >= 2 && diff > 3) return Action.QUIERO;
+        if (this.envidoWinnerPoints >= 2) return Action.NO_QUIERO;
+        return Action.NO_QUIERO;
+    }
+  }
+
+  responseTrucoHand_1({ lastSang }) {
+    switch (lastSang) {
+      case value:
+        return "";
+    }
+  }
+
+  responseTrucoHand_2({ lastSang }) {
+    switch (lastSang) {
+      case value:
+        return "";
+    }
+  }
+
+  sayTruco({}) {
+    switch (this.game.round.numberOfHands) {
       case 0:
         return "";
       case 1:
@@ -253,19 +312,8 @@ export class IA extends Player {
     }
   }
 
-  sayTruco({ handNumber }) {
-    switch (handNumber) {
-      case 0:
-        return "";
-      case 1:
-        return "";
-      case 2:
-        return "";
-    }
-  }
-
-  iaChoice({ handNumber }) {
-    switch (handNumber) {
+  iaChoice({}) {
+    switch (this.game.round.numberOfHands) {
       case 0:
         return "";
       case 1:
@@ -304,5 +352,13 @@ export class IA extends Player {
       default:
         return { currentPoints: 1, nextAction: Action.TRUCO, nextPoints: 2 };
     }
+  }
+
+  win() {
+    const handNumber = this.game.round.numberOfHands;
+    return (
+      this.playedCards[handNumber].value -
+      this.game.humanPlayer.playedCards[handNumber].value
+    );
   }
 }

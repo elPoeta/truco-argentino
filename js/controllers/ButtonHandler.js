@@ -109,18 +109,28 @@ export class ButtonHandler {
 
       this.game.round.canTruco = this.game.humanPlayer;
     } else {
-      this.game.round.playerDoesNotWant = this.game.round.playerTruco;
+      this.game.round.playerDoesNotWant = this.game.humanPlayer;
     }
     this.game.logMessage.show({
       player: Action.HUMAN,
       action: dataResponse,
     });
-    this.game.round.waiting = false;
-    this.game.round.continue();
+    //this.game.round.waiting = false;
+    //this.game.round.continue();
   }
 
   getExecuteAction() {
-    const lastSang = this.game.round.chants.getLast();
+    console.log("CURRETN RESPONSE", this.game.round.currentResponseo);
+    let lastSang = "";
+    if (this.game.round.currentResponse === Action.ENVIDO) {
+      lastSang = !this.chants.length
+        ? ""
+        : this.chants.length[this.chants.length - 1];
+    } else if (this.game.round.currentResponse === Action.truco) {
+      lastSang = !this.truco.length
+        ? ""
+        : this.truco.length[this.truco.length - 1];
+    }
     switch (lastSang) {
       case Action.ENVIDO:
       case Action.ENVIDO_ENVIDO:
@@ -133,6 +143,7 @@ export class ButtonHandler {
         return "executeResponseTruco";
     }
   }
+
   handleVoicePanel(ev) {
     const target = ev.target.closest(".panel-icon");
     if (!target) return;
