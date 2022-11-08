@@ -1,5 +1,4 @@
 import { Action } from "../models/Action.js";
-import { Score } from "../models/Score.js";
 import { Fullscreen } from "./fullScreen.js";
 
 export class ButtonHandler {
@@ -37,6 +36,7 @@ export class ButtonHandler {
         this.handleResponseActions({ target });
         break;
       case "irAlMazo":
+        this.game.round.humanGoToMazo();
         break;
       case "menu":
         break;
@@ -120,28 +120,36 @@ export class ButtonHandler {
   }
 
   getExecuteAction() {
-    console.log("CURRETN RESPONSE", this.game.round.currentResponseo);
-    let lastSang = "";
-    if (this.game.round.currentResponse === Action.ENVIDO) {
-      lastSang = !this.chants.length
-        ? ""
-        : this.chants.length[this.chants.length - 1];
-    } else if (this.game.round.currentResponse === Action.truco) {
-      lastSang = !this.truco.length
-        ? ""
-        : this.truco.length[this.truco.length - 1];
-    }
-    switch (lastSang) {
-      case Action.ENVIDO:
-      case Action.ENVIDO_ENVIDO:
-      case Action.REAL_ENVIDO:
-      case Action.FALTA_ENVIDO:
-        return "executeResponseEnvido";
-      case Action.TRUCO:
-      case Action.RE_TRUCO:
-      case Action.VALE_4:
-        return "executeResponseTruco";
-    }
+    console.log("CURRETN RESPONSE", this.game.round.currentResponse);
+    return this.game.round.currentResponse === Action.ENVIDO
+      ? "executeResponseEnvido"
+      : "executeResponseTruco";
+    // let lastSang = "";
+    // if (this.game.round.currentResponse === Action.ENVIDO) {
+    //   console.log(
+    //     "@@@@@ ".this.game.round.chants.length,
+    //     this.game.round.chants
+    //   );
+    //   lastSang = !this.game.round.chants.length
+    //     ? ""
+    //     : this.game.round.chants.length[this.game.round.chants.length - 1];
+    // } else if (this.game.round.currentResponse === Action.truco) {
+    //   lastSang = !this.game.round.truco.length
+    //     ? ""
+    //     : this.game.round.truco.length[this.game.round.truco.length - 1];
+    // }
+    // console.log("***** ", lastSang);
+    // switch (lastSang) {
+    //   case Action.ENVIDO:
+    //   case Action.ENVIDO_ENVIDO:
+    //   case Action.REAL_ENVIDO:
+    //   case Action.FALTA_ENVIDO:
+    //     return "executeResponseEnvido";
+    //   case Action.TRUCO:
+    //   case Action.RE_TRUCO:
+    //   case Action.VALE_4:
+    //     return "executeResponseTruco";
+    // }
   }
 
   handleVoicePanel(ev) {

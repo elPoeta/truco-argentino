@@ -1,4 +1,4 @@
-import { getRandomInt } from "../utils/gameHelper.js";
+import { getRandomInt, playedCardCoords } from "../utils/gameHelper.js";
 import {
   POS_CARD_1,
   POS_CARD_2,
@@ -14,6 +14,7 @@ export class IA extends Player {
   constructor({ game, name, itIsHand, hisTurn }) {
     super({ game, name, itIsHand, hisTurn });
     this.cardsInHand = this.setCardsInHand();
+    this.cardsInHandHidden = [];
     this.strategyGame = null;
     this.probability = new Probability({ game });
   }
@@ -47,6 +48,111 @@ export class IA extends Player {
   removeAllCards() {
     this.cards = [];
     this.playedCards = [];
+  }
+
+  playCard() {
+    if (!this.strategyGame) this.strategyGame = this.classicStrategy;
+    const index = this.strategyGame();
+    const card = this.cardsInHandHidden[index];
+    const len =
+      this.playedCards.length + this.game.humanPlayer.playedCards.length;
+    const { x, y } = playedCardCoords[len];
+    card.x = x;
+    card.y = y;
+    this.playedCards.push(card);
+    this.cardsInHandHidden.splice(index, 1);
+    this.cardsInHand.splice(index, 1);
+  }
+
+  strategy() {
+    const { low, media } = this.classifyCards(this.cardsInHandHidden);
+    if (low === 1 && media === 1) {
+      return this.cardsInHandHidden[0].value < this.cardsInHandHidden[1].value
+        ? 1
+        : 0;
+    }
+    return this.classicStrategy();
+  }
+
+  classicStrategy() {
+    let card = null;
+    let numberOfHands = this.game.round.numberOfHands;
+    let index = -1;
+    const { high } = this.classifyCards(this.cardsInHandHidden);
+    if (!(this.game.round.playsOnHands === 0)) {
+      const len = this.game.humanPlayer.playedCards.length - 1;
+      card = this.game.humanPlayer.playedCards[len];
+      index = this.choice({ order: 1, card });
+      if (index < 0) {
+        index = this.choice({ order: 0 });
+      } else {
+        if (
+          numberOfHands === 0 &&
+          this.cardsInHandHidden[index].value >= 11 &&
+          card.value <= 7
+        )
+          index = this.choice({ order: 0 });
+      }
+    } else {
+      switch (numberOfHands) {
+        case 0:
+          if (high >= 2) {
+            index = this.choice({
+              order: 0,
+            });
+          } else if (high >= 1) {
+            index = this.choice({ order: 1, card: null, classification: 1 });
+            if (index < 0) index = this.choice(1, null, 0);
+          } else index = this.choice({ order: 1 });
+          break;
+        case 1:
+          if (this.hands > this.game.humanPlayer.hands) {
+            index = this.choice({ order: 0 });
+          } else {
+            index = this.choice({ order: 1 });
+          }
+          break;
+        case 2:
+          index = 0;
+          break;
+      }
+    }
+    return index;
+  }
+
+  choice({ order, card, classification }) {
+    let index = -1;
+    if (card === undefined) card = null;
+    let value = order === 0 ? 99 : card === null ? -1 : 99;
+    for (const c in this.cardsInHandHidden) {
+      let currentValue = this.cardsInHandHidden[c].value;
+      const { calificationValue } = this.classify(this.cardsInHandHidden[c]);
+      if (classification !== undefined && classification !== calificationValue)
+        continue;
+      switch (order) {
+        case 0:
+          if (currentValue < value) {
+            value = currentValue;
+            index = c;
+          }
+          break;
+        case 1:
+          if (card === null) {
+            if (currentValue > value) {
+              value = currentValue;
+              index = c;
+            }
+          } else {
+            if (currentValue < value && currentValue > card.value) {
+              value = currentValue;
+              index = c;
+            }
+          }
+          break;
+      }
+    }
+
+    return index;
   }
 
   envido({ lastSang, pointsAccumulate, lastCard }) {
@@ -213,7 +319,7 @@ export class IA extends Player {
             .sort((a, b) => b.value - a.value)
         : null;
 
-    const inHand = this.cardsInHand;
+    const inHand = this.cardsInHandHidden;
     const IABoard =
       this.playedCards.length === handNumber + 1
         ? this.playedCards[handNumber]
@@ -222,7 +328,7 @@ export class IA extends Player {
       this.game.humanPlayer.playedCards.length === handNumber + 1
         ? this.game.humanPlayer.playedCards[handNumber]
         : null;
-    const { high, media, low } = this.classifyCards(this.cardsInHand);
+    const { high, media, low } = this.classifyCards(this.cardsInHandHidden);
 
     const mediumHigh = high + media;
 
@@ -302,6 +408,7 @@ export class IA extends Player {
   }
 
   sayTruco({}) {
+    console.log("IA-SAY-TRUCO");
     switch (this.game.round.numberOfHands) {
       case 0:
         return "";
@@ -313,6 +420,8 @@ export class IA extends Player {
   }
 
   iaChoice({}) {
+    console.log("IA-SAY-CHOICE");
+
     switch (this.game.round.numberOfHands) {
       case 0:
         return "";
@@ -323,6 +432,16 @@ export class IA extends Player {
     }
   }
 
+  classify(card) {
+    if (card.value <= 6) {
+      return { calificationValue: 0, calificationType: "low" };
+    } else if (card.value <= 10) {
+      return { calificationValue: 1, calificationType: "media" };
+    } else {
+      return { calificationValue: 2, calificationType: "high" };
+    }
+  }
+
   classifyCards(cards) {
     const classification = {
       media: 0,
@@ -330,13 +449,15 @@ export class IA extends Player {
       low: 0,
     };
     cards.forEach((card) => {
-      if (card.value <= 6) {
-        classification.low++;
-      } else if (card.value <= 10) {
-        classification.media++;
-      } else {
-        classification.high++;
-      }
+      const { calificationType } = this.classify(card);
+      classification[calificationType]++;
+      // if (card.value <= 6) {
+      //   classification.low++;
+      // } else if (card.value <= 10) {
+      //   classification.media++;
+      // } else {
+      //   classification.high++;
+      // }
     });
     return classification;
   }

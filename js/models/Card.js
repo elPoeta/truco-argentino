@@ -32,6 +32,7 @@ export class Card {
     this.envidoPoints = envidoPoints || 0;
     this.number = cardNumber || 0;
     this.suit = cardSuit || "";
+    this.played = false;
   }
 
   getName() {

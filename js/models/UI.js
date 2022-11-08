@@ -6,7 +6,7 @@ export class UI {
     this.panel = document.querySelector(".panel");
     this.voicePanel = document.querySelector(".voice-panel");
     this.cssPosition();
-    this.buttonHandler = new ButtonHandler({ game, ui: this });
+    this.buttonHandler = new ButtonHandler({ game: this.game, ui: this });
   }
 
   cssPosition() {
