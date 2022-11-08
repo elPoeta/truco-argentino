@@ -31,6 +31,7 @@ export class Round {
     this.truco = [];
     this.deck = new Deck({ game });
     this.currentResponse = null;
+    this.humanCanPlayCard = false;
   }
 
   waitingPlayer(player) {
@@ -91,11 +92,19 @@ export class Round {
       card.y = y;
       if (i % 2 === 0) {
         handPlayer.cards.push(card);
-        if (handPlayer instanceof Human) handPlayer.cardsInHand.push(card);
+        if (handPlayer instanceof Human) {
+          handPlayer.cardsInHand.push(card);
+        } else {
+          handPlayer.cardsInHandHidden.push(card);
+        }
         count++;
       } else {
         player.cards.push(card);
-        if (player instanceof Human) player.cardsInHand.push(card);
+        if (player instanceof Human) {
+          player.cardsInHand.push(card);
+        } else {
+          player.cardsInHandHidden.push(card);
+        }
       }
       roundDeck.splice(index, 1);
     }
@@ -188,12 +197,12 @@ export class Round {
 
   chooseCard() {
     console.log("CHOOSE ", this.playerTurn);
+    if (!this.playerTurn) return;
     if (this.playerTurn instanceof Human) {
       console.log("Humano choose card");
       this.waiting = true;
       if (this.canEnvido) {
         this.humanCanSayEnvido();
-        return;
       }
       if (this.canTruco === null || this.canTruco === this.playerTurn) {
         this.humanCanSayTruco();
@@ -206,7 +215,7 @@ export class Round {
       if (this.canTruco === null || this.canTruco === this.playerTurn) {
         if (this.IACanSayTruco()) return;
       }
-      this.swapTurn();
+      this.IACanPlayCard();
     }
   }
 
@@ -232,6 +241,7 @@ export class Round {
       player: Action.IA,
       action,
     });
+    this.currentResponse = Action.ENVIDO;
     this.chants.push(action);
     this.whoSang.push(Action.IA);
     this.playerEnvido = this.waitingPlayer(this.playerTurn);
@@ -284,6 +294,7 @@ export class Round {
         this.playEnvido(action === Action.QUIERO);
       } else {
         this.chants.push(action);
+        this.currentResponse = Action.ENVIDO;
         this.whoSang.push(Action.IA);
         this.playerEnvido = this.waitingPlayer(this.playerEnvido);
       }
@@ -415,6 +426,7 @@ export class Round {
         action: IASang,
       });
       this.truco.push(IASang);
+      this.currentResponse = Action.TRUCO;
       this.playerTruco = this.waitingPlayer(this.playerTurn);
       this.canTruco = this.waitingPlayer(this.playerTurn);
       return true;
@@ -449,7 +461,7 @@ export class Round {
         action: response,
       });
       console.log("IA RESP TRUCO ", response);
-
+      this.currentResponse = Action.TRUCO;
       switch (response) {
         case Action.QUIERO:
           this.canTruco = this.game.IAPlayer;
@@ -465,4 +477,19 @@ export class Round {
       }
     }
   }
+
+  humanPlayCard() {
+    console.log("### HUMAN PLAY CARD ###");
+    this.waiting = false;
+    //this.humanCanPlayCard = false;
+    this.swapTurn();
+    this.continue();
+  }
+
+  IACanPlayCard() {
+    this.game.IAPlayer.playCard();
+    this.swapTurn();
+  }
+
+  humanGoToMazo() {}
 }

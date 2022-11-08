@@ -132,7 +132,6 @@ export class EventHandler {
       }
     );
     this.game.renderDashedArea = false;
-    const card = this.game.humanPlayer.playCard(index);
-    console.log("CARD ", card);
+    this.game.humanPlayer.playCard(index);
   }
 }

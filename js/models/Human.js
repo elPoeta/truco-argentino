@@ -21,7 +21,7 @@ export class Human extends Player {
     card.y = y;
     this.playedCards.push(card);
     this.cardsInHand.splice(index, 1);
-    return card;
+    this.game.round.humanPlayCard();
   }
 
   removeAllCards() {

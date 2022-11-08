@@ -35,7 +35,6 @@ export class Game {
       itIsHand: !randomHand,
       hisTurn: randomHand,
     });
-    this.ui = new UI({ game: this });
     this.humanScore = [
       new Score({ game: this, player: this.humanPlayer, maxScore: 5 }),
       new Score({ game: this, player: this.humanPlayer, maxScore: 10 }),
@@ -57,6 +56,7 @@ export class Game {
     this.scoreLimit = 30;
     this.round = new Round({ game: this });
     this.round.start();
+    this.ui = new UI({ game: this });
   }
 
   update() {}
