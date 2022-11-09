@@ -13,6 +13,11 @@ import { Action } from "./Action.js";
 export class Round {
   constructor({ game }) {
     this.game = game;
+    this.deck = new Deck({ game });
+    this.init();
+  }
+
+  init() {
     this.numberOfHands = 0;
     this.playsOnHands = 0;
     this.playerTurn = null;
@@ -29,9 +34,22 @@ export class Round {
     this.canTruco = null;
     this.playerDoesNotWant = null;
     this.truco = [];
-    this.deck = new Deck({ game });
     this.currentResponse = null;
     this.humanCanPlayCard = false;
+  }
+
+  changeHand() {
+    if (this.game.humanPlayer.itIsHand) {
+      this.game.IAPlayer.itIsHand = true;
+      this.game.IAPlayer.hisTurn = false;
+      this.game.humanPlayer.itIsHand = false;
+      this.game.humanPlayer.hisTurn = true;
+    } else {
+      this.game.humanPlayer.itIsHand = true;
+      this.game.humanPlayer.hisTurn = false;
+      this.game.IAPlayer.itIsHand = false;
+      this.game.IAPlayer.hisTurn = true;
+    }
   }
 
   waitingPlayer(player) {
@@ -45,7 +63,7 @@ export class Round {
   }
 
   swapTurn() {
-    console.log("SWAP-TURN ", JSON.stringify(this.playerTurn.name));
+    //console.log("SWAP-TURN ", JSON.stringify(this.playerTurn.name));
     if (this.playerTurn instanceof Human) {
       this.playerTurn = this.game.IAPlayer;
     } else {
