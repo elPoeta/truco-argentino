@@ -59,7 +59,7 @@ export class ButtonHandler {
     this.game.round.whoSang.push(Action.HUMAN);
     this.game.round.waiting = false;
     this.game.round.playerEnvido = this.game.round.waitingPlayer(
-      this.game.round.playerTurn
+      this.game.humanPlayer
     );
     const envidoButtons = document.querySelector("#envido-buttons");
     envidoButtons.querySelectorAll("button").forEach((button) => {
@@ -70,9 +70,10 @@ export class ButtonHandler {
 
   handleTrucoActions({ target }) {
     const dataTruco = target.dataset.truco;
+    console.log("TRUCO ACTION ", dataTruco);
     this.game.round.truco.push(dataTruco);
     this.game.round.playerTruco = this.game.round.waitingPlayer(
-      this.game.round.playerTurn
+      this.game.humanPlayer
     );
     this.game.logMessage.show({
       player: Action.HUMAN,
