@@ -45,6 +45,7 @@ export class Round {
   }
 
   swapTurn() {
+    console.log("SWAP-TURN ", JSON.stringify(this.playerTurn.name));
     if (this.playerTurn instanceof Human) {
       this.playerTurn = this.game.IAPlayer;
     } else {
@@ -161,7 +162,7 @@ export class Round {
   // }
 
   continue(playerWinner) {
-    console.log("HAND-NUMBER ", this.numberOfHands);
+    //console.log("HAND-NUMBER ", this.numberOfHands);
     while (!playerWinner) {
       if (this.playsOnHands === 2 || this.playerDoesNotWant != null) {
         if (this.playsOnHands === 2) {
@@ -185,11 +186,50 @@ export class Round {
     }
     if (playerWinner) {
       // TODO
-      console.log("WINNER ", playerWinner);
+      //console.log("WINNER ", playerWinner);
     }
   }
 
-  winningHand(numberOfHands) {}
+  winningHand(index, pointsAccumulate) {
+    if (pointsAccumulate == undefined || pointsAccumulate == null) {
+      pointsAccumulate = true;
+    }
+    if (
+      this.game.humanPlayer.playedCards[index].value >
+      this.game.IAPlayer.playedCards[index].value
+    ) {
+      if (pointsAccumulate) {
+        this.game.humanPlayer.hands += 1;
+      }
+      console.log("GANA MANO ", this.game.humanPlayer.name);
+      // Deberíamos buscar una forma mas elegante
+
+      return this.game.humanPlayer;
+    } else {
+      if (
+        this.game.humanPlayer.playedCards[index].value <
+        this.game.IAPlayer.playedCards[index].value
+      ) {
+        if (pointsAccumulate) {
+          this.game.IAPlayer.hands += 1;
+        }
+        // Deberíamos buscar una forma mas elegante
+        console.log("GANA MANO ", this.game.IAPlayer.name);
+        return this.game.IAPlayer;
+      } else {
+        if (pointsAccumulate) {
+          this.game.humanPlayer.hands += 1;
+          this.game.IAPlayer.hands += 1;
+        }
+        console.log("PARDA");
+        if (this.game.humanPlayer.itIsHand) {
+          return this.game.humanPlayer;
+        } else {
+          return this.game.IAPlayer;
+        }
+      }
+    }
+  }
 
   winningRound() {}
 
@@ -197,9 +237,13 @@ export class Round {
 
   chooseCard() {
     console.log("CHOOSE ", this.playerTurn);
-    if (!this.playerTurn) return;
+    if (!this.playerTurn) {
+      this.waiting = true;
+      console.log("FAIL ", this.playerTruco);
+      return;
+    }
     if (this.playerTurn instanceof Human) {
-      console.log("Humano choose card");
+      //console.log("Humano choose card");
       this.waiting = true;
       if (this.canEnvido) {
         this.humanCanSayEnvido();
@@ -208,7 +252,7 @@ export class Round {
         this.humanCanSayTruco();
       }
     } else {
-      console.log("IA play");
+      console.log("IA play choose");
       if (this.canEnvido) {
         if (this.IACanSayEnvido()) return;
       }
@@ -244,13 +288,14 @@ export class Round {
     this.currentResponse = Action.ENVIDO;
     this.chants.push(action);
     this.whoSang.push(Action.IA);
-    this.playerEnvido = this.waitingPlayer(this.playerTurn);
+    // this.playerEnvido = this.waitingPlayer(this.playerTurn);
+    this.playerEnvido = this.waitingPlayer(this.game.IAPlayer);
     //log
     return true;
   }
 
   envidoResponse() {
-    console.log("ENVIDO-response", this.playerEnvido);
+    // console.log("ENVIDO-response", this.playerEnvido);
     if (this.playerEnvido instanceof Human) {
       this.humanEnvidoResponse();
     } else {
@@ -259,7 +304,7 @@ export class Round {
   }
 
   humanEnvidoResponse() {
-    console.log("CHANTS ", this.chants);
+    //console.log("CHANTS ", this.chants);
     const lastSang = this.chants.length[this.chants.length - 1];
     const envidoButtons = document.querySelector("#envido-buttons");
     const responseButtons = document.querySelector("#response-buttons");
@@ -296,7 +341,7 @@ export class Round {
         this.chants.push(action);
         this.currentResponse = Action.ENVIDO;
         this.whoSang.push(Action.IA);
-        this.playerEnvido = this.waitingPlayer(this.playerEnvido);
+        this.playerEnvido = this.waitingPlayer(this.game.IAPlayer);
       }
     }
   }
@@ -421,14 +466,17 @@ export class Round {
       : this.truco[this.truco.length - 1];
     const IASang = this.game.IAPlayer.truco({ response: false, lastSang });
     if (IASang !== "") {
+      console.log("IA CAN SAY TRUCO SANG", IASang);
       this.game.logMessage.show({
         player: Action.IA,
         action: IASang,
       });
       this.truco.push(IASang);
       this.currentResponse = Action.TRUCO;
-      this.playerTruco = this.waitingPlayer(this.playerTurn);
-      this.canTruco = this.waitingPlayer(this.playerTurn);
+      //this.playerTruco = this.waitingPlayer(this.playerTurn);
+      //this.canTruco = this.waitingPlayer(this.playerTurn);
+      this.playerTruco = this.waitingPlayer(this.game.IAPlayer);
+      this.canTruco = this.waitingPlayer(this.game.IAPlayer);
       return true;
     }
     return false;
@@ -438,12 +486,14 @@ export class Round {
     const lastSang = !this.truco.length
       ? ""
       : this.truco[this.truco.length - 1];
-    console.log("!!! RESP TRUCO ", lastSang);
+    //console.log("!!! RESP TRUCO ", lastSang);
     if (this.playerTruco instanceof Human) {
       const trucoButtons = document.querySelector("#truco-buttons");
       trucoButtons
         .querySelectorAll("button")
         .forEach((button) => button.classList.add("hide"));
+      const responseButtons = document.querySelector("#response-buttons");
+      responseButtons.classList.remove("hide");
       this.currentResponse = Action.TRUCO;
       switch (lastSang) {
         case Action.truco:
@@ -460,7 +510,7 @@ export class Round {
         player: Action.IA,
         action: response,
       });
-      console.log("IA RESP TRUCO ", response);
+      //console.log("IA RESP TRUCO ", response);
       this.currentResponse = Action.TRUCO;
       switch (response) {
         case Action.QUIERO:
@@ -472,14 +522,14 @@ export class Round {
           break;
         default:
           this.truco.push(response);
-          this.playerTruco = this.waitingPlayer(this.game.humanPlayer);
+          this.playerTruco = this.waitingPlayer(this.game.IAPlayer);
           break;
       }
     }
   }
 
   humanPlayCard() {
-    console.log("### HUMAN PLAY CARD ###");
+    //console.log("### HUMAN PLAY CARD ###");
     this.waiting = false;
     //this.humanCanPlayCard = false;
     this.swapTurn();
@@ -491,5 +541,35 @@ export class Round {
     this.swapTurn();
   }
 
-  humanGoToMazo() {}
+  humanGoToMazo() {
+    this.debugLog();
+  }
+
+  debugLog() {
+    let log = console.log;
+    log(`NUMERO  DE MANOS: ${this.numberOfHands}`);
+    log(`MANOS JUGADAS: ${this.playsOnHands}`);
+    log("PLAYER TURN: ", this.playerTurn);
+    log(`WAITING: ${this.waiting}`);
+    log("");
+    log("##### ENVIDO #####");
+    log(`PUEDE ENVIDO: ${this.canEnvido}`);
+    log(`CHANTS: ${this.chants}`);
+    log(`PLAYER ENVIDO: ${this.playerEnvido}`);
+    log(`WHO SANG: ${this.whoSang}`);
+    log(`ENVIDO STATS: ${this.envidoStatsFlag}`);
+    log(`PUNTOS GUARDADOS: ${this.savedPoints}`);
+    log("");
+    log(`##### TRUCO #####`);
+    log("PLAYER TRUCO:", this.playerTruco);
+    log(`CAN TRUCO: ${this.canTruco}`);
+    log(`JUGADOR NO QUIERE: ${this.playerDoesNotWant}`);
+    log(`TRUCO[] ${this.truco}`);
+    log(`RESPUESTA ACTUAL: ${this.currentResponse}`);
+    log(`HUMANO PUEDE JUGAR: ${this.humanCanPlayCard}`);
+    log("");
+    log(`##### PLAYERS ####`);
+    log("HUMANO:", this.game.humanPlayer);
+    log("IA: ", this.game.IAPlayer);
+  }
 }

@@ -56,7 +56,9 @@ export class IA extends Player {
     const card = this.cardsInHandHidden[index];
     const len =
       this.playedCards.length + this.game.humanPlayer.playedCards.length;
+    console.log("LEN IA ", len);
     const { x, y } = playedCardCoords[len];
+    console.log("LEN X ", x);
     card.x = x;
     card.y = y;
     this.playedCards.push(card);
@@ -319,7 +321,6 @@ export class IA extends Player {
             .sort((a, b) => b.value - a.value)
         : null;
 
-    const inHand = this.cardsInHandHidden;
     const IABoard =
       this.playedCards.length === handNumber + 1
         ? this.playedCards[handNumber]
@@ -335,9 +336,7 @@ export class IA extends Player {
     const humanScore = this.game.humanPlayer.score;
     const iaScore = this.score;
     const diff = iaScore - humanScore;
-    const missing =
-      this.game.scoreLimit - (humanScore > iaScore ? humanScore : iaScore);
-    const pointInStake = this.pointInStake(lastSang);
+
     if (response) {
       return this.responseTruco({
         lastSang,
@@ -346,16 +345,34 @@ export class IA extends Player {
         low,
         mediumHigh,
         diff,
+        IABoard,
+        humanBoard,
+        possibleCards,
       });
     } else if (lastSang === null || lastSang === undefined || lastSang === "") {
-      return this.sayTruco({ lastSang });
+      return this.sayTruco({
+        high,
+        mediumHigh,
+        low,
+        possibleCards,
+        humanBoard,
+      });
     } else {
-      return this.iaChoice({ lastSang });
+      return this.iaChoice({ lastSang, humanBoard, high, mediumHigh });
     }
-    //RETURN QIUERO - NO QUIERO -T - RT - V4
   }
 
-  responseTruco({ lastSang, high, media, low, mediumHigh, diff }) {
+  responseTruco({
+    lastSang,
+    high,
+    media,
+    low,
+    mediumHigh,
+    diff,
+    IABoard,
+    humanBoard,
+    possibleCards,
+  }) {
     switch (this.game.round.numberOfHands) {
       case 0:
         return this.responseTrucoHand_0({
@@ -366,9 +383,25 @@ export class IA extends Player {
           diff,
         });
       case 1:
-        return this.responseTrucoHand_1({ lastSang });
+        return this.responseTrucoHand_1({
+          lastSang,
+          IABoard,
+          mediumHigh,
+          high,
+          media,
+          low,
+          humanBoard,
+          possibleCards,
+        });
       case 2:
-        return this.responseTrucoHand_2({ lastSang });
+        return this.responseTrucoHand_2({
+          lastSang,
+          IABoard,
+          possibleCards,
+          humanBoard,
+          mediumHigh,
+          high,
+        });
     }
   }
 
@@ -393,42 +426,465 @@ export class IA extends Player {
     }
   }
 
-  responseTrucoHand_1({ lastSang }) {
-    switch (lastSang) {
-      case value:
-        return "";
+  responseTrucoHand_1({
+    lastSang,
+    IABoard,
+    mediumHigh,
+    high,
+    media,
+    low,
+    humanBoard,
+    possibleCards,
+  }) {
+    if (this.win(0) > 0) {
+      if (IABoard === null) {
+        switch (lastSang) {
+          case Action.RE_TRUCO:
+            if (mediumHigh >= 1)
+              return high >= 1 ? Action.VALE_4 : Action.QUIERO;
+            else if (low === 1 && media === 1) return Action.QUIERO;
+            else return Action.NO_QUIERO;
+          case Action.VALE_4:
+            if (mediumHigh >= 1) return Action.QUIERO;
+            return Action.NO_QUIERO;
+        }
+      } else {
+        switch (lastSang) {
+          case Action.TRUCO:
+            if (this.cardsInHandHidden[0].value >= 11) return Action.RE_TRUCO;
+            if (IABoard.value >= 11) return Action.RE_TRUCO;
+            if (IABoard.value >= 7) {
+              if (this.cardsInHandHidden[0].value >= 10) return Action.RE_TRUCO;
+              else return Action.QUIERO;
+            } else {
+              let random = getRandomInt(0, 100);
+              if (this.cardsInHandHidden[0].value >= 6) {
+                if (this.envidoWinnerPoints >= 3 && random <= 66)
+                  return Action.NO_QUIERO;
+                else return Action.QUIERO;
+              }
+            }
+            return Action.NO_QUIERO;
+          case Action.RE_TRUCO:
+            if (this.cardsInHandHidden[0].value >= 11) return Action.VALE_4;
+            if (IABoard.value >= 11) return Action.VALE_4;
+            if (IABoard.value >= 9) return Action.QUIERO;
+            if (IABoard.value >= 6)
+              if (this.cardsInHandHidden[0].value >= 9) return Action.QUIERO;
+            if (this.cardsInHandHidden[0].value >= 9) return Action.QUIERO;
+            else return Action.NO_QUIERO;
+          case Action.VALE_4:
+            if (this.cardsInHandHidden[0].value >= 11) return Action.QUIERO;
+            if (IABoard.value >= 11) return Action.QUIERO;
+            if (IABoard.value >= 9) return Action.QUIERO;
+            if (IABoard.value >= 6)
+              if (this.cardsInHandHidden[0].value >= 9) return Action.QUIERO;
+            if (this.cardsInHandHidden[0].value >= 9) return Action.QUIERO;
+            else return Action.NO_QUIERO;
+        }
+      }
+    } else if (this.win(0) === 0) {
+      if (humanBoard === null && possibleCards !== null)
+        humanBoard = possibleCards[0];
+      if (IABoard !== null && IABoard.value < 8) return Action.NO_QUIERO;
+      if (humanBoard !== null && this.iKill(humanBoard) === -1)
+        return Action.NO_QUIERO;
+      switch (lastSang) {
+        case Action.TRUCO:
+          if (humanBoard !== null && this.iKill(humanBoard) > -1)
+            return Action.RE_TRUCO;
+          if (mediumHigh > 0) return Action.QUIERO;
+          return Action.NO_QUIERO;
+        case Action.RE_TRUCO:
+          if (humanBoard !== null && this.iKill(humanBoard) > -1)
+            return Action.VALE_4;
+          if (IABoard !== null && IABoard.value >= 11) return Action.QUIERO;
+          if (IABoard !== null && IABoard.value >= 13) return Action.VALE_4;
+          if (high > 0) return Action.QUIERO;
+          return Action.NO_QUIERO;
+        case Action.VALE_4:
+          if (IABoard !== null && IABoard.value >= 11) return Action.QUIERO;
+          if (high > 0) return Action.QUIERO;
+          return Action.NO_QUIERO;
+      }
+    } else {
+      if (humanBoard === null) {
+        switch (lastSang) {
+          case Action.TRUCO:
+            if (mediumHigh === 2) return Action.QUIERO;
+            return Action.NO_QUIERO;
+          case Action.RE_TRUCO:
+            if (high === 2) return Action.QUIERO;
+            return Action.NO_QUIERO;
+          case Action.VALE_4:
+            if (high === 2) return Action.QUIERO;
+            return Action.NO_QUIERO;
+        }
+      } else {
+        const kill = this.iKill(humanBoard);
+        switch (lastSang) {
+          case Action.RE_TRUCO:
+          case Action.VALE_4:
+            if (kill === -1) return Action.NO_QUIERO;
+            if (high === 2)
+              return lastSang === Action.VALE_4 ? Action.QUIERO : Action.VALE_4;
+            if (this.clasificar(this.cardsInHandHidden[1 - kill]) >= 1)
+              return Action.QUIERO;
+            return Action.NO_QUIERO;
+        }
+      }
+    }
+    return Action.NO_QUIERO;
+  }
+
+  responseTrucoHand_2({
+    lastSang,
+    IABoard,
+    possibleCards,
+    humanBoard,
+    mediumHigh,
+    high,
+  }) {
+    if (this.win(1) > 0) {
+      if (IABoard === null) {
+        switch (lastSang) {
+          case Action.RE_TRUCO:
+            if (this.cardsInHandHidden[0].value >= 13) return Action.VALE_4;
+            if (this.cardsInHandHidden[0].value >= 11) return Action.QUIERO;
+            return Action.NO_QUIERO;
+          case Action.VALE_4:
+            if (this.cardsInHandHidden[0].value >= 13) return Action.QUIERO;
+            return Action.NO_QUIERO;
+        }
+      } else {
+        let random;
+        switch (lastSang) {
+          case Action.TRUCO:
+            random = getRandomInt(0, 100);
+            if (possibleCards !== undefined && possibleCards !== null) {
+              if (
+                possibleCards.length > 0 &&
+                possibleCards[0].value < IABoard.value
+              )
+                return Action.QUIERO;
+              else return Action.NO_QUIERO;
+            }
+            if (IABoard.value >= 12) return Action.RE_TRUCO;
+            if (IABoard.value >= 9) return Action.QUIERO;
+            if (IABoard.value >= 6) {
+              if (this.envidoWinnerPoints >= 3) return Action.NO_QUIERO;
+              else if (random <= 33) return Action.QUIERO;
+            }
+            return Action.NO_QUIERO;
+          case Action.RE_TRUCO:
+            random = getRandomInt(0, 100);
+            if (IABoard.value >= 13) return Action.VALE_4;
+            if (IABoard.value >= 9) return Action.QUIERO;
+            if (IABoard.value >= 6) {
+              if (this.envidoWinnerPoints >= 3) return Action.NO_QUIERO;
+              else if (random <= 33) return Action.QUIERO;
+            }
+            return Action.NO_QUIERO;
+          case Action.VALE_4:
+            if (IABoard.value >= 13) return Action.QUIERO;
+            else return Action.NO_QUIERO;
+        }
+      }
+    } else if (this.win(1) === 0) {
+      if (humanBoard === null && possibleCards !== null)
+        humanBoard = possibleCards[0];
+
+      if (IABoard !== null && IABoard.value < 8) return Action.NO_QUIERO;
+      if (humanBoard !== null && this.iKill(humanBoard) === -1)
+        return Action.NO_QUIERO;
+      switch (lastSang) {
+        case Action.TRUCO:
+          if (humanBoard !== null && this.iKill(humanBoard) > -1)
+            return Action.RE_TRUCO;
+          if (mediumHigh > 0) return Action.QUIERO;
+          return Action.NO_QUIERO;
+        case Action.RE_TRUCO:
+          if (humanBoard !== null && this.iKill(humanBoard) > -1)
+            return Action.VALE_4;
+          if (high > 0) return Action.QUIERO;
+          return Action.NO_QUIERO;
+        case Action.VALE_4:
+          if (high > 0) return Action.QUIERO;
+          return Action.NO_QUIERO;
+      }
+    } else {
+      if (humanBoard === null) {
+        switch (lastSang) {
+          case Action.TRUCO:
+            if (possibleCards !== null && possibleCards !== undefined)
+              if (
+                possibleCards.length > 0 &&
+                possibleCards[0].value <= this.cardsInHandHidden[0].value
+              )
+                return Action.RE_TRUCO;
+            if (this.cardsInHandHidden[0].value >= 11) return Action.RE_TRUCO;
+            if (this.cardsInHandHidden[0].value >= 9) return Action.QUIERO;
+            if (this.cardsInHandHidden[0].value >= 7) {
+              if (this.envidoWinnerPoints >= 3) return Action.NO_QUIERO;
+              else {
+                if (
+                  this.playedCards[0].value -
+                    this.game.humanPlayer.playedCards[0].value >
+                    3 &&
+                  this.game.humanPlayer.playedCards[0].value > 7
+                )
+                  return Action.NO_QUIERO;
+                else return Action.QUIERO;
+              }
+            }
+            return Action.NO_QUIERO;
+          case Action.RE_TRUCO:
+            let random = getRandomInt(0, 100);
+            if (this.cardsInHandHidden[0].value >= 13) return Action.VALE_4;
+            if (this.cardsInHandHidden[0].value >= 11) return Action.QUIERO;
+            if (this.cardsInHandHidden[0].value >= 8) return Action.QUIERO;
+            if (this.cardsInHandHidden[0].value >= 7) {
+              if (this.envidoWinnerPoints >= 3) return Action.NO_QUIERO;
+              else {
+                if (
+                  this.playedCards[0].value -
+                    this.game.humanPlayer.playedCards[0].value >
+                    3 &&
+                  this.game.humanPlayer.playedCards[0].value > 7
+                )
+                  if (random <= 66) return Action.NO_QUIERO;
+                  else return Action.QUIERO;
+              }
+            }
+
+            return Action.NO_QUIERO;
+          case Action.VALE_4:
+            if (this.cardsInHandHidden[0].value >= 11) return Action.QUIERO;
+
+            return Action.NO_QUIERO;
+        }
+      } else {
+        switch (lastSang) {
+          case Action.RE_TRUCO:
+            if (this.cardsInHandHidden[0].value > humanBoard.value)
+              return Action.VALE_4;
+            return Action.NO_QUIERO;
+          case Action.VALE_4:
+            if (this.cardsInHandHidden[0].value > humanBoard.value)
+              return Action.QUIERO;
+            return Action.NO_QUIERO;
+        }
+      }
     }
   }
 
-  responseTrucoHand_2({ lastSang }) {
-    switch (lastSang) {
-      case value:
-        return "";
-    }
-  }
-
-  sayTruco({}) {
-    console.log("IA-SAY-TRUCO");
+  sayTruco({ high, mediumHigh, low, possibleCards, humanBoard }) {
+    console.log("IA-SAY-TRUCO", this.game.round.numberOfHands);
     switch (this.game.round.numberOfHands) {
       case 0:
-        return "";
+        return this.sayTrucoHand_0({ mediumHigh });
       case 1:
-        return "";
+        return this.sayTrucoHand_1({
+          high,
+          mediumHigh,
+          low,
+          possibleCards,
+          humanBoard,
+        });
       case 2:
-        return "";
+        return this.sayTrucoHand_2({ humanBoard, possibleCards, mediumHigh });
     }
   }
 
-  iaChoice({}) {
-    console.log("IA-SAY-CHOICE");
+  sayTrucoHand_0({ mediumHigh }) {
+    if (mediumHigh >= 3) return Action.TRUCO;
+    return "";
+  }
 
+  sayTrucoHand_1({ high, mediumHigh, low, possibleCards, humanBoard }) {
+    if (this.win(0) > 0) {
+      this.strategyGame = this.strategy;
+
+      if (high === 2) return Action.TRUCO;
+      if (mediumHigh === 2) return Action.TRUCO;
+      if (low === 1 && high === 1) return "";
+      if (high >= 1) return Action.TRUCO;
+      return "";
+    } else if (this.win(0) === 0) {
+      if (humanBoard !== null && this.iKill(humanBoard) > -1)
+        return Action.TRUCO;
+      if (humanBoard !== null && humanBoard.value <= 7) return Action.TRUCO;
+      if (mediumHigh > 0) return Action.TRUCO;
+      return "";
+    } else {
+      if (this.iKill(humanBoard) !== -1) {
+        if (high === 2) return Action.TRUCO;
+        if (mediumHigh >= 1) return "";
+        return "";
+      } else {
+        if (
+          possibleCards !== null &&
+          humanBoard.value <= 4 &&
+          possibleCards.length > 0 &&
+          possibleCards[0].value <= 6
+        )
+          return Action.TRUCO;
+        return "";
+      }
+    }
+  }
+
+  sayTrucoHand_2({ humanBoard, possibleCards, mediumHigh }) {
+    let random = getRandomInt(0, 100);
+    if (this.win(1) < 0) {
+      if (this.iKill(humanBoard) !== -1) return Action.TRUCO;
+      if (
+        possibleCards !== null &&
+        possibleCards.length > 0 &&
+        this.iKill(possibleCards[0]) !== -1
+      )
+        return Action.TRUCO;
+      if (random <= 33 && humanBoard.value < 8) return Action.TRUCO;
+      return "";
+    } else if (this.win(1) === 0) {
+      if (humanBoard !== null && this.iKill(humanBoard) > -1)
+        return Action.TRUCO;
+      if (humanBoard !== null && humanBoard.value <= 7) return Action.TRUCO;
+      if (mediumHigh > 0) return Action.TRUCO;
+      return "";
+    } else {
+      if (this.cardsInHandHidden[0].value >= 10) return Action.TRUCO;
+      if (
+        possibleCards !== null &&
+        possibleCards.length > 0 &&
+        this.iKill(possibleCards[0]) !== -1
+      )
+        return Action.TRUCO;
+      else
+        possibleCards !== null &&
+          possibleCards.length > 0 &&
+          this.iKill(possibleCards[0]) === -1;
+      return "";
+    }
+  }
+
+  iaChoice({ lastSang, humanBoard, high, mediumHigh }) {
     switch (this.game.round.numberOfHands) {
       case 0:
-        return "";
+        return this.iaChoiceHand_0({ lastSang, humanBoard, high, mediumHigh });
       case 1:
-        return "";
+        return this.iaChoiceHand_1({ lastSang, humanBoard, high, mediumHigh });
       case 2:
-        return "";
+        return this.iaChoiceHand_2({ lastSang, humanBoard, high });
+    }
+  }
+
+  iaChoiceHand_0({ lastSang, humanBoard, high, mediumHigh }) {
+    if (humanBoard !== null) {
+      let kill = this.iKill(humanBoard);
+      switch (lastSang) {
+        case Action.TRUCO:
+          if (kill !== -1) {
+            if (high === 2) return Action.RE_TRUCO;
+            else return "";
+          } else {
+            return "";
+          }
+        case Action.RE_TRUCO:
+          if (kill !== -1) {
+            if (high === 2) return Action.VALE_4;
+            else return "";
+          } else {
+            return "";
+          }
+        default:
+          return "";
+      }
+    } else {
+      switch (lastSang) {
+        case Action.RE_TRUCO:
+          if (high >= 2) return Action.VALE_4;
+          if (mediumHigh >= 2) return "";
+        default:
+          return "";
+      }
+    }
+  }
+
+  iaChoiceHand_1({ lastSang, humanBoard, high, mediumHigh }) {
+    if (this.win(0) > 0) {
+      switch (lastSang) {
+        case Action.TRUCO:
+          if (high >= 1) return Action.RE_TRUCO;
+          return "";
+        case Action.RE_TRUCO:
+          if (high >= 1) return Action.VALE_4;
+          return "";
+        default:
+          return "";
+      }
+    } else if (this.win(0) === 0) {
+      if (humanBoard !== null && this.iKill(humanBoard) > -1)
+        return lastSang === Action.TRUCO ? Action.RE_TRUCO : Action.VALE_4;
+      if (high > 0)
+        return lastSang === Action.TRUCO ? Action.RE_TRUCO : Action.VALE_4;
+      return "";
+    } else {
+      if (this.iKill(humanBoard) !== -1) {
+        switch (lastSang) {
+          case Action.TRUCO:
+            if (mediumHigh >= 2 && high >= 1) return Action.RE_TRUCO;
+            return "";
+          case Action.RE_TRUCO:
+            if (high >= 2) return Action.VALE_4;
+            return "";
+          default:
+            return "";
+        }
+      } else {
+        switch (lastSang) {
+          case Action.TRUCO:
+          case Action.RE_TRUCO:
+          case Action.VALE_4:
+            return "";
+        }
+      }
+    }
+    return "";
+  }
+
+  iaChoiceHand_2({ lastSang, humanBoard, high }) {
+    if (this.win(1) > 0) {
+      switch (lastSang) {
+        case Action.TRUCO:
+          if (high === 1) return Action.RE_TRUCO;
+          return "";
+        case Action.RE_TRUCO:
+          if (this.cardsInHandHidden[0].value >= 13) return Action.VALE_4;
+          return "";
+        default:
+          return "";
+      }
+    } else if (this.win(1) === 0) {
+      if (humanBoard !== null && this.iKill(humanBoard) > -1)
+        return lastSang === Action.TRUCO ? Action.RE_TRUCO : Action.VALE_4;
+      if (high > 0)
+        return lastSang === Action.TRUCO ? Action.RE_TRUCO : Action.VALE_4;
+      return "";
+    } else {
+      switch (lastSang) {
+        case Action.TRUCO:
+          if (humanBoard.value < this.cardsInHandHidden[0].value)
+            return Action.RE_TRUCO;
+          if (humanBoard.value < 9) return Action.RE_TRUCO;
+          return "";
+        case Action.RE_TRUCO:
+          if (humanBoard.value < this.cardsInHandHidden[0].value)
+            return Action.VALE_4;
+          return "";
+        default:
+          return "";
+      }
     }
   }
 
@@ -451,13 +907,6 @@ export class IA extends Player {
     cards.forEach((card) => {
       const { calificationType } = this.classify(card);
       classification[calificationType]++;
-      // if (card.value <= 6) {
-      //   classification.low++;
-      // } else if (card.value <= 10) {
-      //   classification.media++;
-      // } else {
-      //   classification.high++;
-      // }
     });
     return classification;
   }
@@ -475,11 +924,29 @@ export class IA extends Player {
     }
   }
 
-  win() {
-    const handNumber = this.game.round.numberOfHands;
+  win(handNumber) {
     return (
       this.playedCards[handNumber].value -
       this.game.humanPlayer.playedCards[handNumber].value
     );
+  }
+
+  iKill(card) {
+    let index = -1;
+    let value = 99;
+    for (let i = 0; i < this.cardsInHandHidden.length; i++)
+      if (card.value < this.cardsInHandHidden[i].value)
+        if (this.cardsInHandHidden[i].value < value) {
+          value = this.cardsInHandHidden[i].value;
+          index = i;
+        }
+    return index;
+  }
+
+  moreLow(card) {
+    for (let i = 0; i < this.cardsInHandHidden.length; i++) {
+      if (card.value > this.cardsInHandHidden[i].value) return true;
+    }
+    return false;
   }
 }
