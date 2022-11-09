@@ -1,4 +1,5 @@
 import { canvas } from "../app.js";
+import { IA } from "../models/IA.js";
 import {
   isEmpty,
   PLAYED_AREA_H,
@@ -87,6 +88,7 @@ export class EventHandler {
   }
 
   handleMouseDown(ev) {
+    if (this.game.round.playerTurn instanceof IA) return;
     this.setMousePos(ev);
     this.game.humanPlayer.cardsInHand = this.game.humanPlayer.cardsInHand.map(
       (card) => {

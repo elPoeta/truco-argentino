@@ -53,8 +53,9 @@ export class IA extends Player {
 
   playCard() {
     if (!this.strategyGame) this.strategyGame = this.classicStrategy;
-    const index = this.strategyGame();
+    let index = this.strategyGame();
     console.log("INDEX CHOICE ", index);
+    index = index < 0 ? 0 : index;
     const card = this.cardsInHandHidden[index];
     const len =
       this.playedCards.length + this.game.humanPlayer.playedCards.length;
@@ -530,7 +531,10 @@ export class IA extends Player {
             if (kill === -1) return Action.NO_QUIERO;
             if (high === 2)
               return lastSang === Action.VALE_4 ? Action.QUIERO : Action.VALE_4;
-            if (this.clasificar(this.cardsInHandHidden[1 - kill]) >= 1)
+            if (
+              this.classify(this.cardsInHandHidden[1 - kill])
+                .calificationValue >= 1
+            )
               return Action.QUIERO;
             return Action.NO_QUIERO;
         }
