@@ -48,11 +48,13 @@ export class IA extends Player {
   removeAllCards() {
     this.cards = [];
     this.playedCards = [];
+    this.cardsInHandHidden = [];
   }
 
   playCard() {
     if (!this.strategyGame) this.strategyGame = this.classicStrategy;
     const index = this.strategyGame();
+    console.log("INDEX CHOICE ", index);
     const card = this.cardsInHandHidden[index];
     const len =
       this.playedCards.length + this.game.humanPlayer.playedCards.length;
