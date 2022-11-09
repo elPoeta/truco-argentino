@@ -548,7 +548,7 @@ export class Round {
       //this.canTruco = this.waitingPlayer(this.playerTurn);
       this.playerTruco = this.waitingPlayer(this.game.IAPlayer);
       this.canTruco = this.waitingPlayer(this.game.IAPlayer);
-      this.trucoResponse();
+      //this.trucoResponse();
       return true;
     }
     return false;
@@ -568,7 +568,7 @@ export class Round {
       responseButtons.classList.remove("hide");
       this.currentResponse = Action.TRUCO;
       switch (lastSang) {
-        case Action.truco:
+        case Action.TRUCO:
           trucoButtons.querySelector("#reTruco").classList.remove("hide");
           break;
         case Action.RE_TRUCO:
