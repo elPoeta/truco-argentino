@@ -1,0 +1,81 @@
+.closeResultOverlay {
+  position: absolute;
+  top: 20px;
+  right: 20px;
+  cursor: pointer;
+}
+.closeResultOverlay svg {
+  width: 3rem;
+  fill: #ca8a04;
+}
+.closeResultOverlay svg path {
+  stroke: #ca8a04;
+}
+.closeResultOverlay:hover svg {
+  fill: #7f1d1d;
+}
+.closeResultOverlay:hover svg path {
+  stroke: #7f1d1d;
+}
+.result-container {
+  background-color: #334155;
+  border: 10px ridge #713f12;
+  border-radius: 10px;
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  max-width: 100%;
+  max-height: 100%;
+  color: #ca8a04;
+  padding: 20px;
+}
+.result-container h3 {
+  font-size: 2.5rem;
+  letter-spacing: 2px;
+  margin-bottom: 5px;
+}
+.image-container {
+  width: fit-content;
+  background: #847BFE;
+  border: 3px solid #0f172a;
+  border-radius: 50%;
+  justify-self: center;
+}
+.result-img {
+  display: block;
+  width: 8rem;
+  border-radius: 50%;
+}
+.player-result{
+  margin: 20px 0;
+  display: grid;
+  grid-template-columns: 150px auto;
+  grid-template-rows: 150px auto;
+  align-items: center;
+}
+.player-result span {
+  justify-self: center;
+  font-size: 1.3rem;
+}
+.result-content {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  gap: 10px;
+}
+.result-content h4 {
+  font-size: 2rem;
+  letter-spacing: 2px;
+}
+.result-content div h5 {
+  font-size: 1.2rem;
+  letter-spacing: 2px;
+  margin: 5px 0;;
+}
+.result-divide-line {
+  border: 0;
+  height: 3px;
+  background-image: linear-gradient(to right, rgba(0, 0, 0, 0), #ff9800, rgba(0, 0, 0, 0));
+}

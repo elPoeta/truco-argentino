@@ -1,8 +1,11 @@
 import { canvas } from "../app.js";
 import { ButtonHandler } from "../controllers/ButtonHandler.js";
+import { Human } from "./Human.js";
+import { IA } from "./IA.js";
 export class UI {
   constructor({ game }) {
     this.game = game;
+    this.body = document.querySelector("body");
     this.panel = document.querySelector(".panel");
     this.voicePanel = document.querySelector(".voice-panel");
     this.cssPosition();
@@ -19,5 +22,86 @@ export class UI {
     this.voicePanel.style.left = `${right - 135}px`;
     this.voicePanel.style.bottom = `${top + 10}px`;
     this.voicePanel.classList.remove("hide");
+  }
+
+  showResults(props) {
+    const div = document.createElement("div");
+    div.setAttribute("id", "resultsOverlay");
+    div.setAttribute("class", "overlay");
+    div.innerHTML = this.resultsTemplate(props);
+    this.body.appendChild(div);
+    this.addResultSelectors();
+  }
+
+  resultsTemplate(props) {
+    const { playerWinner } = props;
+    const iaMsg = playerWinner instanceof IA ? "😜 Te Gane!!!" : "🤬 #%!&";
+    const humanMsg = playerWinner instanceof Human ? "😀 Gane!!!" : "🤬 #%!&";
+    return `
+      <i id="closeOverlay" class="closeResultOverlay">
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="currentColor" >
+          <path fill-rule="evenodd" d="M5.47 5.47a.75.75 0 011.06 0L12 10.94l5.47-5.47a.75.75 0 111.06 1.06L13.06 12l5.47 5.47a.75.75 0 11-1.06 1.06L12 13.06l-5.47 5.47a.75.75 0 01-1.06-1.06L10.94 12 5.47 6.53a.75.75 0 010-1.06z" clip-rule="evenodd" />
+        </svg>
+      </i>
+      <section class="result-container">
+        <h3>Resultado de la ronda</h3>
+        <hr class="result-divide-line"/>
+        <div class="player-result">
+          <figure class="image-container">
+            <img class="result-img" src="../../assets/comicFace.png" alt="palyer1">
+          </figure>
+          <div class="result-content">
+            <h4>${humanMsg}</h4>
+            <div>
+              <h5>Puntos Envido: ${
+                this.game.humanPlayer.envidoWinnerPoints
+              }</h5>
+              <h5>Puntos Truco: ${this.game.humanPlayer.trucoPoints}</h5>
+              <h5>Puntos Ronda: ${
+                this.game.humanPlayer.envidoWinnerPoints +
+                this.game.humanPlayer.trucoPoints
+              }</h5>
+              <h5>Puntos Totales: ${this.game.humanPlayer.score}</h5>
+            </div>
+          </div>
+          <span>${this.game.humanPlayer.name}</span>
+        </div>
+        <hr class="result-divide-line"/>
+        <div class="player-result">
+          <figure class="image-container">
+            <img class="result-img" src="../../assets/emojiPoeta.png" alt="elPoeta">
+          </figure>
+          <div class="result-content">
+            <h4>${iaMsg}</h4>
+            <div>
+              <h5>Puntos Envido: ${this.game.IAPlayer.envidoWinnerPoints}</h5>
+              <h5>Puntos Truco: ${this.game.IAPlayer.trucoPoints}</h5>
+              <h5>Puntos Ronda: ${
+                this.game.IAPlayer.envidoWinnerPoints +
+                this.game.IAPlayer.trucoPoints
+              }</h5>
+              <h5>Puntos Totales: ${this.game.IAPlayer.score}</h5>
+            </div>
+          </div>
+          <span>${this.game.IAPlayer.name}</span>
+        </div>
+        <hr class="result-divide-line"/>
+      </section>
+    `;
+  }
+
+  addResultSelectors() {
+    this.closeOverlay = document.querySelector("#closeOverlay");
+    this.resultListenerManager({ type: "addEventListener" });
+  }
+
+  resultListenerManager({ type }) {
+    this.closeOverlay[type]("click", this.handleCloseOverlay.bind(this), true);
+  }
+
+  handleCloseOverlay(ev) {
+    this.resultListenerManager({ type: "removeEventListener" });
+    document.querySelector("#resultsOverlay").remove();
+    this.game.round.startNewRound();
   }
 }

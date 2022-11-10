@@ -6,6 +6,7 @@ export class Player {
     this.cards = [];
     this.cardsInHand = [];
     this.envidoWinnerPoints = 0;
+    this.trucoPoints = 0;
     this.envidoS = [];
     this.realEnvido = [];
     this.envidoEnvido = [];
