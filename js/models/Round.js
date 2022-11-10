@@ -75,9 +75,11 @@ export class Round {
   start() {
     this.game.humanPlayer.hands = 0;
     this.game.humanPlayer.envidoWinnerPoints = 0;
+    this.game.humanPlayer.trucoPoints = 0;
     this.game.IAPlayer.hands = 0;
     this.game.IAPlayer.strategyGame = null;
     this.game.IAPlayer.envidoWinnerPoints = 0;
+    this.game.IAPlayer.trucoPoints = 0;
 
     this.dealCards();
 
@@ -178,38 +180,40 @@ export class Round {
         action: playerWinner instanceof Human ? "😀 Gane!!!" : "🤬 #%!&",
       });
       console.log("WINNER ", playerWinner);
-      const deal = () => {
-        console.log("Resultado Ronda: ", playerWinner.name);
-
-        if (
-          this.envidoStatsFlag &&
-          this.game.humanPlayer.playedCards.length === 3
-        ) {
-          const envidoPoints = this.game.humanPlayer.getEnvidoPoints(
-            this.game.humanPlayer.playedCards
-          );
-          this.game.IAPlayer.statsEnvido(
-            this.chants,
-            this.whoSang,
-            envidoPoints
-          );
-        }
-        this.changeHand();
-        this.init();
-        this.game.logMessage.show({
-          player: Action.IA,
-          action: "",
-        });
-        this.game.logMessage.show({
-          player: Action.HUMAN,
-          action: "",
-        });
-        this.game.IAPlayer.cardsInHand = this.game.IAPlayer.setCardsInHand();
-        this.start();
+      if (
+        this.envidoStatsFlag &&
+        this.game.humanPlayer.playedCards.length === 3
+      ) {
+        const envidoPoints = this.game.humanPlayer.getEnvidoPoints(
+          this.game.humanPlayer.playedCards
+        );
+        this.game.IAPlayer.statsEnvido(this.chants, this.whoSang, envidoPoints);
+      }
+      const showResults = () => {
+        this.game.ui.showResults({ playerWinner });
+        this.cleanLogs();
       };
 
-      setTimeout(deal, 2500);
+      setTimeout(showResults, 1500);
     }
+  }
+
+  startNewRound() {
+    this.changeHand();
+    this.init();
+    this.game.IAPlayer.cardsInHand = this.game.IAPlayer.setCardsInHand();
+    this.start();
+  }
+
+  cleanLogs() {
+    this.game.logMessage.show({
+      player: Action.IA,
+      action: "",
+    });
+    this.game.logMessage.show({
+      player: Action.HUMAN,
+      action: "",
+    });
   }
 
   winningHand(index, pointsAccumulate) {
@@ -256,6 +260,7 @@ export class Round {
     if (this.playerDoesNotWant !== null) {
       const playerWinner = this.waitingPlayer(this.playerDoesNotWant);
       playerWinner.score += notWanted;
+      playerWinner.trucoPoints = notWanted;
       return playerWinner;
     } else if (
       this.game.humanPlayer.hands === this.game.IAPlayer.hands &&
@@ -264,17 +269,21 @@ export class Round {
       if (this.game.humanPlayer.hands === 3) {
         if (this.game.humanPlayer.itIsHand) {
           this.game.humanPlayer.score = this.game.humanPlayer.score + wanted;
+          this.game.humanPlayer.trucoPoints = wanted;
           return this.game.humanPlayer;
         } else {
           this.game.IAPlayer.score = this.game.IAPlayer.score + wanted;
+          this.game.IAPlayer.trucoPoints = wanted;
           return this.game.IAPlayer;
         }
       } else {
         if (this.game.humanPlayer === this.winningHand(0, false)) {
           this.game.humanPlayer.score = this.game.humanPlayer.score + wanted;
+          this.game.humanPlayer.trucoPoints = wanted;
           return this.game.humanPlayer;
         } else {
           this.game.IAPlayer.score = this.game.IAPlayer.score + wanted;
+          this.game.IAPlayer.trucoPoints = wanted;
           return this.game.IAPlayer;
         }
       }
@@ -284,6 +293,7 @@ export class Round {
         this.game.humanPlayer.hands > this.game.IAPlayer.hands
       ) {
         this.game.humanPlayer.score = this.game.humanPlayer.score + wanted;
+        this.game.humanPlayer.trucoPoints = wanted;
         return this.game.humanPlayer;
       } else {
         if (
@@ -291,6 +301,7 @@ export class Round {
           this.game.IAPlayer.hands > this.game.humanPlayer.hands
         ) {
           this.game.IAPlayer.score = this.game.IAPlayer.score + wanted;
+          this.game.IAPlayer.trucoPoints = wanted;
           return this.game.IAPlayer;
         } else {
           console.log(
