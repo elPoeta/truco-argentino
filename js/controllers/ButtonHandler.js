@@ -39,6 +39,7 @@ export class ButtonHandler {
         this.game.round.humanGoToMazo();
         break;
       case "menu":
+        this.game.round.debugLog();
         break;
       default:
         break;
