@@ -19,7 +19,11 @@ export class Score {
 
   draw(ctx) {
     if (this.player.score === 0) return;
-    if (this.player.score <= this.maxScore) this.updateCoords();
+    if (this.player.score <= this.maxScore) {
+      this.updateCoords();
+    } else {
+      this.fixCoords();
+    }
     ctx.drawImage(
       this.image,
       this.frameX * this.spriteWidth,
@@ -36,6 +40,11 @@ export class Score {
   updateCoords() {
     this.getSpriteXCoords();
     this.getSpriteYCoords();
+  }
+
+  fixCoords() {
+    this.x = this.player instanceof Human ? 1300 : 1450;
+    this.frameX = 4;
   }
 
   getSpriteXCoords() {
