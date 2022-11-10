@@ -179,7 +179,7 @@ export class Round {
         player: Action.HUMAN,
         action: playerWinner instanceof Human ? "😀 Gane!!!" : "🤬 #%!&",
       });
-      console.log("WINNER ", playerWinner);
+
       if (
         this.envidoStatsFlag &&
         this.game.humanPlayer.playedCards.length === 3
@@ -459,7 +459,7 @@ export class Round {
   }
 
   playEnvido(action) {
-    const points = this.calculateEnvidoPoints();
+    const { winner, loser } = this.calculateEnvidoPoints();
     let first;
     let second;
     let envidoPoints1;
@@ -506,16 +506,16 @@ export class Round {
           this.savedPoints = envidoPoints2;
           this.envidoStatsFlag = false;
         }
-        second.envidoWinnerPoints = points.winner;
-        second.score += points.winner;
+        second.envidoWinnerPoints = winner;
+        second.score += winner;
       } else {
-        first.score += points.winner;
-        first.envidoWinnerPoints = points.winner;
+        first.score += winner;
+        first.envidoWinnerPoints = winner;
       }
     } else {
-      const winner = this.waitingPlayer(this.playerEnvido);
-      winner.score += points.loser;
-      winner.envidoWinnerPoints = points.loser;
+      const playerWinner = this.waitingPlayer(this.playerEnvido);
+      playerWinner.score += loser;
+      playerWinner.envidoWinnerPoints = loser;
     }
     this.canEnvido = false;
     this.playerEnvido = null;
@@ -650,7 +650,23 @@ export class Round {
   }
 
   humanGoToMazo() {
-    this.debugLog();
+    if (this.playerEnvido !== null) {
+      this.playEnvido(false);
+    } else {
+      this.game.IAPlayer.score += 1;
+    }
+    const { wanted } = this.calculateTrucoPoints();
+    this.game.IAPlayer.score += wanted;
+    this.game.IAPlayer.trucoPoints = wanted;
+    this.game.logMessage.show({
+      player: Action.HUMAN,
+      action: Action.MAZO,
+    });
+    const showResults = () => {
+      this.game.ui.showResults({ playerWinner: this.game.IAPlayer });
+      this.cleanLogs();
+    };
+    setTimeout(showResults, 1500);
   }
 
   debugLog() {
