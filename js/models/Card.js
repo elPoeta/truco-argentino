@@ -33,6 +33,7 @@ export class Card {
     this.number = cardNumber || 0;
     this.suit = cardSuit || "";
     this.played = false;
+    this.renderOrder = 0;
   }
 
   getName() {

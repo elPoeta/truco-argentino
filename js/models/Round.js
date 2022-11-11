@@ -73,6 +73,7 @@ export class Round {
   }
 
   start() {
+    this.game.playedCards = [];
     this.game.humanPlayer.hands = 0;
     this.game.humanPlayer.envidoWinnerPoints = 0;
     this.game.humanPlayer.trucoPoints = 0;
