@@ -19,7 +19,9 @@ export class Human extends Player {
     const { x, y } = playedCardCoords[len];
     card.x = x;
     card.y = y;
+    card.renderOrder = len;
     this.playedCards.push(card);
+    this.game.playedCards.push(card);
     this.cardsInHand.splice(index, 1);
     this.game.round.humanPlayCard();
   }

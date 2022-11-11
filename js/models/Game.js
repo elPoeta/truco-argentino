@@ -51,6 +51,7 @@ export class Game {
       new Score({ game: this, player: this.IAPlayer, maxScore: 25 }),
       new Score({ game: this, player: this.IAPlayer, maxScore: 30 }),
     ];
+    this.playedCards = [];
     this.logMessage = new LogMessage({ game: this });
     this.eventHandler = new EventHandler({ game: this });
     this.scoreLimit = 30;
@@ -66,6 +67,7 @@ export class Game {
     this.renderScoreTable(ctx);
     [
       ...[this.humanPlayer, this.IAPlayer],
+      ...this.playedCards.sort((a, b) => a.renderOrder > b.renderOrder),
       ...[this.logMessage],
       ...this.humanScore,
       ...this.IAScore,

@@ -59,12 +59,12 @@ export class IA extends Player {
     const card = this.cardsInHandHidden[index];
     const len =
       this.playedCards.length + this.game.humanPlayer.playedCards.length;
-    console.log("LEN IA ", len);
     const { x, y } = playedCardCoords[len];
-    console.log("LEN X ", x);
     card.x = x;
     card.y = y;
+    card.renderOrder = len;
     this.playedCards.push(card);
+    this.game.playedCards.push(card);
     this.cardsInHandHidden.splice(index, 1);
     this.cardsInHand.splice(index, 1);
   }

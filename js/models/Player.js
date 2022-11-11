@@ -18,9 +18,7 @@ export class Player {
   }
 
   draw(ctx) {
-    [...this.cardsInHand, ...this.playedCards].forEach((card) =>
-      card.draw(ctx)
-    );
+    [...this.cardsInHand].forEach((card) => card.draw(ctx));
   }
 
   setName(name) {
@@ -38,7 +36,6 @@ export class Player {
     this.cards.forEach((card) => {
       pair[card.suit].push(card.envidoPoints);
     });
-    console.log("PAIR ", pair);
     let points = 0;
     for (const prop in pair) {
       if (pair.hasOwnProperty(prop)) {
