@@ -49,7 +49,7 @@ export class UI {
         <div class="mobile-result-container">
           <div class="player-result">
             <figure class="image-container">
-              <img class="result-img" src="../../assets/comicFace.png" alt="palyer1">
+              <img class="result-img" src="../../assets/player.png" alt="palyer1">
             </figure>
             <div class="result-content">
               <h4>${humanMsg}</h4>

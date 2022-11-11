@@ -21,6 +21,8 @@ export class Game {
     this.canvasWidth = canvasWidth;
     this.canvasHeight = canvasHeight;
     this.canvasPosition = canvasPosition;
+    this.IAImage = cpuImg;
+    this.humanImage = playerImg;
     this.scale = SCALE;
     this.renderDashedArea = false;
     this.humanPlayer = new Human({
@@ -31,7 +33,7 @@ export class Game {
     });
     this.IAPlayer = new IA({
       game: this,
-      name: "elPoeta",
+      name: "el Poeta",
       itIsHand: !randomHand,
       hisTurn: randomHand,
     });
@@ -65,6 +67,7 @@ export class Game {
   draw(ctx) {
     this.drawDahedArea(ctx);
     this.renderScoreTable(ctx);
+    this.drawFaces(ctx);
     [
       ...[this.humanPlayer, this.IAPlayer],
       ...this.playedCards.sort((a, b) => a.renderOrder > b.renderOrder),
@@ -84,6 +87,21 @@ export class Game {
     ctx.rect(PLAYED_AREA_X, PLAYED_AREA_Y, PLAYED_AREA_W, PLAYED_AREA_H);
     ctx.stroke();
     ctx.restore();
+  }
+
+  drawFaces(ctx) {
+    ctx.drawImage(this.IAImage, 0, 0, 490, 490, 380, 10, 490 * 0.2, 490 * 0.2);
+    ctx.drawImage(
+      this.humanImage,
+      0,
+      0,
+      1863,
+      1802,
+      1120,
+      745,
+      1863 * 0.08,
+      1802 * 0.08
+    );
   }
 
   renderScoreTable(ctx) {
