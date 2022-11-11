@@ -1,0 +1,124 @@
+@media (max-width: 500px)  { 
+  .panel{
+    overflow-y: auto;
+    overflow-x: hidden;
+  }
+  .btn-container{
+    grid-template-columns: 1fr;
+    gap: 0;
+  }
+  .btn {
+    padding: 5px 12px;
+    font-size: .85rem;
+    clip-path: polygon(81% 0, 100% 60%, 100% 100%, 17% 100%, 0% 40%, 0 0);
+  }
+ .btn-label {
+    display: none;
+ }
+ .btn:hover{
+  background-color: #0f0f0f;
+}
+.btn:hover .btn-label{
+  background-color: #0f0f0f;
+} 
+ .panel-icon {
+    padding: .3rem;
+    border-radius: 50%;
+  }
+  .panel-svg-icon {
+    width: 1.5rem;
+  }
+  .panel-icon:hover{
+    background-color: #0f0f0f;
+  } 
+.mobile-result-container {
+  display: flex;
+  flex-direction: column;
+    width: 80vw;
+    align-items: center;
+    justify-content: center;
+    gap: 10px;
+}
+  .result-container h3 {
+  font-size: 1.5rem;
+}
+.result-img {
+  width: 4.5rem;
+}
+.player-result{
+  grid-template-columns: 100px auto;
+  grid-template-rows: 100px auto;
+}
+.player-result span {
+  font-size: 1.2rem;
+}
+.result-content h4 {
+  font-size: 1rem;
+
+}
+.result-content div h5 {
+  font-size: 0.9rem;
+}
+}
+
+@media (max-width: 900px) and (orientation: landscape) { 
+  .panel{
+    overflow-y: auto;
+    overflow-x: hidden;
+  }
+  .btn-container{
+    grid-template-columns: 1fr;
+    gap: 0;  
+  } 
+  .btn {
+    padding: 5px 12px;
+    font-size: .85rem;
+    clip-path: polygon(81% 0, 100% 60%, 100% 100%, 17% 100%, 0% 40%, 0 0);
+  }
+  .btn-label {
+    display: none;
+  }
+  .btn:hover{
+    background-color: #0f0f0f;
+  }
+  .btn:hover .btn-label{
+  background-color: #0f0f0f;
+} 
+  .panel-icon {
+    padding: .3rem;
+    border-radius: 50%;
+  }
+  .panel-svg-icon {
+    width: 1.5rem;
+  }
+  .panel-icon:hover{
+    background-color: #0f0f0f;
+  } 
+  .mobile-result-container {
+  display: flex;
+    width: 80vw;
+    align-items: center;
+    justify-content: center;
+    gap: 20px;
+}
+  .result-container h3 {
+  font-size: 1.5rem;
+}
+.result-img {
+  width: 4.5rem;
+}
+.player-result{
+  grid-template-columns: 100px auto;
+  grid-template-rows: 100px auto;
+}
+.player-result span {
+  font-size: 1.2rem;
+}
+.result-content h4 {
+  font-size: 1rem;
+
+}
+.result-content div h5 {
+  font-size: 0.9rem;
+}
+}

@@ -3,7 +3,7 @@
   position: absolute;
   z-index: 999;
 }
-.btn-container{
+.btn-container {
   display: grid;
   grid-template-columns: 1fr 1fr;
   gap: 10px;
@@ -29,7 +29,7 @@
   border: 2px solid #d97706;
   cursor: pointer;
 }
-.btn:hover{
+.btn:hover {
   background-color: #334155;
 }
 .btn::before {
@@ -66,9 +66,9 @@
   z-index: 3;
   letter-spacing: 2px;
 }
-.btn:hover .btn-label{
+.btn:hover .btn-label {
   background-color: #334155;
-} 
+}
 .voice-panel {
   margin: 10px 0;
   display: flex;
@@ -77,7 +77,7 @@
 }
 .panel-icon {
   display: flex;
-  padding: .5rem;
+  padding: 0.5rem;
   border: 2px solid #d97706;
   background-color: #0f0f0f;
   border-radius: 50%;
@@ -85,81 +85,12 @@
   justify-content: center;
   cursor: pointer;
 }
-.panel-icon:first-child{
+.panel-icon:first-child {
   margin-right: 15px;
 }
-.panel-icon:hover{
+.panel-icon:hover {
   background-color: #334155;
-} 
+}
 .panel-svg-icon {
   width: 2rem;
-}
-@media (max-width: 500px)  { 
-  .panel{
-    overflow-y: auto;
-    overflow-x: hidden;
-  }
-  .btn-container{
-    grid-template-columns: 1fr;
-    gap: 0;
-  }
-  .btn {
-    padding: 5px 12px;
-    font-size: .85rem;
-    clip-path: polygon(81% 0, 100% 60%, 100% 100%, 17% 100%, 0% 40%, 0 0);
-  }
- .btn-label {
-    display: none;
- }
- .btn:hover{
-  background-color: #0f0f0f;
-}
-.btn:hover .btn-label{
-  background-color: #0f0f0f;
-} 
- .panel-icon {
-    padding: .3rem;
-    border-radius: 50%;
-  }
-  .panel-svg-icon {
-    width: 1.5rem;
-  }
-  .panel-icon:hover{
-    background-color: #0f0f0f;
-  } 
-}
-
-@media (max-width: 900px) and (orientation: landscape) { 
-  .panel{
-    overflow-y: auto;
-    overflow-x: hidden;
-  }
-  .btn-container{
-    grid-template-columns: 1fr;
-    gap: 0;  
-  } 
-  .btn {
-    padding: 5px 12px;
-    font-size: .85rem;
-    clip-path: polygon(81% 0, 100% 60%, 100% 100%, 17% 100%, 0% 40%, 0 0);
-  }
-  .btn-label {
-    display: none;
-  }
-  .btn:hover{
-    background-color: #0f0f0f;
-  }
-  .btn:hover .btn-label{
-  background-color: #0f0f0f;
-} 
-  .panel-icon {
-    padding: .3rem;
-    border-radius: 50%;
-  }
-  .panel-svg-icon {
-    width: 1.5rem;
-  }
-  .panel-icon:hover{
-    background-color: #0f0f0f;
-  } 
 }
