@@ -46,48 +46,48 @@ export class UI {
       <section class="result-container">
         <h3>Resultado de la ronda</h3>
         <hr class="result-divide-line"/>
-        <div class="player-result">
-          <figure class="image-container">
-            <img class="result-img" src="../../assets/comicFace.png" alt="palyer1">
-          </figure>
-          <div class="result-content">
-            <h4>${humanMsg}</h4>
-            <div>
-              <h5>Puntos Envido: ${
-                this.game.humanPlayer.envidoWinnerPoints
-              }</h5>
-              <h5>Puntos Truco: ${this.game.humanPlayer.trucoPoints}</h5>
-              <h5>Puntos Ronda: ${
-                this.game.humanPlayer.envidoWinnerPoints +
-                this.game.humanPlayer.trucoPoints
-              }</h5>
-              <h5>Puntos Totales: ${this.game.humanPlayer.score}</h5>
+        <div class="mobile-result-container">
+          <div class="player-result">
+            <figure class="image-container">
+              <img class="result-img" src="../../assets/player.png" alt="palyer1">
+            </figure>
+            <div class="result-content">
+              <h4>${humanMsg}</h4>
+              <div>
+                <h5>Puntos Envido: ${
+                  this.game.humanPlayer.envidoWinnerPoints
+                }</h5>
+                <h5>Puntos Truco: ${this.game.humanPlayer.trucoPoints}</h5>
+                <h5>Puntos Ronda: ${
+                  this.game.humanPlayer.envidoWinnerPoints +
+                  this.game.humanPlayer.trucoPoints
+                }</h5>
+                <h5>Puntos Totales: ${this.game.humanPlayer.score}</h5>
+              </div>
             </div>
+            <span>${this.game.humanPlayer.name}</span>
           </div>
-          <span>${this.game.humanPlayer.name}</span>
-        </div>
-        <hr class="result-divide-line"/>
-        <div class="player-result">
-          <figure class="image-container">
-            <img class="result-img" src="../../assets/emojiPoeta.png" alt="elPoeta">
-          </figure>
-          <div class="result-content">
-            <h4>${iaMsg}</h4>
-            <div>
-              <h5>Puntos Envido: ${this.game.IAPlayer.envidoWinnerPoints}</h5>
-              <h5>Puntos Truco: ${this.game.IAPlayer.trucoPoints}</h5>
-              <h5>Puntos Ronda: ${
-                this.game.IAPlayer.envidoWinnerPoints +
-                this.game.IAPlayer.trucoPoints
-              }</h5>
-              <h5>Puntos Totales: ${this.game.IAPlayer.score}</h5>
+          <div class="player-result">
+            <figure class="image-container">
+              <img class="result-img" src="../../assets/emojiPoeta.png" alt="elPoeta">
+            </figure>
+            <div class="result-content">
+              <h4>${iaMsg}</h4>
+              <div>
+                <h5>Puntos Envido: ${this.game.IAPlayer.envidoWinnerPoints}</h5>
+                <h5>Puntos Truco: ${this.game.IAPlayer.trucoPoints}</h5>
+                <h5>Puntos Ronda: ${
+                  this.game.IAPlayer.envidoWinnerPoints +
+                  this.game.IAPlayer.trucoPoints
+                }</h5>
+                <h5>Puntos Totales: ${this.game.IAPlayer.score}</h5>
+              </div>
             </div>
+            <span>${this.game.IAPlayer.name}</span>
           </div>
-          <span>${this.game.IAPlayer.name}</span>
         </div>
-        <hr class="result-divide-line"/>
       </section>
-    `;
+              `;
   }
 
   addResultSelectors() {
