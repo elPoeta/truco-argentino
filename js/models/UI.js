@@ -49,7 +49,9 @@ export class UI {
         <div class="mobile-result-container">
           <div class="player-result">
             <figure class="image-container">
-              <img class="result-img" src="../../assets/player.png" alt="palyer1">
+              <img class="result-img" src='${
+                document.querySelector("#playerImg").src
+              }' alt="palyer1">
             </figure>
             <div class="result-content">
               <h4>${humanMsg}</h4>
@@ -69,7 +71,9 @@ export class UI {
           </div>
           <div class="player-result">
             <figure class="image-container">
-              <img class="result-img" src="../../assets/emojiPoeta.png" alt="elPoeta">
+              <img class="result-img" src='${
+                document.querySelector("#cpuImg").src
+              }' alt="elPoeta">
             </figure>
             <div class="result-content">
               <h4>${iaMsg}</h4>
