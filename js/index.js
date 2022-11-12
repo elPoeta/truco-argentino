@@ -10,14 +10,8 @@ Array.prototype.getLast = function () {
 };
 
 const animate = (timeStamp) => {
+  game.checkGameWinner();
   ctx.clearRect(0, 0, canvas.width, canvas.height);
-
-  // ctx.font = "150px Bangers";
-  // ctx.fillStyle = "#ca8a04";
-  // ctx.textAlign = "center";
-  // ctx.fillText("Truco", canvas.width / 2, canvas.height / 2);
-  // ctx.strokeText("Truco", canvas.width / 2, canvas.height / 2);
-
   game.update();
   game.draw(ctx);
   requestAnimationFrame(animate);

@@ -60,9 +60,11 @@ export class Game {
     this.round = new Round({ game: this });
     this.round.start();
     this.ui = new UI({ game: this });
+    this.checked = false;
+
   }
 
-  update() {}
+  update() { }
 
   draw(ctx) {
     this.drawDahedArea(ctx);
@@ -132,5 +134,14 @@ export class Game {
       30
     );
     ctx.fillText(`${this.IAPlayer.name} ( ${this.IAPlayer.score} )`, 1475, 30);
+  }
+
+  checkGameWinner() {
+    if (this.checked) return;
+    if (this.humanPlayer.score >= this.scoreLimit || this.IAPlayer.score >= this.scoreLimit) {
+      this.checked = true;
+      const playerWinner = this.humanPlayer.score > this.IAPlayer.score ? this.humanPlayer : this.IAPlayer
+      this.ui.showWinner(playerWinner);
+    }
   }
 }
