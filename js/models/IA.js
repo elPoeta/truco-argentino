@@ -321,7 +321,7 @@ export class IA extends Player {
               points: this.game.round.savedPoints,
               playedCards: this.game.humanPlayer.playedCards,
             })
-            .sort((a, b) => b.value - a.value)
+            .sort((a, b) => b.value - a.value) // Can return null
         : null;
 
     const IABoard =

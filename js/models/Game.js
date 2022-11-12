@@ -70,7 +70,7 @@ export class Game {
     this.drawFaces(ctx);
     [
       ...[this.humanPlayer, this.IAPlayer],
-      ...this.playedCards.sort((a, b) => a.renderOrder > b.renderOrder),
+      ...this.playedCards.sort((a, b) => a.renderOrder - b.renderOrder),
       ...[this.logMessage],
       ...this.humanScore,
       ...this.IAScore,

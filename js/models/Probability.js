@@ -32,7 +32,9 @@ export class Probability {
 
   averagePoints({ pcc }) {
     if (!pcc.length) return null;
-    const t = pcc.sort(function (a, b) { return a - b });
+    const t = pcc.sort(function (a, b) {
+      return a - b;
+    });
     if (t.length % 2 == 0) return (t[t.length / 2] + t[t.length / 2 - 1]) / 2;
     else return t[(t.length - 1) / 2];
   }
@@ -41,7 +43,7 @@ export class Probability {
     const sum = 0;
     for (let i = 0; i < cards.length; i++)
       sum = sum + cards[i].winnerProbability();
-    return (sum / cards.length);
+    return sum / cards.length;
   }
 
   // TODO IMPLEMENT
@@ -50,26 +52,38 @@ export class Probability {
     if (points <= 7) {
       this.posiblesCardsLow8({ points, playedCards, posibleCards });
     } else {
-      if (playedCards.length === 2 && playedCards[0].suit === playedCards[1].suit) {
+      if (
+        playedCards.length === 2 &&
+        playedCards[0].suit === playedCards[1].suit
+      ) {
         const envidoPoints1 = playedCards[0].envidoPoints;
         const envidoPoints2 = playedCards[1].envidoPoints;
         const suit = playedCards[0].suit;
         if (envidoPoints1 + envidoPoints2 + 20 !== points) {
-          const p = ((envidoPoints1 > envidoPoints2) ? (points - envidoPoints1 - 20) : (points - envidoPoints2 - 20));
+          const p =
+            envidoPoints1 > envidoPoints2
+              ? points - envidoPoints1 - 20
+              : points - envidoPoints2 - 20;
           posibleCards = this.getPosibleCardsBySuitAndCardNumber(suit, p);
-        } else return null;
+        } else return []; //null;
       }
       for (let i = 0; i < playedCards.length; i++) {
         const suit = playedCards[i].suit;
         const cardNumber = points - playedCards[i].envidoPoints - 20;
         if (0 <= cardNumber && cardNumber <= 7)
-          posibleCards.push(...this.getPosibleCardsBySuitAndCardNumber(suit, cardNumber));
+          posibleCards.push(
+            ...this.getPosibleCardsBySuitAndCardNumber(suit, cardNumber)
+          );
       }
     }
 
     for (let j = 0; j < playedCards.length; j++)
       for (let i = posibleCards.length - 1; i >= 0; i--) {
-        if (posibleCards[i] != undefined && playedCards[j].number === posibleCards[i].number && playedCards[j].suit === posibleCards[i].suit) {
+        if (
+          posibleCards[i] != undefined &&
+          playedCards[j].number === posibleCards[i].number &&
+          playedCards[j].suit === posibleCards[i].suit
+        ) {
           posibleCards.splice(i);
           break;
         }
@@ -78,10 +92,13 @@ export class Probability {
   }
 
   posiblesCardsLow8({ points, playedCards, posibleCards }) {
-    posibleCards = this.cards.filter(card => card.envidoPoints === points);
+    posibleCards = this.cards.filter((card) => card.envidoPoints === points);
     for (let j = 0; j < playedCards.length; j++)
       for (let i = posibleCards.length - 1; i >= 0; i--) {
-        if (posibleCards[i] !== undefined && playedCards[j].suit === posibleCards[i].suit) {
+        if (
+          posibleCards[i] !== undefined &&
+          playedCards[j].suit === posibleCards[i].suit
+        ) {
           posibleCards[i] = undefined;
         }
       }
@@ -90,9 +107,15 @@ export class Probability {
   getPosibleCardsBySuitAndCardNumber(suit, cardNumber) {
     switch (cardNumber) {
       case 0:
-        return this.cards.filter(card => (card.number === 12 || card.number === 11 || card.number == 10) && card.suit === suit);
+        return this.cards.filter(
+          (card) =>
+            (card.number === 12 || card.number === 11 || card.number == 10) &&
+            card.suit === suit
+        );
       default:
-        return this.cards.filter(card => card.number === cardNumber && card.suit === suit);
+        return this.cards.filter(
+          (card) => card.number === cardNumber && card.suit === suit
+        );
     }
   }
 }
