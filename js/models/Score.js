@@ -9,10 +9,10 @@ export class Score {
     this.spriteHeight = SPRITE_SCORE_HEIGHT;
     this.width = this.spriteWidth;
     this.height = this.spriteHeight;
-    this.x = 0; //x || 0;
-    this.y = 0; //y || 0;
-    this.frameX = 0; //frameX;
-    this.frameY = 0; //frameY;
+    this.x = 0;
+    this.y = 0;
+    this.frameX = 0;
+    this.frameY = 0;
     this.player = player;
     this.maxScore = maxScore;
   }
