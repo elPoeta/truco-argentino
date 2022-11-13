@@ -25,11 +25,19 @@ export class LogMessage {
       this.human = msg;
       //this.ia = clean ? "" : this.ia;
     } else {
+      this.talk(msg);
       this.ia = msg;
       //this.human = clean ? "" : this.human;
     }
   }
 
+  talk(msg) {
+    if (msg === '🤬 #%!&') msg = 'La pucha, perdi'
+    if (msg === '😜 Te Gane!!!') msg = 'ja, ja, te Gane';
+    const iaSpeaking = document.querySelector('#iaSpeeking');
+    iaSpeaking.dataset.speech = msg;
+    iaSpeaking.click();
+  }
   getMessage(action) {
     switch (action) {
       case Action.ENVIDO:
