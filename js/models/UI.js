@@ -24,6 +24,14 @@ export class UI {
     this.voicePanel.classList.remove("hide");
   }
 
+  hideButtons() {
+    const envidoButtons = document.querySelector('#envido-buttons');
+    const trucoButtons = document.querySelector('#truco-buttons');
+    document.querySelector('#response-buttons').classList.add('hide');
+    envidoButtons.querySelectorAll('button').forEach(button => button.classList.add('hide'))
+    trucoButtons.querySelectorAll('button').forEach(button => button.classList.add('hide'))
+  }
+
   showResults(props) {
     const div = document.createElement("div");
     div.setAttribute("id", "resultsOverlay");

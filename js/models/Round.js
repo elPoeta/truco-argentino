@@ -18,6 +18,7 @@ export class Round {
   }
 
   init() {
+    this.game.ui.hideButtons();
     this.numberOfHands = 0;
     this.playsOnHands = 0;
     this.playerTurn = null;
@@ -307,9 +308,9 @@ export class Round {
         } else {
           console.log(
             "human: " +
-              this.game.humanPlayer.hands +
-              "IA: " +
-              this.game.IAPlayer.hands
+            this.game.humanPlayer.hands +
+            "IA: " +
+            this.game.IAPlayer.hands
           );
           return null;
         }

@@ -57,9 +57,9 @@ export class Game {
     this.logMessage = new LogMessage({ game: this });
     this.eventHandler = new EventHandler({ game: this });
     this.scoreLimit = 30;
+    this.ui = new UI({ game: this });
     this.round = new Round({ game: this });
     this.round.start();
-    this.ui = new UI({ game: this });
     this.checked = false;
 
   }
