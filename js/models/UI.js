@@ -33,6 +33,7 @@ export class UI {
   }
 
   showResults(props) {
+    if (document.querySelector("#winnerOverlay")) return;
     const div = document.createElement("div");
     div.setAttribute("id", "resultsOverlay");
     div.setAttribute("class", "overlay");

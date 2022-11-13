@@ -13,7 +13,9 @@ import { IA } from "./IA.js";
 import { LogMessage } from "./LogMessage.js";
 import { Round } from "./Round.js";
 import { Score } from "./Score.js";
+import { Speek } from "./Speak.js";
 import { UI } from "./UI.js";
+
 
 const randomHand = generateRandomInteger(100) < 50;
 export class Game {
@@ -58,6 +60,7 @@ export class Game {
     this.eventHandler = new EventHandler({ game: this });
     this.scoreLimit = 30;
     this.ui = new UI({ game: this });
+    this.speek = new Speek({ game: this });
     this.round = new Round({ game: this });
     this.round.start();
     this.checked = false;
