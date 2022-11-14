@@ -37,11 +37,12 @@
   text-align: center;
 }
 .mobile-result-container {
-    display: flex;
-    width: 55vw;
-    align-items: center;
-    justify-content: center;
-    gap: 40px;
+  display: flex;
+  width: 55vw;
+  align-items: center;
+  justify-content: center;
+  gap: 40px;
+  position: relative;
 }
 .image-container {
   width: fit-content;
@@ -55,7 +56,7 @@
   width: 8rem;
   border-radius: 50%;
 }
-.player-result{
+.player-result {
   margin: 20px 0;
   display: grid;
   grid-template-columns: 180px auto;
@@ -80,10 +81,43 @@
 .result-content div h5 {
   font-size: 1.2rem;
   letter-spacing: 2px;
-  margin: 5px 0;;
+  margin: 5px 0;
 }
 .result-divide-line {
   border: 0;
   height: 3px;
-  background-image: linear-gradient(to right, rgba(0, 0, 0, 0), #ff9800, rgba(0, 0, 0, 0));
+  background-image: linear-gradient(
+    to right,
+    rgba(0, 0, 0, 0),
+    #ff9800,
+    rgba(0, 0, 0, 0)
+  );
+}
+.winner-images {
+  position: relative;
+}
+.image-player-container {
+  position: absolute;
+  top: 30%;
+  left: 41%;
+  background: #f9b54c;
+  border: 3px solid #cb8343;
+}
+.winner-player-img {
+  width: 4rem;
+}
+.winner-cup-img {
+  display: block;
+  width: 25rem;
+}
+.player-winner-buttons {
+  position: absolute;
+  right: 0;
+  bottom: 0;
+}
+
+.btn-winner {
+  padding: 15px 30px;
+  clip-path: polygon(86% 0, 100% 34%, 100% 100%, 16% 100%, 0% 69%, 0 0);
+  letter-spacing: 3px;
 }

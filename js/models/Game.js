@@ -16,7 +16,6 @@ import { Score } from "./Score.js";
 import { Speek } from "./Speak.js";
 import { UI } from "./UI.js";
 
-
 const randomHand = generateRandomInteger(100) < 50;
 export class Game {
   constructor({ canvasWidth, canvasHeight, canvasPosition }) {
@@ -64,10 +63,9 @@ export class Game {
     this.round = new Round({ game: this });
     this.round.start();
     this.checked = false;
-
   }
 
-  update() { }
+  update() {}
 
   draw(ctx) {
     this.drawDahedArea(ctx);
@@ -141,9 +139,15 @@ export class Game {
 
   checkGameWinner() {
     if (this.checked) return;
-    if (this.humanPlayer.score >= this.scoreLimit || this.IAPlayer.score >= this.scoreLimit) {
+    if (
+      this.humanPlayer.score >= this.scoreLimit ||
+      this.IAPlayer.score >= this.scoreLimit
+    ) {
       this.checked = true;
-      const playerWinner = this.humanPlayer.score > this.IAPlayer.score ? this.humanPlayer : this.IAPlayer
+      const playerWinner =
+        this.humanPlayer.score > this.IAPlayer.score
+          ? this.humanPlayer
+          : this.IAPlayer;
       this.ui.showWinner(playerWinner);
     }
   }
