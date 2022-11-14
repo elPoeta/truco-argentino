@@ -197,6 +197,8 @@ export class UI {
 
   newGameAction() {
     this.removeWinnerOverlay();
+    const { playerName } = menu.getOptions();
+    this.game.newGame({ playerName });
   }
 
   menuAction() {

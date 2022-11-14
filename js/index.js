@@ -15,5 +15,5 @@ animate(0);
 
 window.addEventListener("resize", (e) => {
   game.canvasPosition = canvas.getBoundingClientRect();
-  game.ui.cssPosition();
+  if (game.ui) game.ui.cssPosition();
 });
