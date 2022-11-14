@@ -157,10 +157,10 @@ export class UI {
           </div>
           <div class="player-winner-buttons">
             <div id="winner-buttons" class="btn-container">
-              <button id="newGame" class="btn btn-winner" data-winner="NEW">
+              <button id="newGame" class="btn btn-winner">
                 <span class="btn-content">NUEVA</span>
               </button>
-              <button id="winnerMenu" class="btn btn-winner" data-winner="MENU">
+              <button id="winnerMenu" class="btn btn-winner">
                 <span class="btn-content">MENU</span>
               </button>
             </div>
@@ -171,19 +171,39 @@ export class UI {
   }
 
   addWinnerSelectors() {
-    // this.closeOverlay = document.querySelector("#closeOverlay");
-    // this.winnerListenerManager({ type: "addEventListener" });
+    this.winnerButtons = document.querySelector("#winner-buttons");
+    this.winnerListenerManager({ type: "addEventListener" });
   }
 
   winnerListenerManager({ type }) {
-    this.closeOverlay[type](
+    this.winnerButtons[type](
       "click",
-      this.handleCloseWinnerOverlay.bind(this),
+      this.handleWinnerButtons.bind(this),
       true
     );
   }
 
-  handleCloseWinnerOverlay(ev) {
+  handleWinnerButtons(ev) {
+    const target = ev.target.closest(".btn-winner");
+    if (!target) return;
+    const id = target.id;
+    if (!id) return;
+    if (id === "newGame") {
+      this.newGameAction();
+    } else {
+      this.menuAction();
+    }
+  }
+
+  newGameAction() {
+    this.removeWinnerOverlay();
+  }
+
+  menuAction() {
+    this.removeWinnerOverlay();
+  }
+
+  removeWinnerOverlay() {
     this.winnerListenerManager({ type: "removeEventListener" });
     document.querySelector("#winnerOverlay").remove();
   }
