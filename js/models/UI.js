@@ -25,11 +25,15 @@ export class UI {
   }
 
   hideButtons() {
-    const envidoButtons = document.querySelector('#envido-buttons');
-    const trucoButtons = document.querySelector('#truco-buttons');
-    document.querySelector('#response-buttons').classList.add('hide');
-    envidoButtons.querySelectorAll('button').forEach(button => button.classList.add('hide'))
-    trucoButtons.querySelectorAll('button').forEach(button => button.classList.add('hide'))
+    const envidoButtons = document.querySelector("#envido-buttons");
+    const trucoButtons = document.querySelector("#truco-buttons");
+    document.querySelector("#response-buttons").classList.add("hide");
+    envidoButtons
+      .querySelectorAll("button")
+      .forEach((button) => button.classList.add("hide"));
+    trucoButtons
+      .querySelectorAll("button")
+      .forEach((button) => button.classList.add("hide"));
   }
 
   showResults(props) {
@@ -58,18 +62,21 @@ export class UI {
         <div class="mobile-result-container">
           <div class="player-result">
             <figure class="image-container">
-              <img class="result-img" src='${document.querySelector("#playerImg").src
-      }' alt="palyer1">
+              <img class="result-img" src='${
+                document.querySelector("#playerImg").src
+              }' alt="palyer1">
             </figure>
             <div class="result-content">
               <h4>${humanMsg}</h4>
               <div>
-                <h5>Puntos Envido: ${this.game.humanPlayer.envidoWinnerPoints
-      }</h5>
+                <h5>Puntos Envido: ${
+                  this.game.humanPlayer.envidoWinnerPoints
+                }</h5>
                 <h5>Puntos Truco: ${this.game.humanPlayer.trucoPoints}</h5>
-                <h5>Puntos Ronda: ${this.game.humanPlayer.envidoWinnerPoints +
-      this.game.humanPlayer.trucoPoints
-      }</h5>
+                <h5>Puntos Ronda: ${
+                  this.game.humanPlayer.envidoWinnerPoints +
+                  this.game.humanPlayer.trucoPoints
+                }</h5>
                 <h5>Puntos Totales: ${this.game.humanPlayer.score}</h5>
               </div>
             </div>
@@ -77,17 +84,19 @@ export class UI {
           </div>
           <div class="player-result">
             <figure class="image-container">
-              <img class="result-img" src='${document.querySelector("#cpuImg").src
-      }' alt="elPoeta">
+              <img class="result-img" src='${
+                document.querySelector("#cpuImg").src
+              }' alt="elPoeta">
             </figure>
             <div class="result-content">
               <h4>${iaMsg}</h4>
               <div>
                 <h5>Puntos Envido: ${this.game.IAPlayer.envidoWinnerPoints}</h5>
                 <h5>Puntos Truco: ${this.game.IAPlayer.trucoPoints}</h5>
-                <h5>Puntos Ronda: ${this.game.IAPlayer.envidoWinnerPoints +
-      this.game.IAPlayer.trucoPoints
-      }</h5>
+                <h5>Puntos Ronda: ${
+                  this.game.IAPlayer.envidoWinnerPoints +
+                  this.game.IAPlayer.trucoPoints
+                }</h5>
                 <h5>Puntos Totales: ${this.game.IAPlayer.score}</h5>
               </div>
             </div>
@@ -128,26 +137,33 @@ export class UI {
 
   winnerTemplate(playerWinner) {
     const message = `Ganador ${playerWinner.name}`;
-    const playerImage = playerWinner instanceof Human ? 'playerImg' : 'cpuImg'
+    const playerImage = playerWinner instanceof Human ? "playerImg" : "cpuImg";
     return `
-      <i id="closeOverlay" class="closeResultOverlay">
-        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="currentColor" >
-          <path fill-rule="evenodd" d="M5.47 5.47a.75.75 0 011.06 0L12 10.94l5.47-5.47a.75.75 0 111.06 1.06L13.06 12l5.47 5.47a.75.75 0 11-1.06 1.06L12 13.06l-5.47 5.47a.75.75 0 01-1.06-1.06L10.94 12 5.47 6.53a.75.75 0 010-1.06z" clip-rule="evenodd" />
-        </svg>
-      </i>
       <section class="result-container">
         <h3>${message}</h3>
         <hr class="result-divide-line"/>
         <div class="mobile-result-container">
-          <div class="player-result">
-            <figure class="image-container">
-              <img class="result-img" src='${document.querySelector(`#${playerImage}`).src
-      }' alt="palyer1">
+          <div class="winner-images">
+            <figure class="image-container image-player-container">
+              <img class="result-img winner-player-img" src='${
+                document.querySelector(`#${playerImage}`).src
+              }' alt="player-winner">
+             </figure>
+            <figure class="image-cup-container">
+              <img class="winner-cup-img" src='${
+                document.querySelector(`#cupImg`).src
+              }' alt="winner-cup">
             </figure>
-            <figure class="image-container">
-            <img class="result-img" src='${document.querySelector(`#cupImg`).src
-      }' alt="palyer1">
-          </figure>
+          </div>
+          <div class="player-winner-buttons">
+            <div id="winner-buttons" class="btn-container">
+              <button id="newGame" class="btn btn-winner" data-winner="NEW">
+                <span class="btn-content">NUEVA</span>
+              </button>
+              <button id="winnerMenu" class="btn btn-winner" data-winner="MENU">
+                <span class="btn-content">MENU</span>
+              </button>
+            </div>
           </div>
         </div>
       </section>
@@ -155,12 +171,16 @@ export class UI {
   }
 
   addWinnerSelectors() {
-    this.closeOverlay = document.querySelector("#closeOverlay");
-    this.winnerListenerManager({ type: "addEventListener" });
+    // this.closeOverlay = document.querySelector("#closeOverlay");
+    // this.winnerListenerManager({ type: "addEventListener" });
   }
 
   winnerListenerManager({ type }) {
-    this.closeOverlay[type]("click", this.handleCloseWinnerOverlay.bind(this), true);
+    this.closeOverlay[type](
+      "click",
+      this.handleCloseWinnerOverlay.bind(this),
+      true
+    );
   }
 
   handleCloseWinnerOverlay(ev) {
