@@ -16,19 +16,29 @@ import { Score } from "./Score.js";
 import { Speek } from "./Speak.js";
 import { UI } from "./UI.js";
 
-const randomHand = generateRandomInteger(100) < 50;
 export class Game {
   constructor({ canvasWidth, canvasHeight, canvasPosition }) {
+    this.pause = true;
     this.canvasWidth = canvasWidth;
     this.canvasHeight = canvasHeight;
     this.canvasPosition = canvasPosition;
     this.IAImage = cpuImg;
     this.humanImage = playerImg;
     this.scale = SCALE;
+    this.scoreLimit = 30;
+    this.gameStarted = false;
+  }
+
+  generateRandomHand() {
+    return generateRandomInteger(100) < 50;
+  }
+
+  newGame({ playerName }) {
+    const randomHand = this.generateRandomHand();
     this.renderDashedArea = false;
     this.humanPlayer = new Human({
       game: this,
-      name: "Player 1",
+      name: playerName || "Player 1",
       itIsHand: randomHand,
       hisTurn: !randomHand,
     });
@@ -57,12 +67,12 @@ export class Game {
     this.playedCards = [];
     this.logMessage = new LogMessage({ game: this });
     this.eventHandler = new EventHandler({ game: this });
-    this.scoreLimit = 30;
     this.ui = new UI({ game: this });
     this.speek = new Speek({ game: this });
     this.round = new Round({ game: this });
     this.round.start();
-    this.checked = false;
+    this.pause = false;
+    this.gameStarted = true;
   }
 
   update() {}
@@ -138,12 +148,13 @@ export class Game {
   }
 
   checkGameWinner() {
-    if (this.checked) return;
+    if (this.pause) return;
     if (
       this.humanPlayer.score >= this.scoreLimit ||
       this.IAPlayer.score >= this.scoreLimit
     ) {
-      this.checked = true;
+      this.gameStarted = false;
+      this.pause = true;
       const playerWinner =
         this.humanPlayer.score > this.IAPlayer.score
           ? this.humanPlayer

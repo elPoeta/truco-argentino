@@ -1,4 +1,4 @@
-import { canvas } from "../app.js";
+import { canvas, menu } from "../app.js";
 import { ButtonHandler } from "../controllers/ButtonHandler.js";
 import { Human } from "./Human.js";
 import { IA } from "./IA.js";
@@ -201,6 +201,7 @@ export class UI {
 
   menuAction() {
     this.removeWinnerOverlay();
+    menu.render();
   }
 
   removeWinnerOverlay() {

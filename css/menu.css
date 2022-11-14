@@ -1,0 +1,19 @@
+.menu-container {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  background: #0f172a;
+  width: 80vw;
+  height: 80vh;
+  overflow-y: auto;
+  position: absolute;
+  transform: translate(-50%, -50%);
+  top: 50%;
+  left: 50%;
+  border-radius: 10px;
+  border: 3px solid #d97706;
+}
+.ribbon-image {
+  display: block;
+  width: 30rem;
+}
