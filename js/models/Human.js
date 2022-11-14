@@ -2,8 +2,14 @@ import { playedCardCoords } from "../utils/gameHelper.js";
 import { Player } from "./Player.js";
 
 export class Human extends Player {
-  constructor({ game, name, itIsHand, hisTurn }) {
-    super({ game, name, itIsHand, hisTurn });
+  constructor({ game }) {
+    super({ game });
+  }
+  setInitialValues({ name, itIsHand, hisTurn }) {
+    this.baseValues();
+    this.name = name;
+    this.itIsHand = itIsHand;
+    this.hisTurn = hisTurn;
   }
 
   playCard(index) {

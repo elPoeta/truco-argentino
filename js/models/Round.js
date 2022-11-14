@@ -14,7 +14,6 @@ export class Round {
   constructor({ game }) {
     this.game = game;
     this.deck = new Deck({ game });
-    this.init();
   }
 
   init() {

@@ -11,12 +11,22 @@ import { Player } from "./Player.js";
 import { Probability } from "./Probability.js";
 
 export class IA extends Player {
-  constructor({ game, name, itIsHand, hisTurn }) {
-    super({ game, name, itIsHand, hisTurn });
+  constructor({ game }) {
+    super({ game });
+    this.name = "el poeta";
     this.cardsInHand = this.setCardsInHand();
     this.cardsInHandHidden = [];
     this.strategyGame = null;
     this.probability = new Probability({ game });
+  }
+
+  setInitialValues({ itIsHand, hisTurn }) {
+    this.baseValues();
+    this.cardsInHand = this.setCardsInHand();
+    this.cardsInHandHidden = [];
+    this.strategyGame = null;
+    this.itIsHand = itIsHand;
+    this.hisTurn = hisTurn;
   }
 
   setCardsInHand() {
