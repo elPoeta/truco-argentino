@@ -1,3 +1,4 @@
+import { menu } from "../app.js";
 import { Action } from "../models/Action.js";
 import { Fullscreen } from "./fullScreen.js";
 
@@ -39,7 +40,7 @@ export class ButtonHandler {
         this.game.round.humanGoToMazo();
         break;
       case "menu":
-        this.game.round.debugLog();
+        menu.render();
         break;
       default:
         break;

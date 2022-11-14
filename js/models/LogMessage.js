@@ -32,9 +32,10 @@ export class LogMessage {
   }
 
   talk(msg) {
-    if (msg === '🤬 #%!&') msg = 'La pucha, perdi'
-    if (msg === '😜 Te Gane!!!') msg = 'ja, ja, te Gane';
-    const iaSpeaking = document.querySelector('#iaSpeeking');
+    if (!this.game.enableIAVoice) return;
+    if (msg === "🤬 #%!&") msg = "La pucha, perdi";
+    if (msg === "😜 Te Gane!!!") msg = "ja, ja, te Gane";
+    const iaSpeaking = document.querySelector("#iaSpeeking");
     iaSpeaking.dataset.speech = msg;
     iaSpeaking.click();
   }

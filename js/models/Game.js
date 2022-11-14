@@ -27,6 +27,7 @@ export class Game {
     this.scale = SCALE;
     this.scoreLimit = 30;
     this.gameStarted = false;
+    this.enableIAVoice = true;
   }
 
   generateRandomHand() {
