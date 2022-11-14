@@ -93,10 +93,9 @@ export class Menu {
     const playerName = document.querySelector("#playerName").value;
     const scoreLimit = +document.querySelector('[name="scoreLimit"]:checked')
       .value;
-    this.game.scoreLimit = scoreLimit;
     localStorage.setItem("options", JSON.stringify({ playerName, scoreLimit }));
     this.removeOverlay();
-    this.game.newGame({ playerName });
+    this.game.newGame({ playerName, scoreLimit });
   }
 
   handleCloseMenu() {

@@ -1,7 +1,12 @@
 export class Player {
-  constructor({ game, name, itIsHand, hisTurn }) {
+  constructor({ game }) {
     this.game = game;
-    this.name = name;
+    this.name = "";
+    this.itIsHand = false;
+    this.hisTurn = false;
+  }
+
+  baseValues() {
     this.score = 0;
     this.cards = [];
     this.cardsInHand = [];
@@ -13,8 +18,6 @@ export class Player {
     this.faltaEnvido = [];
     this.playedCards = [];
     this.hands = 0;
-    this.itIsHand = itIsHand;
-    this.hisTurn = hisTurn;
   }
 
   draw(ctx) {

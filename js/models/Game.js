@@ -28,27 +28,8 @@ export class Game {
     this.scoreLimit = 30;
     this.gameStarted = false;
     this.enableIAVoice = true;
-  }
-
-  generateRandomHand() {
-    return generateRandomInteger(100) < 50;
-  }
-
-  newGame({ playerName }) {
-    const randomHand = this.generateRandomHand();
-    this.renderDashedArea = false;
-    this.humanPlayer = new Human({
-      game: this,
-      name: playerName || "Player 1",
-      itIsHand: randomHand,
-      hisTurn: !randomHand,
-    });
-    this.IAPlayer = new IA({
-      game: this,
-      name: "el Poeta",
-      itIsHand: !randomHand,
-      hisTurn: randomHand,
-    });
+    this.humanPlayer = new Human({ game: this });
+    this.IAPlayer = new IA({ game: this });
     this.humanScore = [
       new Score({ game: this, player: this.humanPlayer, maxScore: 5 }),
       new Score({ game: this, player: this.humanPlayer, maxScore: 10 }),
@@ -65,12 +46,32 @@ export class Game {
       new Score({ game: this, player: this.IAPlayer, maxScore: 25 }),
       new Score({ game: this, player: this.IAPlayer, maxScore: 30 }),
     ];
-    this.playedCards = [];
     this.logMessage = new LogMessage({ game: this });
     this.eventHandler = new EventHandler({ game: this });
     this.ui = new UI({ game: this });
     this.speek = new Speek({ game: this });
     this.round = new Round({ game: this });
+  }
+
+  generateRandomHand() {
+    return generateRandomInteger(100) < 50;
+  }
+
+  newGame({ playerName, scoreLimit }) {
+    const randomHand = this.generateRandomHand();
+    this.renderDashedArea = false;
+    this.humanPlayer.setInitialValues({
+      name: playerName,
+      itIsHand: randomHand,
+      hisTurn: !randomHand,
+    });
+    this.IAPlayer.setInitialValues({
+      itIsHand: !randomHand,
+      hisTurn: randomHand,
+    });
+    this.scoreLimit = scoreLimit;
+    this.playedCards = [];
+    this.round.init();
     this.round.start();
     this.pause = false;
     this.gameStarted = true;
