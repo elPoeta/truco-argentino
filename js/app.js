@@ -1,4 +1,5 @@
 import { Game } from "./models/Game.js";
+import { Menu } from "./models/Menu.js";
 import { CANVAS_HEIGHT, CANVAS_WIDTH } from "./utils/helpers.js";
 const canvas = document.querySelector("#canvas1");
 const ctx = canvas.getContext("2d");
@@ -18,4 +19,7 @@ const game = new Game({
   canvasPosition: canvasPosition,
 });
 
-export { canvas, ctx, game };
+const menu = new Menu({ game });
+menu.render();
+
+export { canvas, ctx, game, menu };

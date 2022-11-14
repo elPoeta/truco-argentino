@@ -308,9 +308,9 @@ export class Round {
         } else {
           console.log(
             "human: " +
-            this.game.humanPlayer.hands +
-            "IA: " +
-            this.game.IAPlayer.hands
+              this.game.humanPlayer.hands +
+              "IA: " +
+              this.game.IAPlayer.hands
           );
           return null;
         }
@@ -406,7 +406,11 @@ export class Round {
   }
 
   IAEnvidoResponse() {
-    const card = this.game.humanPlayer.cardsInHand.getLast();
+    const card = !this.game.humanPlayer.cardsInHand.length
+      ? null
+      : this.game.humanPlayer.cardsInHand[
+          this.game.humanPlayer.cardsInHand.length - 1
+        ];
     const { winner } = this.calculateEnvidoPoints();
     let action = this.game.IAPlayer.envido({
       lastSang: this.chants[this.chants.length - 1],

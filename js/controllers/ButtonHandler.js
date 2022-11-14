@@ -47,7 +47,9 @@ export class ButtonHandler {
   }
 
   handleEnvidoActions({ target }) {
-    const lastSang = this.game.round.chants.getLast();
+    const lastSang = !this.game.round.chants.length
+      ? ""
+      : this.game.round.chants[this.game.round.chants.length - 1];
     let dataEnvido = target.dataset.envido;
     if (lastSang === Action.ENVIDO && dataEnvido === Action.ENVIDO)
       dataEnvido = Action.ENVIDO_ENVIDO;
