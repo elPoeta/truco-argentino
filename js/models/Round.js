@@ -18,6 +18,7 @@ export class Round {
 
   init() {
     this.game.ui.hideButtons();
+    this.cleanLogs();
     this.numberOfHands = 0;
     this.playsOnHands = 0;
     this.playerTurn = null;
