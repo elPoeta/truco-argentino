@@ -32,7 +32,7 @@
 
 .menu-items input[type="text"] {
   padding: 10px;
-  border: none;
+  border: 2px solid #0f172a;
   outline: none;
   box-shadow: inset 0 0 10px 0 rgb(15 23 42);
   border-radius: 20px;
