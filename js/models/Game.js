@@ -27,7 +27,6 @@ export class Game {
     this.scale = SCALE;
     this.scoreLimit = 30;
     this.gameStarted = false;
-    this.enableIAVoice = true;
     this.humanPlayer = new Human({ game: this });
     this.IAPlayer = new IA({ game: this });
     this.humanScore = [
@@ -57,7 +56,7 @@ export class Game {
     return generateRandomInteger(100) < 50;
   }
 
-  newGame({ playerName, scoreLimit }) {
+  newGame({ playerName, scoreLimit, enableIAVoice }) {
     const randomHand = this.generateRandomHand();
     this.renderDashedArea = false;
     this.humanPlayer.setInitialValues({
@@ -70,6 +69,7 @@ export class Game {
       hisTurn: randomHand,
     });
     this.scoreLimit = scoreLimit;
+    this.enableIAVoice = enableIAVoice;
     this.playedCards = [];
     this.round.init();
     this.round.start();

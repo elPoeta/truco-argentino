@@ -197,8 +197,8 @@ export class UI {
 
   newGameAction() {
     this.removeWinnerOverlay();
-    const { playerName, scoreLimit } = menu.getOptions();
-    this.game.newGame({ playerName, scoreLimit });
+    const { playerName, scoreLimit, enableIAVoice } = menu.getOptions();
+    this.game.newGame({ playerName, scoreLimit, enableIAVoice });
   }
 
   menuAction() {

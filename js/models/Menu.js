@@ -19,11 +19,12 @@ export class Menu {
       JSON.stringify({
         playerName: "Player 1",
         scoreLimit: 30,
+        enableIAVoice: true,
       });
     return JSON.parse(storageItem);
   }
   menuTemplate() {
-    const { playerName, scoreLimit } = this.getOptions();
+    const { playerName, scoreLimit, enableIAVoice } = this.getOptions();
     return `
     <i id="closeMenuOverlay" class="closeResultOverlay" style="${
       !this.game.gameStarted ? "display:none;" : ""
@@ -38,31 +39,57 @@ export class Menu {
           document.querySelector(`#menuRibbonImg`).src
         }' alt="ribbon">
       </figure>
-      <div class="menu-items">
-        <div>
-          <i>
-            <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="currentColor" class=">
-              <path fill-rule="evenodd" d="M7.5 6a4.5 4.5 0 119 0 4.5 4.5 0 01-9 0zM3.751 20.105a8.25 8.25 0 0116.498 0 .75.75 0 01-.437.695A18.683 18.683 0 0112 22.5c-2.786 0-5.433-.608-7.812-1.7a.75.75 0 01-.437-.695z" clip-rule="evenodd" />
-            </svg>
-          </i>
+      <div class="menu-items-container">
+        <div class="menu-items">
+          <h3>Nombre</h3> 
           <input type="text" id="playerName" name="playerName" value='${playerName}' />
         </div>
-        <div>
-          <input type="radio" id="limit30" name="scoreLimit" value='30' ${
-            scoreLimit === 30 ? "checked" : ""
-          } />
-          <label for="limit30">30</label>
-          <input type="radio" id="limit15" name="scoreLimit" value='15' ${
-            scoreLimit === 15 ? "checked" : ""
-          } />
-          <label for="limit30">15</label>
+        <div class="menu-items">
+          <h3>Puntos</h3>
+          <div class="menu-items-radio">
+            <label class="radio-label">
+              <input type="radio" id="limit30" name="scoreLimit" value='30' ${
+                scoreLimit === 30 ? "checked" : ""
+              } />30
+	            <i></i>
+            </label>
+            <label class="radio-label">
+              <input type="radio" id="limit15" name="scoreLimit" value='15' ${
+                scoreLimit === 15 ? "checked" : ""
+              } />15
+              <i></i>
+            </label>
+          </div>
         </div>
-      </div>
-      <div class="menu-buttons">
-        <button id="newGame" class="btn-selector">Nuevo Juego</button>
+        <div class="menu-items">
+          <h3>IA voz</h3>
+          <i id="voiceIAIcon" class="btn-selector" data-enablevoice="${enableIAVoice}">
+           ${this.getSoundIcon(enableIAVoice)}
+          </i>
+        </div>
+        <div class="menu-items">
+          <button id="newGame" class="btn btn-selector">
+            <span class="btn-content">Nuevo Juego</span>
+          </button>
+        </div>
       </div>
     </section>
     `;
+  }
+
+  getSoundIcon(enableIAVoice) {
+    if (enableIAVoice) {
+      return `
+      <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="currentColor" class="menu-item-svg">
+        <path d="M13.5 4.06c0-1.336-1.616-2.005-2.56-1.06l-4.5 4.5H4.508c-1.141 0-2.318.664-2.66 1.905A9.76 9.76 0 001.5 12c0 .898.121 1.768.35 2.595.341 1.24 1.518 1.905 2.659 1.905h1.93l4.5 4.5c.945.945 2.561.276 2.561-1.06V4.06zM18.584 5.106a.75.75 0 011.06 0c3.808 3.807 3.808 9.98 0 13.788a.75.75 0 11-1.06-1.06 8.25 8.25 0 000-11.668.75.75 0 010-1.06z" />
+        <path d="M15.932 7.757a.75.75 0 011.061 0 6 6 0 010 8.486.75.75 0 01-1.06-1.061 4.5 4.5 0 000-6.364.75.75 0 010-1.06z" />
+      </svg>`;
+    }
+
+    return `
+      <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="currentColor" class="menu-item-svg">
+        <path d="M13.5 4.06c0-1.336-1.616-2.005-2.56-1.06l-4.5 4.5H4.508c-1.141 0-2.318.664-2.66 1.905A9.76 9.76 0 001.5 12c0 .898.121 1.768.35 2.595.341 1.24 1.518 1.905 2.659 1.905h1.93l4.5 4.5c.945.945 2.561.276 2.561-1.06V4.06zM17.78 9.22a.75.75 0 10-1.06 1.06L18.44 12l-1.72 1.72a.75.75 0 001.06 1.06l1.72-1.72 1.72 1.72a.75.75 0 101.06-1.06L20.56 12l1.72-1.72a.75.75 0 00-1.06-1.06l-1.72 1.72-1.72-1.72z" />
+      </svg>`;
   }
 
   addMenuListeners() {
@@ -84,18 +111,33 @@ export class Menu {
       case "newGame":
         this.handleNewGameAction();
         break;
+      case "voiceIAIcon":
+        this.handleIAVoice();
+        break;
       default:
         break;
     }
+  }
+
+  handleIAVoice() {
+    const voiceIcon = document.querySelector("#voiceIAIcon");
+    const dataVoice = voiceIcon.dataset.enablevoice == "true";
+    voiceIcon.dataset.enablevoice = !dataVoice;
+    voiceIcon.innerHTML = this.getSoundIcon(!dataVoice);
   }
 
   handleNewGameAction() {
     const playerName = document.querySelector("#playerName").value;
     const scoreLimit = +document.querySelector('[name="scoreLimit"]:checked')
       .value;
-    localStorage.setItem("options", JSON.stringify({ playerName, scoreLimit }));
+    const enableIAVoice =
+      document.querySelector("#voiceIAIcon").dataset.enablevoice == "true";
+    localStorage.setItem(
+      "options",
+      JSON.stringify({ playerName, scoreLimit, enableIAVoice })
+    );
     this.removeOverlay();
-    this.game.newGame({ playerName, scoreLimit });
+    this.game.newGame({ playerName, scoreLimit, enableIAVoice });
   }
 
   handleCloseMenu() {
