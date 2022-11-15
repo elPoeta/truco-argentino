@@ -74,7 +74,6 @@ export class ButtonHandler {
 
   handleTrucoActions({ target }) {
     const dataTruco = target.dataset.truco;
-    console.log("TRUCO ACTION ", dataTruco);
     this.game.round.truco.push(dataTruco);
     this.game.round.playerTruco = this.game.round.waitingPlayer(
       this.game.humanPlayer
@@ -105,6 +104,10 @@ export class ButtonHandler {
       player: Action.HUMAN,
       action: dataResponse,
     });
+    const envidoButtons = document.querySelector("#envido-buttons");
+    envidoButtons.querySelectorAll("button").forEach((button) => {
+      button.classList.add("hide");
+    });
     this.game.round.playEnvido(dataResponse === Action.QUIERO);
   }
 
@@ -120,41 +123,12 @@ export class ButtonHandler {
       player: Action.HUMAN,
       action: dataResponse,
     });
-    //this.game.round.waiting = false;
-    //this.game.round.continue();
   }
 
   getExecuteAction() {
-    console.log("CURRETN RESPONSE", this.game.round.currentResponse);
     return this.game.round.currentResponse === Action.ENVIDO
       ? "executeResponseEnvido"
       : "executeResponseTruco";
-    // let lastSang = "";
-    // if (this.game.round.currentResponse === Action.ENVIDO) {
-    //   console.log(
-    //     "@@@@@ ".this.game.round.chants.length,
-    //     this.game.round.chants
-    //   );
-    //   lastSang = !this.game.round.chants.length
-    //     ? ""
-    //     : this.game.round.chants.length[this.game.round.chants.length - 1];
-    // } else if (this.game.round.currentResponse === Action.truco) {
-    //   lastSang = !this.game.round.truco.length
-    //     ? ""
-    //     : this.game.round.truco.length[this.game.round.truco.length - 1];
-    // }
-    // console.log("***** ", lastSang);
-    // switch (lastSang) {
-    //   case Action.ENVIDO:
-    //   case Action.ENVIDO_ENVIDO:
-    //   case Action.REAL_ENVIDO:
-    //   case Action.FALTA_ENVIDO:
-    //     return "executeResponseEnvido";
-    //   case Action.TRUCO:
-    //   case Action.RE_TRUCO:
-    //   case Action.VALE_4:
-    //     return "executeResponseTruco";
-    // }
   }
 
   handleVoicePanel(ev) {

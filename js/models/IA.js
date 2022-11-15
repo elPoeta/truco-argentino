@@ -64,7 +64,6 @@ export class IA extends Player {
   playCard() {
     if (!this.strategyGame) this.strategyGame = this.classicStrategy;
     let index = this.strategyGame();
-    console.log("INDEX CHOICE ", index);
     index = index < 0 ? 0 : index;
     const card = this.cardsInHandHidden[index];
     const len =
@@ -420,7 +419,6 @@ export class IA extends Player {
 
   responseTrucoHand_0({ lastSang, high, low, mediumHigh, diff }) {
     const random = getRandomInt(0, 100);
-    console.log("RESP #### ", lastSang);
     switch (lastSang) {
       case Action.TRUCO:
         if (this.envidoWinnerPoints < 2 && mediumHigh >= 2 && high >= 1)
@@ -695,7 +693,6 @@ export class IA extends Player {
   }
 
   sayTruco({ high, mediumHigh, low, possibleCards, humanBoard }) {
-    console.log("IA-SAY-TRUCO", this.game.round.numberOfHands);
     switch (this.game.round.numberOfHands) {
       case 0:
         return this.sayTrucoHand_0({ mediumHigh });

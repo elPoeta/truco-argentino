@@ -63,7 +63,6 @@ export class Round {
   }
 
   swapTurn() {
-    //console.log("SWAP-TURN ", JSON.stringify(this.playerTurn.name));
     if (this.playerTurn instanceof Human) {
       this.playerTurn = this.game.IAPlayer;
     } else {
@@ -228,8 +227,6 @@ export class Round {
       if (pointsAccumulate) {
         this.game.humanPlayer.hands += 1;
       }
-      console.log("GANA MANO ", this.game.humanPlayer.name);
-
       return this.game.humanPlayer;
     } else {
       if (
@@ -239,14 +236,12 @@ export class Round {
         if (pointsAccumulate) {
           this.game.IAPlayer.hands += 1;
         }
-        console.log("GANA MANO ", this.game.IAPlayer.name);
         return this.game.IAPlayer;
       } else {
         if (pointsAccumulate) {
           this.game.humanPlayer.hands += 1;
           this.game.IAPlayer.hands += 1;
         }
-        console.log("PARDA");
         if (this.game.humanPlayer.itIsHand) {
           return this.game.humanPlayer;
         } else {
@@ -318,14 +313,12 @@ export class Round {
   }
 
   chooseCard() {
-    console.log("CHOOSE ", this.playerTurn);
     if (!this.playerTurn) {
       this.waiting = true;
       console.log("FAIL ", this.playerTruco);
       return;
     }
     if (this.playerTurn instanceof Human) {
-      //console.log("Humano choose card");
       this.waiting = true;
       if (this.canEnvido) {
         this.humanCanSayEnvido();
@@ -334,7 +327,6 @@ export class Round {
         this.humanCanSayTruco();
       }
     } else {
-      console.log("IA play choose");
       if (this.canEnvido) {
         if (this.IACanSayEnvido()) return;
       }
@@ -370,15 +362,11 @@ export class Round {
     this.currentResponse = Action.ENVIDO;
     this.chants.push(action);
     this.whoSang.push(Action.IA);
-    // this.playerEnvido = this.waitingPlayer(this.playerTurn);
     this.playerEnvido = this.waitingPlayer(this.game.IAPlayer);
-    this.humanCanSayEnvido();
-    //log
     return true;
   }
 
   envidoResponse() {
-    // console.log("ENVIDO-response", this.playerEnvido);
     if (this.playerEnvido instanceof Human) {
       this.humanEnvidoResponse();
     } else {
@@ -387,7 +375,6 @@ export class Round {
   }
 
   humanEnvidoResponse() {
-    //console.log("CHANTS ", this.chants);
     const lastSang = this.chants[this.chants.length - 1];
     const envidoButtons = document.querySelector("#envido-buttons");
     const responseButtons = document.querySelector("#response-buttons");
@@ -553,18 +540,14 @@ export class Round {
       : this.truco[this.truco.length - 1];
     const IASang = this.game.IAPlayer.truco({ response: false, lastSang });
     if (IASang !== "") {
-      console.log("IA CAN SAY TRUCO SANG", IASang);
       this.game.logMessage.show({
         player: Action.IA,
         action: IASang,
       });
       this.truco.push(IASang);
       this.currentResponse = Action.TRUCO;
-      //this.playerTruco = this.waitingPlayer(this.playerTurn);
-      //this.canTruco = this.waitingPlayer(this.playerTurn);
       this.playerTruco = this.waitingPlayer(this.game.IAPlayer);
       this.canTruco = this.waitingPlayer(this.game.IAPlayer);
-      //this.trucoResponse();
       return true;
     }
     return false;
@@ -574,7 +557,6 @@ export class Round {
     const lastSang = !this.truco.length
       ? ""
       : this.truco[this.truco.length - 1];
-    //console.log("!!! RESP TRUCO ", lastSang);
     if (this.playerTruco instanceof Human) {
       const trucoButtons = document.querySelector("#truco-buttons");
       trucoButtons
@@ -598,7 +580,6 @@ export class Round {
         player: Action.IA,
         action: response,
       });
-      //console.log("IA RESP TRUCO ", response);
       this.currentResponse = Action.TRUCO;
       switch (response) {
         case Action.QUIERO:
@@ -642,9 +623,7 @@ export class Round {
     return { wanted, notWanted };
   }
   humanPlayCard() {
-    //console.log("### HUMAN PLAY CARD ###");
     this.waiting = false;
-    //this.humanCanPlayCard = false;
     this.swapTurn();
     this.continue();
   }
