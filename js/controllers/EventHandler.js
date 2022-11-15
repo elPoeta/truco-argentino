@@ -58,7 +58,6 @@ export class EventHandler {
   handleTouchStart(ev) {
     ev.preventDefault();
     const touch = ev.touches[0];
-    console.log("TOUCH ", touch);
     this.lastTouch = touch;
     this.dispatchMouseEvent({
       touch,
