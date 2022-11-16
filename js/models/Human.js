@@ -28,6 +28,12 @@ export class Human extends Player {
     card.renderOrder = len;
     this.playedCards.push(card);
     this.game.playedCards.push(card);
+    this.cards = this.cards.map((c) => {
+      if (c.number === card.number && c.suit === card.suit) {
+        c.played = true;
+      }
+      return c;
+    });
     this.cardsInHand.splice(index, 1);
     this.game.round.humanPlayCard();
   }

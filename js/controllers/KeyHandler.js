@@ -1,4 +1,5 @@
 import { Action } from "../models/Action.js";
+import { IA } from "../models/IA.js";
 import { InputHandler } from "./InputHandler.js";
 
 export class KeyHandler extends InputHandler {
@@ -11,6 +12,11 @@ export class KeyHandler extends InputHandler {
     ev.preventDefault();
     const key = ev.key;
     switch (key) {
+      case "1":
+      case "2":
+      case "3":
+        this.handlePlayCardsAction(key);
+        break;
       case "F1":
         if (this.isNotEnableButton("envido")) break;
         this.handleEnvidoActions({ dataEnvido: Action.ENVIDO });
@@ -56,5 +62,16 @@ export class KeyHandler extends InputHandler {
 
   isNotEnableButton(selector) {
     return document.querySelector(`#${selector}`).classList.contains("hide");
+  }
+
+  handlePlayCardsAction(key) {
+    if (this.game.round.playerTurn instanceof IA) return;
+    const card = this.game.humanPlayer.cards[key - 1];
+    if (card.played) return;
+    const index = this.game.humanPlayer.cardsInHand.findIndex(
+      (c) => c.number === card.number && c.suit === card.suit
+    );
+    if (index < 0) return;
+    this.game.humanPlayer.playCard(index);
   }
 }
