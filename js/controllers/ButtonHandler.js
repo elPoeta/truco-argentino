@@ -25,16 +25,16 @@ export class ButtonHandler {
       case "faltaEnvido":
       case "realEnvido":
       case "FaltaEnvido":
-        this.handleEnvidoActions({ target });
+        this.handleEnvidoActions({ dataEnvido: target.dataset.envido });
         break;
       case "truco":
       case "reTruco":
       case "vale4":
-        this.handleTrucoActions({ target });
+        this.handleTrucoActions({ dataTruco: target.dataset.truco });
         break;
       case "quiero":
       case "noQuiero":
-        this.handleResponseActions({ target });
+        this.handleResponseActions({ dataResponse: target.dataset.response });
         break;
       case "irAlMazo":
         this.game.round.humanGoToMazo();
@@ -47,11 +47,10 @@ export class ButtonHandler {
     }
   }
 
-  handleEnvidoActions({ target }) {
+  handleEnvidoActions({ dataEnvido }) {
     const lastSang = !this.game.round.chants.length
       ? ""
       : this.game.round.chants[this.game.round.chants.length - 1];
-    let dataEnvido = target.dataset.envido;
     if (lastSang === Action.ENVIDO && dataEnvido === Action.ENVIDO)
       dataEnvido = Action.ENVIDO_ENVIDO;
     this.game.logMessage.show({
@@ -72,8 +71,7 @@ export class ButtonHandler {
     this.game.round.continue();
   }
 
-  handleTrucoActions({ target }) {
-    const dataTruco = target.dataset.truco;
+  handleTrucoActions({ dataTruco }) {
     this.game.round.truco.push(dataTruco);
     this.game.round.playerTruco = this.game.round.waitingPlayer(
       this.game.humanPlayer
@@ -90,8 +88,7 @@ export class ButtonHandler {
     this.game.round.continue();
   }
 
-  handleResponseActions({ target }) {
-    const dataResponse = target.dataset.response;
+  handleResponseActions({ dataResponse }) {
     const executeAction = this.getExecuteAction();
     this[executeAction](dataResponse);
     document.querySelector("#response-buttons").classList.add("hide");
