@@ -512,6 +512,7 @@ export class Round {
     }
     this.canEnvido = false;
     this.playerEnvido = null;
+    document.querySelector("#response-buttons").classList.add("hide");
   }
 
   humanCanSayTruco() {

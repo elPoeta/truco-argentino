@@ -49,7 +49,6 @@ export class InputHandler {
   handleResponseActions({ dataResponse }) {
     const executeAction = this.getExecuteAction();
     this[executeAction](dataResponse);
-    document.querySelector("#response-buttons").classList.add("hide");
     this.game.round.waiting = false;
     this.game.round.continue();
   }
