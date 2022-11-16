@@ -1,5 +1,6 @@
 import { canvas, menu } from "../app.js";
 import { ButtonHandler } from "../controllers/ButtonHandler.js";
+import { KeyHandler } from "../controllers/KeyHandler.js";
 import { Human } from "./Human.js";
 import { IA } from "./IA.js";
 export class UI {
@@ -9,7 +10,8 @@ export class UI {
     this.panel = document.querySelector(".panel");
     this.voicePanel = document.querySelector(".voice-panel");
     this.cssPosition();
-    this.buttonHandler = new ButtonHandler({ game: this.game, ui: this });
+    this.buttonHandler = new ButtonHandler({ game, ui: this });
+    this.keyHandler = new KeyHandler({ game });
   }
 
   cssPosition() {
