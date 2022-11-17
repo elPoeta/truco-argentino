@@ -153,7 +153,12 @@ export class Round {
     }
   }
 
-  continue(playerWinner) {
+  sleep(ms) {
+    return new Promise((resolve) => setTimeout(resolve, ms));
+  }
+
+  async continue(playerWinner) {
+    await this.sleep(200);
     while (!playerWinner) {
       if (this.playsOnHands === 2 || this.playerDoesNotWant != null) {
         if (this.playsOnHands === 2) {
@@ -358,6 +363,7 @@ export class Round {
       pointsAccumulate: winner,
       lastCard: card,
     });
+
     if (action === "") return false;
     this.canEnvido = false;
     this.game.logMessage.show({
