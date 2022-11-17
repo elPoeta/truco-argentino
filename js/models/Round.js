@@ -53,6 +53,10 @@ export class Round {
     }
   }
 
+  getLastItem(dataArray) {
+    return !dataArray.length ? "" : dataArray[dataArray.length - 1];
+  }
+
   waitingPlayer(player) {
     if (player instanceof Human) {
       return this.game.IAPlayer;
@@ -149,7 +153,12 @@ export class Round {
     }
   }
 
-  continue(playerWinner) {
+  sleep(ms) {
+    return new Promise((resolve) => setTimeout(resolve, ms));
+  }
+
+  async continue(playerWinner) {
+    await this.sleep(200);
     while (!playerWinner) {
       if (this.playsOnHands === 2 || this.playerDoesNotWant != null) {
         if (this.playsOnHands === 2) {
@@ -350,10 +359,11 @@ export class Round {
     const card = this.game.humanPlayer.playedCards[len - 1];
     const { winner } = this.calculateEnvidoPoints();
     let action = this.game.IAPlayer.envido({
-      lastSang: this.chants.length[this.chants.length - 1],
+      lastSang: this.getLastItem(this.chants),
       pointsAccumulate: winner,
       lastCard: card,
     });
+
     if (action === "") return false;
     this.canEnvido = false;
     this.game.logMessage.show({
@@ -376,7 +386,7 @@ export class Round {
   }
 
   humanEnvidoResponse() {
-    const lastSang = this.chants[this.chants.length - 1];
+    const lastSang = this.getLastItem(this.chants);
     const envidoButtons = document.querySelector("#envido-buttons");
     const responseButtons = document.querySelector("#response-buttons");
     responseButtons.classList.remove("hide");
@@ -400,7 +410,7 @@ export class Round {
         ];
     const { winner } = this.calculateEnvidoPoints();
     let action = this.game.IAPlayer.envido({
-      lastSang: this.chants[this.chants.length - 1],
+      lastSang: this.getLastItem(this.chants),
       pointsAccumulate: winner,
       lastCard: card,
     });
@@ -516,9 +526,7 @@ export class Round {
   }
 
   humanCanSayTruco() {
-    const lastSang = !this.truco.length
-      ? ""
-      : this.truco[this.truco.length - 1];
+    const lastSang = this.getLastItem(this.truco);
     const trucoButtons = document.querySelector("#truco-buttons");
     this.currentResponse = Action.TRUCO;
     switch (lastSang) {
@@ -537,9 +545,7 @@ export class Round {
   }
 
   IACanSayTruco() {
-    const lastSang = !this.truco.length
-      ? ""
-      : this.truco[this.truco.length - 1];
+    const lastSang = this.getLastItem(this.truco);
     const IASang = this.game.IAPlayer.truco({ response: false, lastSang });
     if (IASang !== "") {
       this.game.logMessage.show({
@@ -556,9 +562,7 @@ export class Round {
   }
 
   trucoResponse() {
-    const lastSang = !this.truco.length
-      ? ""
-      : this.truco[this.truco.length - 1];
+    const lastSang = this.getLastItem(this.truco);
     if (this.playerTruco instanceof Human) {
       const trucoButtons = document.querySelector("#truco-buttons");
       trucoButtons
@@ -602,9 +606,7 @@ export class Round {
   calculateTrucoPoints() {
     let wanted = 0;
     let notWanted = 0;
-    const lastSang = !this.truco.length
-      ? ""
-      : this.truco[this.truco.length - 1];
+    const lastSang = this.getLastItem(this.truco);
     switch (lastSang) {
       case Action.TRUCO:
         wanted = 2;

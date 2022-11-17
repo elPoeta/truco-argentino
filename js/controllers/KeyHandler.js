@@ -1,3 +1,4 @@
+import { menu } from "../app.js";
 import { Action } from "../models/Action.js";
 import { IA } from "../models/IA.js";
 import { InputHandler } from "./InputHandler.js";
@@ -11,6 +12,7 @@ export class KeyHandler extends InputHandler {
   handleKeydown(ev) {
     ev.preventDefault();
     const key = ev.key;
+    console.log(key);
     switch (key) {
       case "1":
       case "2":
@@ -55,6 +57,9 @@ export class KeyHandler extends InputHandler {
       case "Escape":
         this.handleMenuAction();
         break;
+      case "x":
+        this.closeOverlay();
+        break;
       default:
         break;
     }
@@ -73,5 +78,12 @@ export class KeyHandler extends InputHandler {
     );
     if (index < 0) return;
     this.game.humanPlayer.playCard(index);
+  }
+
+  closeOverlay() {
+    if (document.querySelector("#resultsOverlay"))
+      this.game.ui.handleCloseOverlay();
+    if (document.querySelector("#closeMenuOverlay") && this.game.gameStarted)
+      menu.handleCloseMenu();
   }
 }
