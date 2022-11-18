@@ -75,14 +75,13 @@ export class SpeechRecognition extends InputHandler {
 
   handleTranscription(transcript) {
     transcript = transcript.toLowerCase();
-    console.log(transcript);
     this.logMessage(transcript);
     if (this.words.includes(transcript)) {
       this.handleCommand(this.commands[transcript]);
     } else {
       setTimeout(() => {
         this.logMessage("comando de voz invalido");
-      }, 500);
+      }, 600);
     }
   }
 
