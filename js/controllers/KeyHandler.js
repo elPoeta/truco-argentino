@@ -58,6 +58,9 @@ export class KeyHandler extends InputHandler {
       case "x":
         this.closeOverlay();
         break;
+      case " ":
+        this.game.speechRecognition.run();
+        break;
       default:
         break;
     }
