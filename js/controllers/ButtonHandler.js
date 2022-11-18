@@ -53,6 +53,7 @@ export class ButtonHandler extends InputHandler {
     if (!id) return;
     switch (id) {
       case "commandVoice":
+        this.game.speechRecognition.run();
         break;
       case "fullScreen":
         this.fullscreen.handleFullscreen();

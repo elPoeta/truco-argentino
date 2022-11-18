@@ -14,6 +14,7 @@ import { LogMessage } from "./LogMessage.js";
 import { Round } from "./Round.js";
 import { Score } from "./Score.js";
 import { Speek } from "./Speak.js";
+import { SpeechRecognition } from "./SpeechRecognition.js";
 import { UI } from "./UI.js";
 
 export class Game {
@@ -49,6 +50,12 @@ export class Game {
     this.eventHandler = new EventHandler({ game: this });
     this.ui = new UI({ game: this });
     this.speek = new Speek({ game: this });
+    if ("webkitSpeechRecognition" in window) {
+      this.speechRecognition = new SpeechRecognition({ game: this });
+    } else {
+      document.querySelector("#commandVoice").style.visibility = "hidden";
+    }
+
     this.round = new Round({ game: this });
   }
 
