@@ -75,12 +75,13 @@ export class SpeechRecognition extends InputHandler {
 
   handleTranscription(transcript) {
     transcript = transcript.toLowerCase();
-    console.log(transcript);
+    this.logMessage(transcript);
     if (this.words.includes(transcript)) {
-      this.logMessage(transcript);
       this.handleCommand(this.commands[transcript]);
     } else {
-      this.logMessage("comando de voz invalido");
+      setTimeout(() => {
+        this.logMessage("comando de voz invalido");
+      }, 600);
     }
   }
 
@@ -147,12 +148,16 @@ export class SpeechRecognition extends InputHandler {
         </svg>`;
     } else {
       return `
-        <svg fill="#d97706" class="panel-svg-icon" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" width="36px" height="36px" viewBox="0 0 36 36" version="1.1" preserveAspectRatio="xMidYMid meet">
-          <title>microphone mute</title>
-          <path d="M30,17h-2c0,1.8-0.5,3.5-1.4,5l1.5,1.5C29.3,21.5,29.9,19.3,30,17z" class="clr-i-solid clr-i-solid-path-1"/>
-          <path d="M25,17V9c0-3.9-3.2-7-7.1-6.9c-2.9,0-5.6,1.9-6.5,4.7l13,13C24.8,18.9,25,17.9,25,17z" class="clr-i-solid clr-i-solid-path-2"/>
-          <path d="M25.2,26.6l6.9,6.9l1.4-1.4L4,2.6L2.6,4l8.4,8.4V17c0,3.9,3.1,7,7,7c1.3,0,2.5-0.3,3.6-1l2.2,2.2C22.1,26.4,20.1,27,18,27   c-5.4,0.2-9.8-4.1-10-9.4c0-0.2,0-0.4,0-0.6H6c0.1,6.2,4.8,11.4,11,12v3h-3c-0.6,0-1,0.4-1,1s0.4,1,1,1h8c0.6,0,1-0.4,1-1   s-0.4-1-1-1h-3v-3C21.2,28.8,23.4,28,25.2,26.6z" class="clr-i-solid clr-i-solid-path-3"/>
-          <rect x="0" y="0" width="36" height="36" fill-opacity="0"/>
+        <svg fill="#d97706" class="panel-svg-icon" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" version="1.1" id="Layer_1" x="0px" y="0px" viewBox="0 0 488.9 488.9" style="enable-background:new 0 0 488.9 488.9;" xml:space="preserve">
+          <g>
+            <g>
+              <path d="M243.9,0c-51,0-92.6,41.6-92.6,92.6v189.3c0,43.8,30.8,80.7,71.8,90.2v75.2H195c-11.4,0-20.8,9.4-20.8,20.8    s9.4,20.8,20.8,20.8h97.8c11.4,0,20.8-9.4,20.8-20.8s-9.4-20.8-20.8-20.8h-28.1v-75.2c41-9.5,71.8-46.4,71.8-90.2V92.6    C336.5,41.6,294.9,0,243.9,0z M295.9,282c0,29.1-22.9,52-52,52s-52-22.9-52-52V92.6c0-29.1,22.9-52,52-52s52,23.9,52,52V282z"/>
+              <path d="M450.9,91.6c-8.3-8.3-20.8-8.3-29.1-1c-8.3,8.3-8.3,20.8-1,29.1c35.4,37.5,35.4,98.8,0,136.3c-7.3,8.3-7.3,21.8,1,29.1    c3.1,3.1,15.4,10.2,29.1-1C500.8,231,500.8,144.6,450.9,91.6z"/>
+              <path d="M407.2,133.2c-8.3-8.3-20.8-8.3-29.1-1c-8.3,8.3-8.3,20.8-1,29.1c13.5,14.6,13.5,37.5,0,52c-7.3,8.3-7.3,21.8,1,29.1    c3.1,3.1,15.7,10.6,29.1-1C435.3,211.2,435.3,163.4,407.2,133.2z"/>
+              <path d="M68.1,119.7c7.3-8.3,7.3-20.8-1-29.1c-8.3-7.3-20.8-7.3-29.1,1c-49.9,53.1-49.9,139.4,0,192.5c13.8,11.2,26,4.2,29.1,1    c8.3-7.3,8.3-20.8,1-29.1C32.7,218.5,32.7,157.1,68.1,119.7z"/>
+              <path d="M110.7,132.1c-8.3-7.3-20.8-7.3-29.1,1c-28.1,30.2-28.1,78,0,108.2c13.4,11.6,26,4.2,29.1,1c8.3-7.3,8.3-20.8,1-29.1    c-13.5-14.6-13.5-37.5,0-52C119,153,119,140.5,110.7,132.1z"/>
+            </g>
+          </g>
         </svg>`;
     }
   }
