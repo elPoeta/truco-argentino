@@ -1,5 +1,6 @@
 import { menu } from "../app.js";
 import { Action } from "../models/Action.js";
+import { IA } from "../models/IA.js";
 export class InputHandler {
   constructor({ game }) {
     this.game = game;
@@ -91,5 +92,20 @@ export class InputHandler {
 
   handleMenuAction() {
     menu.render();
+  }
+
+  handlePlayCardsAction(key) {
+    if (this.game.round.playerTurn instanceof IA) return;
+    const card = this.game.humanPlayer.cards[key - 1];
+    if (card.played) return;
+    const index = this.game.humanPlayer.cardsInHand.findIndex(
+      (c) => c.number === card.number && c.suit === card.suit
+    );
+    if (index < 0) return;
+    this.game.humanPlayer.playCard(index);
+  }
+
+  isNotEnableButton(selector) {
+    return document.querySelector(`#${selector}`).classList.contains("hide");
   }
 }
