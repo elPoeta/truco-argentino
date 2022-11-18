@@ -1,8 +1,8 @@
 import { Action } from "./Action.js";
-
-export class SpeechRecognition {
+import { InputHandler } from "../controllers/InputHandler.js";
+export class SpeechRecognition extends InputHandler {
   constructor({ game }) {
-    this.game = game;
+    super({ game });
     this.commandVoice = document.querySelector("#commandVoice");
     this.words = [
       "envido",
@@ -15,7 +15,31 @@ export class SpeechRecognition {
       "quiero",
       "no quiero",
       "me voy al mazo",
+      "jugar carta 1",
+      "jugar carta 2",
+      "jugar carta 3",
+      "jugar carta uno",
+      "jugar carta dos",
+      "jugar carta tres",
     ];
+    this.commands = {
+      envido: Action.ENVIDO,
+      "real envido": Action.REAL_ENVIDO,
+      "falta envido": Action.FALTA_ENVIDO,
+      truco: Action.TRUCO,
+      "quiero retruco": Action.RE_TRUCO,
+      "quiero vale cuatro": Action.VALE_4,
+      "quiero vale 4": Action.VALE_4,
+      quiero: Action.QUIERO,
+      "no quiero": Action.NO_QUIERO,
+      "me voy al mazo": Action.MAZO,
+      "jugar carta 1": 1,
+      "jugar carta 2": 2,
+      "jugar carta 3": 3,
+      "jugar carta uno": 1,
+      "jugar carta dos": 2,
+      "jugar carta tres": 3,
+    };
   }
 
   run() {
@@ -51,10 +75,59 @@ export class SpeechRecognition {
 
   handleTranscription(transcript) {
     transcript = transcript.toLowerCase();
+    console.log(transcript);
     if (this.words.includes(transcript)) {
       this.logMessage(transcript);
+      this.handleCommand(this.commands[transcript]);
     } else {
       this.logMessage("comando de voz invalido");
+    }
+  }
+
+  handleCommand(command) {
+    switch (command) {
+      case 1:
+      case 2:
+      case 3:
+        this.handlePlayCardsAction(command);
+        break;
+      case Action.ENVIDO:
+        if (this.isNotEnableButton("envido")) break;
+        this.handleEnvidoActions({ dataEnvido: Action.ENVIDO });
+        break;
+      case Action.REAL_ENVIDO:
+        if (this.isNotEnableButton("realEnvido")) break;
+        this.handleEnvidoActions({ dataEnvido: Action.REAL_ENVIDO });
+        break;
+      case Action.FALTA_ENVIDO:
+        if (this.isNotEnableButton("faltaEnvido")) break;
+        this.handleEnvidoActions({ dataEnvido: Action.FALTA_ENVIDO });
+        break;
+      case Action.TRUCO:
+        if (this.isNotEnableButton("truco")) break;
+        this.handleTrucoActions({ dataTruco: Action.TRUCO });
+        break;
+      case Action.RE_TRUCO:
+        if (this.isNotEnableButton("reTruco")) break;
+        this.handleTrucoActions({ dataTruco: Action.RE_TRUCO });
+        break;
+      case Action.VALE_4:
+        if (this.isNotEnableButton("vale4")) break;
+        this.handleTrucoActions({ dataTruco: Action.VALE_4 });
+        break;
+      case Action.QUIERO:
+        if (this.isNotEnableButton("response-buttons")) break;
+        this.handleResponseActions({ dataResponse: Action.QUIERO });
+        break;
+      case Action.NO_QUIERO:
+        if (this.isNotEnableButton("response-buttons")) break;
+        this.handleResponseActions({ dataResponse: Action.NO_QUIERO });
+        break;
+      case Action.MAZO:
+        this.handleMazoAction();
+        break;
+      default:
+        break;
     }
   }
 

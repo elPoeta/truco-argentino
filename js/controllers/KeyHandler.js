@@ -1,6 +1,5 @@
 import { menu } from "../app.js";
 import { Action } from "../models/Action.js";
-import { IA } from "../models/IA.js";
 import { InputHandler } from "./InputHandler.js";
 
 export class KeyHandler extends InputHandler {
@@ -12,7 +11,6 @@ export class KeyHandler extends InputHandler {
   handleKeydown(ev) {
     ev.preventDefault();
     const key = ev.key;
-    console.log(key);
     switch (key) {
       case "1":
       case "2":
@@ -63,21 +61,6 @@ export class KeyHandler extends InputHandler {
       default:
         break;
     }
-  }
-
-  isNotEnableButton(selector) {
-    return document.querySelector(`#${selector}`).classList.contains("hide");
-  }
-
-  handlePlayCardsAction(key) {
-    if (this.game.round.playerTurn instanceof IA) return;
-    const card = this.game.humanPlayer.cards[key - 1];
-    if (card.played) return;
-    const index = this.game.humanPlayer.cardsInHand.findIndex(
-      (c) => c.number === card.number && c.suit === card.suit
-    );
-    if (index < 0) return;
-    this.game.humanPlayer.playCard(index);
   }
 
   closeOverlay() {
