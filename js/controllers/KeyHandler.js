@@ -55,6 +55,9 @@ export class KeyHandler extends InputHandler {
       case "Escape":
         this.handleMenuAction();
         break;
+      case "F11":
+        this.game.ui.buttonHandler.fullscreen.handleFullscreen();
+        break;
       case "x":
         this.closeOverlay();
         break;
