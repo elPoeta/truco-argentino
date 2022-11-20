@@ -9,6 +9,7 @@ export class KeyHandler extends InputHandler {
   }
 
   handleKeydown(ev) {
+    if (document.querySelector('#closeMenuOverlay')) return;
     ev.preventDefault();
     const key = ev.key;
     switch (key) {
@@ -65,6 +66,7 @@ export class KeyHandler extends InputHandler {
         this.game.speechRecognition.run();
         break;
       default:
+        console.log()
         break;
     }
   }
