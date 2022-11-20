@@ -1,3 +1,5 @@
+import { Help } from "./Help.js";
+
 export class Menu {
   constructor({ game }) {
     this.game = game;
@@ -26,18 +28,16 @@ export class Menu {
   menuTemplate() {
     const { playerName, scoreLimit, enableIAVoice } = this.getOptions();
     return `
-    <i id="closeMenuOverlay" class="closeResultOverlay" style="${
-      !this.game.gameStarted ? "display:none;" : ""
-    }">
+    <i id="closeMenuOverlay" class="closeResultOverlay" style="${!this.game.gameStarted ? "display:none;" : ""
+      }">
       <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="currentColor" >
         <path fill-rule="evenodd" d="M5.47 5.47a.75.75 0 011.06 0L12 10.94l5.47-5.47a.75.75 0 111.06 1.06L13.06 12l5.47 5.47a.75.75 0 11-1.06 1.06L12 13.06l-5.47 5.47a.75.75 0 01-1.06-1.06L10.94 12 5.47 6.53a.75.75 0 010-1.06z" clip-rule="evenodd" />
       </svg>
     </i>
     <section class="menu-container">
       <figure class="menu-ribbon-image-container">
-        <img class="ribbon-image" src='${
-          document.querySelector(`#menuRibbonImg`).src
-        }' alt="ribbon">
+        <img class="ribbon-image" src='${document.querySelector(`#menuRibbonImg`).src
+      }' alt="ribbon">
       </figure>
       <div class="menu-items-container">
         <div class="menu-items">
@@ -48,15 +48,13 @@ export class Menu {
           <h3>Puntos</h3>
           <div class="menu-items-radio">
             <label class="radio-label">
-              <input type="radio" id="limit30" name="scoreLimit" value='30' ${
-                scoreLimit === 30 ? "checked" : ""
-              } />30
+              <input type="radio" id="limit30" name="scoreLimit" value='30' ${scoreLimit === 30 ? "checked" : ""
+      } />30
 	            <i></i>
             </label>
             <label class="radio-label">
-              <input type="radio" id="limit15" name="scoreLimit" value='15' ${
-                scoreLimit === 15 ? "checked" : ""
-              } />15
+              <input type="radio" id="limit15" name="scoreLimit" value='15' ${scoreLimit === 15 ? "checked" : ""
+      } />15
               <i></i>
             </label>
           </div>
@@ -72,6 +70,13 @@ export class Menu {
             <span class="btn-content">Nuevo Juego</span>
           </button>
         </div>
+        <div class="help-container">
+          <i id="helpIcon" class="btn-selector" >
+            <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="currentColor" class="menu-item-svg">
+              <path fill-rule="evenodd" d="M2.25 12c0-5.385 4.365-9.75 9.75-9.75s9.75 4.365 9.75 9.75-4.365 9.75-9.75 9.75S2.25 17.385 2.25 12zm11.378-3.917c-.89-.777-2.366-.777-3.255 0a.75.75 0 01-.988-1.129c1.454-1.272 3.776-1.272 5.23 0 1.513 1.324 1.513 3.518 0 4.842a3.75 3.75 0 01-.837.552c-.676.328-1.028.774-1.028 1.152v.75a.75.75 0 01-1.5 0v-.75c0-1.279 1.06-2.107 1.875-2.502.182-.088.351-.199.503-.331.83-.727.83-1.857 0-2.584zM12 18a.75.75 0 100-1.5.75.75 0 000 1.5z" clip-rule="evenodd" />
+            </svg>
+          </i>
+        </div>        
       </div>
     </section>
     `;
@@ -114,6 +119,9 @@ export class Menu {
       case "voiceIAIcon":
         this.handleIAVoice();
         break;
+      case "helpIcon":
+        this.handleHelp();
+        break;
       default:
         break;
     }
@@ -124,6 +132,11 @@ export class Menu {
     const dataVoice = voiceIcon.dataset.enablevoice == "true";
     voiceIcon.dataset.enablevoice = !dataVoice;
     voiceIcon.innerHTML = this.getSoundIcon(!dataVoice);
+  }
+
+  handleHelp() {
+    const help = new Help();
+    help.show();
   }
 
   handleNewGameAction() {
