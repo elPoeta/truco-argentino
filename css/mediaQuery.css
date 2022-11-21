@@ -161,6 +161,17 @@
   .menu-item-svg {
     width: 2rem;
   }
+
+  .help-container{
+  width: 95vw;
+  padding: 25px;
+
+}
+.help-container p {
+  font-size: 1.2rem;
+}
+
+
 }
 
 @media (max-width: 900px) {
@@ -213,7 +224,10 @@
     justify-content: center;
     gap: 20px;
   }
-
+ .closeResultOverlay {
+    top: -5px;
+    right: 0px;
+ }
   .result-container h3 {
     font-size: 1.5rem;
   }
@@ -326,6 +340,16 @@
   .menu-item-svg {
     width: 2rem;
   }
+
+  .help-container{
+  width: 95vw;
+  padding: 25px;
+}
+
+.help-container p {
+  font-size: 1.2rem;
+}
+
 }
 
 @media (max-width: 1280px) and (min-width: 901px) {
