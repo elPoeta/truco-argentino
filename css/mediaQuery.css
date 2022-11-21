@@ -126,27 +126,26 @@
     font-size: 18px;
   }
 
-  .radio-label input[type=radio]+i {
+  .radio-label input[type="radio"] + i {
     height: 25px;
     width: 25px;
     border-radius: 100%;
     left: 15px;
   }
 
-  .radio-label input[type=radio]+i:before {
+  .radio-label input[type="radio"] + i:before {
     height: 13px;
     width: 13px;
     top: 4px;
     left: 4px;
-
   }
 
-  .radio-label input[type=radio]:checked+i:before {
+  .radio-label input[type="radio"]:checked + i:before {
     transform: scale(1);
     opacity: 1;
   }
 
-  .radio-label:hover input[type=radio]:not(:checked)+i {
+  .radio-label:hover input[type="radio"]:not(:checked) + i {
     background: #f8b569;
     cursor: pointer;
   }
@@ -161,12 +160,10 @@
 
   .menu-item-svg {
     width: 2rem;
-    fill: #d97706;
-    cursor: pointer;
   }
 }
 
-@media (max-width: 900px)  {
+@media (max-width: 900px) {
   .panel {
     overflow-y: auto;
     overflow-x: hidden;
@@ -294,27 +291,26 @@
     font-size: 15px;
   }
 
-  .radio-label input[type=radio]+i {
+  .radio-label input[type="radio"] + i {
     height: 25px;
     width: 25px;
     border-radius: 100%;
     left: 15px;
   }
 
-  .radio-label input[type=radio]+i:before {
+  .radio-label input[type="radio"] + i:before {
     height: 13px;
     width: 13px;
     top: 4px;
     left: 4px;
-
   }
 
-  .radio-label input[type=radio]:checked+i:before {
+  .radio-label input[type="radio"]:checked + i:before {
     transform: scale(1);
     opacity: 1;
   }
 
-  .radio-label:hover input[type=radio]:not(:checked)+i {
+  .radio-label:hover input[type="radio"]:not(:checked) + i {
     background: #f8b569;
     cursor: pointer;
   }
@@ -329,16 +325,14 @@
 
   .menu-item-svg {
     width: 2rem;
-    fill: #d97706;
-    cursor: pointer;
   }
 }
 
 @media (max-width: 1280px) and (min-width: 901px) {
-  .btn {   
+  .btn {
     font-size: 1.1rem;
     margin: 8px 0;
     padding: 15px 20px;
     clip-path: polygon(88% 0, 100% 33%, 100% 100%, 11% 100%, 0% 69%, 0 0);
   }
-} 
+}
