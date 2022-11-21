@@ -24,6 +24,8 @@ export class Help {
     <label for="tab1">Keyboard</label>
     <input id="tab2" type="radio" name="tabs">
     <label for="tab2">Command voice</label>
+    <input id="tab3" type="radio" name="tabs">
+    <label for="tab3">Reglamento</label>
     <section id="keyboardContent" class="help-content">
       <p>Envido: <span>F1</span></p>
       <p>Real Envido: <span>F2</span></p>
@@ -54,7 +56,16 @@ export class Help {
       <p>Carta 1: <span>Jugar Carta 1</span></p>
       <p>Carta 2: <span>Jugar Carta 2</span></p>
       <p>Carta 3: <span>Jugar Carta 3</span></p>
-    </section
+    </section>
+    <section id="reglamentoContent" class="help-content">
+      <iframe
+        src="https://asart.com.ar/wp-content/uploads/reglamento/reglamento-oficial-asart.pdf#toolbar=0&navpanes=0&scrollbar=0"
+        frameBorder="0"
+        scrolling="auto"
+        height="100%"
+        width="100%"
+      ></iframe>
+    </section>
   </div>
   `;
   }

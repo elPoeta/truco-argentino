@@ -68,7 +68,8 @@
 }
 
 #tab1:checked ~ #keyboardContent,
-#tab2:checked ~ #voiceCommandContent {
+#tab2:checked ~ #voiceCommandContent,
+#tab3:checked ~ #reglamentoContent {
   display: block;
 }
 
