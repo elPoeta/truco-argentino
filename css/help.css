@@ -1,0 +1,75 @@
+.help-container{
+  width: 50vw;
+  padding: 50px;
+  margin: 0 auto;
+  background: #0f172a;
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  border-radius: 10px;
+  border: 3px solid #d97706;
+  height: 80vh;
+  overflow: hidden;
+}
+
+.help-container p {
+  margin: 0 0 20px;
+  line-height: 1.5;
+  color: #fff;
+  font-size: 1.6rem;
+  letter-spacing: 1px;
+}
+
+.help-content {
+  display: none;
+  padding: 20px 0 0;
+  border-top: 1px solid #d97706;
+  overflow-y: auto;
+  height: 65vh;
+}
+
+.help-content span {
+  color: #d97706;
+  letter-spacing: 3px;
+}
+
+.help-container input {
+  display: none;
+}
+
+.help-container label {
+  display: inline-block;
+  margin: 0 0 -1px;
+  padding: 15px 25px;
+  font-weight: 600;
+  text-align: center;
+  color: #bbb;
+  border: 1px solid transparent;
+  letter-spacing: 2px;
+}
+
+.help-container label:before {
+  font-weight: normal;
+  margin-right: 10px;
+}
+
+
+.help-container label:hover {
+  color: #888;
+  cursor: pointer;
+}
+
+.help-container input:checked + label {
+  color: #d97706;
+  border: 1px solid #d97706;
+  border-top: 2px solid #d97706;
+  border-bottom: 1px solid #d97706;
+}
+
+#tab1:checked ~ #keyboardContent,
+#tab2:checked ~ #voiceCommandContent,
+#tab3:checked ~ #reglamentoContent {
+  display: block;
+}
+
