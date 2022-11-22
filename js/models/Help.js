@@ -21,12 +21,14 @@ export class Help {
   </i>
   <div class="help-container">
     <input id="tab1" type="radio" name="tabs" checked>
-    <label for="tab1">Keyboard</label>
+    <label for="tab1">Teclado</label>
     <input id="tab2" type="radio" name="tabs">
-    <label for="tab2">Command voice</label>
+    <label for="tab2">Voz</label>
     <input id="tab3" type="radio" name="tabs">
-    <label for="tab3">Reglamento</label>
+    <label for="tab3">Reglas</label>
     <section id="keyboardContent" class="help-content">
+      <h2>Controles de teclado</h2>
+      <hr class="result-divide-line" style="margin: 10px 0;"/>
       <p>Envido: <span>F1</span></p>
       <p>Real Envido: <span>F2</span></p>
       <p>Falta Envido: <span>F3</span></p>
@@ -44,6 +46,8 @@ export class Help {
       <p>Carta 3: <span>3</span></p>
     </section>
     <section id="voiceCommandContent" class="help-content">
+      <h2>Controles de voz</h2>
+      <hr class="result-divide-line" style="margin: 10px 0;"/>
       <p>Envido: <span>Envido</span></p>
       <p>Real Envido: <span>Real Envido</span></p>
       <p>Falta Envido: <span>Falta Envido</span></p>

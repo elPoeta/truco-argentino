@@ -167,9 +167,19 @@
   padding: 25px;
 
 }
+.help-container label {
+  padding: 10px 20px;
+}
+
+.help-content h2 {
+  font-size: 1.5rem;
+
+}
+
 .help-container p {
   font-size: 1.2rem;
 }
+
 
 
 }
@@ -348,6 +358,14 @@
 
 .help-container p {
   font-size: 1.2rem;
+}
+.help-container label {
+  padding: 10px 20px;
+}
+
+.help-content h2 {
+  font-size: 1.5rem;
+
 }
 
 }

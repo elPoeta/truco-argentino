@@ -29,6 +29,13 @@
   height: 65vh;
 }
 
+.help-content h2 {
+  text-align: center;
+  color: #d97706;
+  font-size: 2rem;
+  letter-spacing: 2px;
+}
+
 .help-content span {
   color: #d97706;
   letter-spacing: 3px;
@@ -65,7 +72,7 @@
   border-top: 2px solid #d97706;
   border-left: 1px solid #d97706;
   border-right: 1px solid #d97706;
-  border-bottom: 1px solid #0f172a;
+  border-bottom: 5px solid #0f172a;
 }
 
 #tab1:checked ~ #keyboardContent,
