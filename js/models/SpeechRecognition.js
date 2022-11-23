@@ -142,13 +142,13 @@ export class SpeechRecognition extends InputHandler {
   microphoneSvg(type) {
     if (type === "unlocked") {
       return `
-        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="#d97706" class="panel-svg-icon">
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="#59c1fe" class="panel-svg-icon">
           <path d="M8.25 4.5a3.75 3.75 0 117.5 0v8.25a3.75 3.75 0 11-7.5 0V4.5z" />
           <path d="M6 10.5a.75.75 0 01.75.75v1.5a5.25 5.25 0 1010.5 0v-1.5a.75.75 0 011.5 0v1.5a6.751 6.751 0 01-6 6.709v2.291h3a.75.75 0 010 1.5h-7.5a.75.75 0 010-1.5h3v-2.291a6.751 6.751 0 01-6-6.709v-1.5A.75.75 0 016 10.5z" />
         </svg>`;
     } else {
       return `
-        <svg fill="#d97706" class="panel-svg-icon" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" version="1.1" id="Layer_1" x="0px" y="0px" viewBox="0 0 488.9 488.9" style="enable-background:new 0 0 488.9 488.9;" xml:space="preserve">
+        <svg fill="#59c1fe" class="panel-svg-icon" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" version="1.1" id="Layer_1" x="0px" y="0px" viewBox="0 0 488.9 488.9" style="enable-background:new 0 0 488.9 488.9;" xml:space="preserve">
           <g>
             <g>
               <path d="M243.9,0c-51,0-92.6,41.6-92.6,92.6v189.3c0,43.8,30.8,80.7,71.8,90.2v75.2H195c-11.4,0-20.8,9.4-20.8,20.8    s9.4,20.8,20.8,20.8h97.8c11.4,0,20.8-9.4,20.8-20.8s-9.4-20.8-20.8-20.8h-28.1v-75.2c41-9.5,71.8-46.4,71.8-90.2V92.6    C336.5,41.6,294.9,0,243.9,0z M295.9,282c0,29.1-22.9,52-52,52s-52-22.9-52-52V92.6c0-29.1,22.9-52,52-52s52,23.9,52,52V282z"/>

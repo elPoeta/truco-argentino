@@ -17,7 +17,8 @@
   border: 0;
   outline: none;
   background-color: #0f172a;
-  color: #d97706;
+  /* color: #d97706; */
+  color: #59c1fe;
   cursor: pointer;
   padding: 20px 25px;
   position: relative;
@@ -26,7 +27,8 @@
   font-size: 1.2rem;
   text-transform: uppercase;
   clip-path: polygon(89% 0, 100% 27%, 100% 100%, 10% 100%, 0% 72%, 0 0);
-  border: 2px solid #d97706;
+  /* border: 2px solid #d97706; */
+  border: 2px solid #59c1fe;
   cursor: pointer;
 }
 .btn:hover {
@@ -40,7 +42,8 @@
   bottom: -14px;
   left: -13px;
   background-color: #0f172a;
-  border-top: 2px solid #d97706;
+  /* border-top: 2px solid #d97706; */
+  border-top: 2px solid #59c1fe;
   transform: rotate(45deg);
 }
 
@@ -52,7 +55,8 @@
   top: -14px;
   right: -13px;
   background-color: #0f0f0f;
-  border-bottom: 2px solid #d97706;
+  /* border-bottom: 2px solid #d97706; */
+  border-bottom: 2px solid #59c1fe;
   transform: rotate(45deg);
 }
 .btn-label {
@@ -78,7 +82,8 @@
 .panel-icon {
   display: flex;
   padding: 0.5rem;
-  border: 2px solid #d97706;
+  /* border: 2px solid #d97706; */
+  border: 2px solid #59c1fe;
   background-color: #0f0f0f;
   border-radius: 50%;
   align-items: center;

@@ -8,7 +8,7 @@
   left: 50%;
   transform: translate(-50%, -50%);
   border-radius: 10px;
-  border: 3px solid #d97706;
+  border: 3px solid #59c1fe;
   height: 80vh;
   overflow: hidden;
 }
@@ -24,20 +24,20 @@
 .help-content {
   display: none;
   padding: 20px 0 0;
-  border-top: 1px solid #d97706;
+  border-top: 1px solid #59c1fe;
   overflow-y: auto;
   height: 65vh;
 }
 
 .help-content h2 {
   text-align: center;
-  color: #d97706;
+  color: #59c1fe;
   font-size: 2rem;
   letter-spacing: 2px;
 }
 
 .help-content span {
-  color: #d97706;
+  color: #59c1fe;
   letter-spacing: 3px;
 }
 
@@ -68,10 +68,10 @@
 }
 
 .help-container input:checked + label {
-  color: #d97706;
-  border-top: 2px solid #d97706;
-  border-left: 1px solid #d97706;
-  border-right: 1px solid #d97706;
+  color: #59c1fe;
+  border-top: 2px solid #59c1fe;
+  border-left: 1px solid #59c1fe;
+  border-right: 1px solid #59c1fe;
   border-bottom: 5px solid #0f172a;
 }
 
