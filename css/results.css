@@ -6,10 +6,10 @@
 }
 .closeResultOverlay svg {
   width: 3rem;
-  fill: #ca8a04;
+  fill: #59c1fe;
 }
 .closeResultOverlay svg path {
-  stroke: #ca8a04;
+  stroke: #59c1fe;
 }
 .closeResultOverlay:hover svg {
   fill: #7f1d1d;
@@ -27,7 +27,7 @@
   transform: translate(-50%, -50%);
   max-width: 100%;
   max-height: 100%;
-  color: #ca8a04;
+  color: #59c1fe;
   padding: 20px;
 }
 .result-container h3 {
@@ -47,7 +47,7 @@
 .image-container {
   width: fit-content;
   background: #009688;
-  border: 3px solid #0f172a;
+  border: 3px solid #59c1fe;
   border-radius: 50%;
   justify-self: center;
 }
@@ -89,7 +89,7 @@
   background-image: linear-gradient(
     to right,
     rgba(0, 0, 0, 0),
-    #ff9800,
+    #59c1fe,
     rgba(0, 0, 0, 0)
   );
 }

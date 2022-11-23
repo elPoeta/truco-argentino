@@ -179,12 +179,25 @@
 .help-container p {
   font-size: 1.2rem;
 }
+.help-icon-container {
+  right: 0;
+}
+.lines {
+  height: 3em;
+}
 
-
+.menu-title h1 {
+  font-size: 4em;
+}
+.menu-title h2 {
+  margin: -20px 0px 0px 25px;
+  font-size: 1.5em;
+ }
 
 }
 
-@media (max-width: 900px) {
+/* @media (max-width: 900px) { */
+  @media  (max-width: 900px) and (orientation: landscape) {
   .panel {
     overflow-y: auto;
     overflow-x: hidden;
@@ -367,6 +380,18 @@
   font-size: 1.5rem;
 
 }
+
+.lines {
+  height: 3em;
+}
+
+.menu-title h1 {
+  font-size: 5em;
+}
+.menu-title h2 {
+  margin: -20px 0px 0px 25px;
+  font-size: 2em;
+ }
 
 }
 
