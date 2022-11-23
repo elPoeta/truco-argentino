@@ -1,0 +1,74 @@
+.lines {
+  position: fixed;
+  width: 100%;
+  height: 4em;
+  background: linear-gradient(
+    rgba(89, 193, 254, 0.2) 20%,
+    #59c1fe 40%,
+    #59c1fe 60%,
+    rgba(89, 193, 254, 0.2) 80%
+  );
+  background-size: 1px 0.5em;
+  box-shadow: 0 0 1em rgba(89, 193, 254, 0.4);
+  transform: translateY(-1em);
+  left: 0;
+}
+
+.menu-title h1 {
+  position: relative;
+  font-size: 9em;
+  margin: 0;
+  transform: skew(-15deg);
+  letter-spacing: 0.09em;
+  color: #0f172a;
+}
+.menu-title h1::after {
+  content: "";
+  position: absolute;
+  top: -0.1em;
+  right: 0.05em;
+  width: 0.4em;
+  height: 0.4em;
+  background: radial-gradient(
+      white 3%,
+      rgba(255, 255, 255, 0.3) 15%,
+      rgba(255, 255, 255, 0.05) 60%,
+      transparent 80%
+    ),
+    radial-gradient(rgba(255, 255, 255, 0.2) 50%, transparent 60%) 50% 50%/5%
+      100%,
+    radial-gradient(rgba(255, 255, 255, 0.2) 50%, transparent 60%) 50% 50%/70%
+      5%;
+  background-repeat: no-repeat;
+}
+.menu-title h1 span:first-child {
+  display: block;
+  text-shadow: 0 0 0.1em #8ba2d0, 0 0 0.2em black, 0 0 5em #165ff3;
+  -webkit-text-stroke: 0.06em rgba(0, 0, 0, 0.5);
+}
+.menu-title h1 span:last-child {
+  position: absolute;
+  left: 0;
+  top: 0;
+  background-image: linear-gradient(
+    #032d50 25%,
+    #00a1ef 35%,
+    #ffffff 50%,
+    #ffffff 50%,
+    #00a1ef 55%,
+    #032d50 75%
+  );
+  -webkit-text-stroke: 0.01em #94a0b9;
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+}
+
+.menu-title h2 {
+  margin: 0px 70px 0px 78px;
+  font-size: 3.5em;
+  margin-top: -0.6em;
+  color: white;
+  text-shadow: 0 0 0.05em #fff, 0 0 0.2em #59c1fe, 0 0 0.3em #59c1fe;
+  transform: rotate(-7deg);
+  letter-spacing: 2px;
+}

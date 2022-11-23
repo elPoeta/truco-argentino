@@ -36,11 +36,14 @@ export class Menu {
       </svg>
     </i>
     <section class="menu-container">
-      <figure class="menu-ribbon-image-container">
-        <img class="ribbon-image" src='${
-          document.querySelector(`#menuRibbonImg`).src
-        }' alt="ribbon">
-      </figure>
+      <div class="menu-title">
+        <div class="lines"></div>
+        <h1>
+          <span>TRUCO</span>
+          <span>TRUCO</span>
+        </h1>
+        <h2>argentino</h2>
+      </div>
       <div class="menu-items-container">
         <div class="menu-items">
           <h3>Nombre</h3> 
@@ -71,7 +74,7 @@ export class Menu {
         </div>
         <div class="menu-items">
           <button id="newGame" class="btn btn-selector">
-            <span class="btn-content">Nuevo Juego</span>
+            <span class="btn-content" style="color:#59c1fe;">Nuevo Juego</span>
           </button>
         </div>
         <div class="help-icon-container">

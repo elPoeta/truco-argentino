@@ -4,15 +4,14 @@
   align-items: center;
   background: #0f172a;
   width: 60vw;
-  height: 80vh;
+  height: 85vh;
   overflow-y: auto;
   position: absolute;
   transform: translate(-50%, -50%);
   top: 50%;
   left: 50%;
   border-radius: 10px;
-  border: 3px solid #d97706;
-  color: #d97706;
+  border: 3px solid #59c1fe;
 }
 
 .ribbon-image {
@@ -22,6 +21,7 @@
 
 .menu-items-container {
   margin-top: 50px;
+  color: #fff;
 }
 
 .menu-items {
@@ -44,7 +44,7 @@
 }
 
 .menu-items input[type="text"]:focus {
-  border: 2px solid #d97706;
+  border: 2px solid #59c1fe;
 }
 
 .menu-items-radio {
@@ -84,6 +84,15 @@
   border-radius: 100%;
   left: 15px;
 }
+#newGame{
+  border:2px solid #59c1fe;
+}
+#newGame::after{
+  border-bottom:2px solid #59c1fe;
+}
+#newGame::before{
+  border-top:2px solid #59c1fe;
+}
 
 .radio-label input[type="radio"] + i:before {
   content: "";
@@ -95,7 +104,7 @@
   z-index: 1;
   top: 4px;
   left: 4px;
-  background: #d97706;
+  background: #59c1fe;
   transition: all 0.25s ease;
   transform: scale(0);
   opacity: 0;
@@ -120,13 +129,14 @@
 
 .menu-item-svg {
   width: 3rem;
-  fill: #fff;
+  fill: #0f172a;
+  stroke: #59c1fe;
   cursor: pointer;
 }
 
 .help-icon-container {
   display: inline-block;
   position: absolute;
-  top: 15px;
-  right: 15px;
+  top: 0px;
+  right: 10px;
 }
