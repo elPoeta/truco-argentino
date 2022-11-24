@@ -4,6 +4,12 @@ export class Action {
   static #_RE = "RE";
   static #_FE = "FE";
 
+  static #_F = "F";
+  static #_FQ = "FQ";
+  static #_FA = "FA";
+  static #_CF = "CF";
+  static #_CFR = "CFR";
+
   static #_T = "T";
   static #_RT = "RT";
   static #_V4 = "V4";
@@ -30,6 +36,26 @@ export class Action {
 
   static get FALTA_ENVIDO() {
     return Action.#_FE;
+  }
+
+  static get FLOR() {
+    return Action.#_F;
+  }
+
+  static get CON_FLOR_QUIERO() {
+    return Action.#_FQ;
+  }
+
+  static get CON_FLOR_ME_ACHICO() {
+    return Action.#_FA;
+  }
+
+  static get CONTRA_FLOR() {
+    return Action.#_CF;
+  }
+
+  static get CONTRA_FLOR_AL_RESTO() {
+    return Action.#_CFR;
   }
 
   static get TRUCO() {

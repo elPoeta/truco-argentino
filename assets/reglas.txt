@@ -1,0 +1,11 @@
+La Flor. Obligatorio cantarla. Es cuando un jugador recibe tres cartas del mismo palo y de ganar, se lleva 3 puntos. 
+Si un rival también tiene tres cartas del mismo palo, puede cantarle también con flor quiero: 
+con lo cual el que gane se llevará 4 puntos. Si su flor es muy baja en puntos, puede cantar: con flor me achico, 
+con lo cual el primero que cantó la flor se lleva tres puntos. O puede cantar: contra flor, con lo que la apuesta pasa a manos del primero que cantó. 
+Si este dice no quiero porque su puntaje es bajo y sabe que va a perder, el rival se lleva 4 puntos. 
+Pero si dice quiero a la contra flor el que gane se llevará 6 puntos. Hay otra opción y es que cualquiera de los dos puede subir cantando: 
+contra flor al resto, con lo que el que gane, se llevará la cantidad de puntos que le falte al que va primero para terminar ese chico de 15. 
+En cuanto a las cartas, la flor más alta que se puede tener en las manos es el 7, el 6 y el 5 de un mismo palo, que suman 38 puntos 
+(el palo da siempre 20 y se suman luego las cartas, teniendo en cuenta que el 10, el 11 y el 12 (también llamadas negras) 
+suman siempre cero puntos tanto en la flor como en el envido). En el caso de que las dos flores cantadas sumen la misma cantidad de puntos,
+ganará la apuesta el equipo que sea mano desde el mazo: o sea el que está primero abriendo el juego y bajando la primera carta.
