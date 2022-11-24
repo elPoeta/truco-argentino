@@ -333,6 +333,8 @@ export class Round {
       this.waiting = true;
       if (this.canEnvido) {
         this.humanCanSayEnvido();
+      } else {
+        this.disableHumanEnvido();
       }
       if (this.canTruco === null || this.canTruco === this.playerTurn) {
         this.humanCanSayTruco();
@@ -353,6 +355,15 @@ export class Round {
     envidoButtons.querySelectorAll("button").forEach((button) => {
       if (button.classList.contains("hide")) button.classList.remove("hide");
     });
+  }
+
+  disableHumanEnvido() {
+    if (this.numberOfHands > 0) {
+      const envidoButtons = document.querySelector("#envido-buttons");
+      envidoButtons.querySelectorAll("button").forEach((button) => {
+        button.classList.add("hide");
+      });
+    }
   }
 
   IACanSayEnvido() {
