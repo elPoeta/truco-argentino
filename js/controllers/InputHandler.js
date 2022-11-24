@@ -7,6 +7,7 @@ export class InputHandler {
   }
 
   handleEnvidoActions({ dataEnvido }) {
+    if (this.game.round.envidoBefore) this.game.round.cancelTruco();
     const lastSang = !this.game.round.chants.length
       ? ""
       : this.game.round.chants[this.game.round.chants.length - 1];
