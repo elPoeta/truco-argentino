@@ -116,7 +116,7 @@
 }
 
 .radio-label:hover input[type="radio"]:not(:checked) + i {
-  background: #f8b569;
+  background: #59c1fe;
   cursor: pointer;
 }
 
