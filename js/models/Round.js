@@ -30,6 +30,7 @@ export class Round {
     this.whoSang = [];
     this.envidoStatsFlag = true;
     this.savedPoints = null;
+    this.envidoBefore = false;
 
     this.playerTruco = null;
     this.canTruco = null;
@@ -414,7 +415,6 @@ export class Round {
       pointsAccumulate: winner,
       lastCard: card,
     });
-
     if (action !== "") {
       this.game.logMessage.show({
         player: Action.IA,
@@ -548,6 +548,13 @@ export class Round {
     const lastSang = this.getLastItem(this.truco);
     const IASang = this.game.IAPlayer.truco({ response: false, lastSang });
     if (IASang !== "") {
+      if (this.numberOfHands === 0) {
+        const lastChant = this.getLastItem(this.chants);
+        if (lastChant === "") {
+          this.envidoBefore = true;
+          this.humanCanSayEnvido();
+        }
+      }
       this.game.logMessage.show({
         player: Action.IA,
         action: IASang,
@@ -559,6 +566,18 @@ export class Round {
       return true;
     }
     return false;
+  }
+
+  cancelTruco() {
+    this.truco = [];
+    this.currentResponse = Action.ENVIDO;
+    this.playerTruco = null;
+    this.canTruco = null;
+    this.envidoBefore = false;
+    const trucoButtons = document.querySelector("#truco-buttons");
+    trucoButtons
+      .querySelectorAll("button")
+      .forEach((button) => button.classList.add("hide"));
   }
 
   trucoResponse() {
