@@ -105,7 +105,7 @@ export class Game {
     ctx.beginPath();
     ctx.setLineDash([6]);
     ctx.lineWidth = "4";
-    ctx.strokeStyle = "#59c1fe";
+    ctx.strokeStyle = "#f59e0b";
     ctx.rect(PLAYED_AREA_X, PLAYED_AREA_Y, PLAYED_AREA_W, PLAYED_AREA_H);
     ctx.stroke();
     ctx.restore();
