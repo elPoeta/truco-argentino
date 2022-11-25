@@ -78,7 +78,7 @@ export class Game {
     this.scoreLimit = scoreLimit;
     this.enableIAVoice = enableIAVoice;
     this.playedCards = [];
-    this.round.init();
+    this.round.init({ withFlor: true });
     this.round.start();
     this.pause = false;
     this.gameStarted = true;

@@ -16,9 +16,12 @@ export class Round {
     this.deck = new Deck({ game });
   }
 
-  init() {
+  init({ withFlor }) {
     this.game.ui.hideButtons();
     this.cleanLogs();
+
+    this.withFlor = withFlor;
+
     this.numberOfHands = 0;
     this.playsOnHands = 0;
     this.playerTurn = null;
@@ -31,6 +34,10 @@ export class Round {
     this.envidoStatsFlag = true;
     this.savedPoints = null;
     this.envidoBefore = false;
+
+    this.canFlor = false;
+    this.playerFlor = null;
+    this.flores = [];
 
     this.playerTruco = null;
     this.canTruco = null;
@@ -174,11 +181,19 @@ export class Round {
         }
       }
 
-      if (this.playerEnvido === null && this.playerTruco === null)
+      if (
+        this.playerFlor === null &&
+        this.playerEnvido === null &&
+        this.playerTruco === null
+      ) {
         this.chooseCard();
-      else if (this.playerEnvido !== null) this.envidoResponse();
-      else this.trucoResponse();
-
+      } else if (this.playerFlor !== null) {
+        this.florResponse();
+      } else if (this.playerEnvido !== null) {
+        this.envidoResponse();
+      } else {
+        this.trucoResponse();
+      }
       if (this.waiting === true) break;
     }
     if (playerWinner) {
@@ -211,7 +226,7 @@ export class Round {
 
   startNewRound() {
     this.changeHand();
-    this.init();
+    this.init({ withFlor: this.withFlor });
     this.game.IAPlayer.cardsInHand = this.game.IAPlayer.setCardsInHand();
     this.start();
   }
@@ -351,6 +366,14 @@ export class Round {
   }
 
   humanCanSayEnvido() {
+    if (this.withFlor) {
+      if (this.humanCanSayFlor()) return;
+      if (
+        this.game.IAPlayer.cards[0].suit === this.game.IAPlayer.cards[1].suit &&
+        this.game.IAPlayer.cards[1].suit === this.game.IAPlayer.cards[2].suit
+      )
+        return;
+    }
     const envidoButtons = document.querySelector("#envido-buttons");
     envidoButtons.querySelectorAll("button").forEach((button) => {
       if (button.classList.contains("hide")) button.classList.remove("hide");
@@ -367,6 +390,18 @@ export class Round {
   }
 
   IACanSayEnvido() {
+    if (this.withFlor) {
+      if (this.IACanSayFlor()) {
+        return true;
+      } else if (
+        this.game.humanPlayer.cards[0].suit ===
+          this.game.humanPlayer.cards[1].suit &&
+        this.game.humanPlayer.cards[1].suit ===
+          this.game.humanPlayer.cards[2].suit
+      ) {
+        return false;
+      }
+    }
     const len = this.game.humanPlayer.playedCards.length;
     const card = this.game.humanPlayer.playedCards[len - 1];
     const { winner } = this.calculateEnvidoPoints();
@@ -536,7 +571,86 @@ export class Round {
     document.querySelector("#response-buttons").classList.add("hide");
   }
 
+  // RESPONSE FLOR
+  humanCanSayFlor() {
+    if (
+      this.game.humanPlayer.cards[0].suit ===
+        this.game.humanPlayer.cards[1].suit &&
+      this.game.humanPlayer.cards[1].suit ===
+        this.game.humanPlayer.cards[2].suit
+    ) {
+      this.canFlor = true;
+      this.canEnvido = false;
+      document.querySelector("#flor").classList.remove("hide");
+      return true;
+    }
+    return false;
+  }
+
+  IACanSayFlor() {
+    if (
+      this.game.IAPlayer.cards[0].suit === this.game.IAPlayer.cards[1].suit &&
+      this.game.IAPlayer.cards[1].suit === this.game.IAPlayer.cards[2].suit
+    ) {
+      this.canEnvido = false;
+      this.game.logMessage.show({
+        player: Action.IA,
+        action: Action.FLOR,
+      });
+      this.currentResponse = Action.FLOR;
+      this.flores.push(Action.FLOR);
+      this.whoSang.push(Action.IA);
+      this.playerFlor = this.waitingPlayer(this.game.IAPlayer);
+      return true;
+    }
+    return false;
+  }
+
+  florResponse() {
+    if (this.playerFlor instanceof Human) {
+      this.humanFlorResponse();
+    } else {
+      this.IAFlorResponse();
+    }
+  }
+
+  humanFlorResponse() {}
+
+  IAFlorResponse() {
+    if (
+      this.game.IAPlayer.cards[0].suit === this.game.IAPlayer.cards[1].suit &&
+      this.game.IAPlayer.cards[1].suit === this.game.IAPlayer.cards[2].suit
+    ) {
+      //HANDLE FLOR RESPONSE
+    } else {
+      this.playFlor(Action.QUIERO);
+    }
+  }
+
+  playFlor(action) {
+    const whoSang = this.getLastItem(this.whoSang);
+    switch (action) {
+      case Action.QUIERO:
+        if (whoSang === Action.HUMAN) {
+          this.game.humanPlayer.florWinnerPoints = 3;
+          this.game.humanPlayer.score += 3;
+        } else {
+          this.game.IAPlayer.florWinnerPoints = 3;
+          this.game.IAPlayer.score += 3;
+        }
+        break;
+
+      default:
+        break;
+    }
+    this.canFlor = false;
+    this.playerFlor = null;
+    document.querySelector("#response-buttons").classList.add("hide");
+  }
+
   humanCanSayTruco() {
+    if (this.canFlor) return;
+
     const lastSang = this.getLastItem(this.truco);
     const trucoButtons = document.querySelector("#truco-buttons");
     this.currentResponse = Action.TRUCO;
