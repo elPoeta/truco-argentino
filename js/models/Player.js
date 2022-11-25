@@ -65,4 +65,15 @@ export class Player {
     }
     return points;
   }
+
+  changeSuit(suit) {
+    this.cards = this.cards.map((card) => {
+      card.suit = suit;
+      return card;
+    });
+    this.cardsInHand = this.cardsInHand.map((card) => {
+      card.suit = suit;
+      return card;
+    });
+  }
 }

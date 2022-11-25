@@ -77,6 +77,19 @@ export class InputHandler {
     this.game.round.continue();
   }
 
+  executeResponseFlor(dataResponse) {
+    this.game.logMessage.show({
+      player: Action.HUMAN,
+      action: dataResponse,
+    });
+    const florButtons = document.querySelector("#flor-buttons");
+    florButtons.querySelectorAll("button").forEach((button) => {
+      button.classList.add("hide");
+    });
+    document.querySelector("#noQuiero").classList.remove("hide");
+    this.game.round.playFlor(Action.QUIERO);
+  }
+
   executeResponseEnvido(dataResponse) {
     this.game.logMessage.show({
       player: Action.HUMAN,
@@ -104,9 +117,13 @@ export class InputHandler {
   }
 
   getExecuteAction() {
-    return this.game.round.currentResponse === Action.ENVIDO
-      ? "executeResponseEnvido"
-      : "executeResponseTruco";
+    if (this.game.round.currentResponse === Action.FLOR) {
+      return "executeResponseFlor";
+    } else if (this.game.round.currentResponse === Action.ENVIDO) {
+      return "executeResponseEnvido";
+    } else {
+      return "executeResponseTruco";
+    }
   }
 
   handleMazoAction() {

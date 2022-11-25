@@ -142,6 +142,7 @@ export class Round {
       }
       roundDeck.splice(index, 1);
     }
+    //this.game.humanPlayer.changeSuit("Copa");
   }
 
   getCardCoords(handPlayer, player, count, i) {
@@ -592,6 +593,7 @@ export class Round {
       this.game.IAPlayer.cards[0].suit === this.game.IAPlayer.cards[1].suit &&
       this.game.IAPlayer.cards[1].suit === this.game.IAPlayer.cards[2].suit
     ) {
+      this.cancelTruco();
       this.canEnvido = false;
       this.game.logMessage.show({
         player: Action.IA,
@@ -614,7 +616,16 @@ export class Round {
     }
   }
 
-  humanFlorResponse() {}
+  humanFlorResponse() {
+    const lastSang = this.getLastItem(this.flores);
+    const florButtons = document.querySelector("#envido-buttons");
+    const responseButtons = document.querySelector("#response-buttons");
+    responseButtons.classList.remove("hide");
+    responseButtons.querySelector("#noQuiero").classList.add("hide");
+    this.currentResponse = Action.FLOR;
+
+    this.waiting = true;
+  }
 
   IAFlorResponse() {
     if (
@@ -649,8 +660,14 @@ export class Round {
   }
 
   humanCanSayTruco() {
-    if (this.canFlor) return;
-
+    if (this.canFlor || this.playerFlor) return;
+    if (this.withFlor && this.numberOfHands === 0) {
+      if (
+        this.game.IAPlayer.cards[0].suit === this.game.IAPlayer.cards[1].suit &&
+        this.game.IAPlayer.cards[1].suit === this.game.IAPlayer.cards[2].suit
+      )
+        return;
+    }
     const lastSang = this.getLastItem(this.truco);
     const trucoButtons = document.querySelector("#truco-buttons");
     this.currentResponse = Action.TRUCO;
