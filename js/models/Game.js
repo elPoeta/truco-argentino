@@ -78,13 +78,13 @@ export class Game {
     this.scoreLimit = scoreLimit;
     this.enableIAVoice = enableIAVoice;
     this.playedCards = [];
-    this.round.init({ withFlor: true });
+    this.round.init({ withFlor: false });
     this.round.start();
     this.pause = false;
     this.gameStarted = true;
   }
 
-  update() {}
+  update() { }
 
   draw(ctx) {
     this.drawDahedArea(ctx);
