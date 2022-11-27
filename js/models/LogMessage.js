@@ -48,6 +48,8 @@ export class LogMessage {
         return { msg: "Real Envido", clean: true };
       case Action.FALTA_ENVIDO:
         return { msg: "Falta Envido", clean: true };
+      case Action.FLOR:
+        return { msg: "Flor", clean: true };
       case Action.TRUCO:
         return { msg: "Truco!", clean: true };
       case Action.RE_TRUCO:

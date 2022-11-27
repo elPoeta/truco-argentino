@@ -11,6 +11,7 @@ export class Player {
     this.cards = [];
     this.cardsInHand = [];
     this.envidoWinnerPoints = 0;
+    this.florWinnerPoints = 0;
     this.trucoPoints = 0;
     this.envidoS = [];
     this.realEnvido = [];
@@ -63,5 +64,16 @@ export class Player {
       points = max;
     }
     return points;
+  }
+
+  changeSuit(suit) {
+    this.cards = this.cards.map((card) => {
+      card.suit = suit;
+      return card;
+    });
+    this.cardsInHand = this.cardsInHand.map((card) => {
+      card.suit = suit;
+      return card;
+    });
   }
 }

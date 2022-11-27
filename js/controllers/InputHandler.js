@@ -31,6 +31,28 @@ export class InputHandler {
     this.game.round.continue();
   }
 
+  handleFlorActions({ dataFlor }) {
+    //if (this.game.round.envidoBefore) this.game.round.cancelTruco();
+    //  const lastSang = this.game.round.getLastItem(this.game.round.flores);
+
+    this.game.logMessage.show({
+      player: Action.HUMAN,
+      action: dataFlor,
+    });
+    this.game.round.canFlor = false;
+    this.game.round.flores.push(dataFlor);
+    this.game.round.whoSang.push(Action.HUMAN);
+    this.game.round.waiting = false;
+    this.game.round.playerFlor = this.game.round.waitingPlayer(
+      this.game.humanPlayer
+    );
+    const envidoButtons = document.querySelector("#flor-buttons");
+    envidoButtons.querySelectorAll("button").forEach((button) => {
+      button.classList.add("hide");
+    });
+    this.game.round.continue();
+  }
+
   handleTrucoActions({ dataTruco }) {
     this.game.round.truco.push(dataTruco);
     this.game.round.playerTruco = this.game.round.waitingPlayer(
@@ -53,6 +75,19 @@ export class InputHandler {
     this[executeAction](dataResponse);
     this.game.round.waiting = false;
     this.game.round.continue();
+  }
+
+  executeResponseFlor(dataResponse) {
+    this.game.logMessage.show({
+      player: Action.HUMAN,
+      action: dataResponse,
+    });
+    const florButtons = document.querySelector("#flor-buttons");
+    florButtons.querySelectorAll("button").forEach((button) => {
+      button.classList.add("hide");
+    });
+    document.querySelector("#noQuiero").classList.remove("hide");
+    this.game.round.playFlor(Action.QUIERO);
   }
 
   executeResponseEnvido(dataResponse) {
@@ -82,9 +117,13 @@ export class InputHandler {
   }
 
   getExecuteAction() {
-    return this.game.round.currentResponse === Action.ENVIDO
-      ? "executeResponseEnvido"
-      : "executeResponseTruco";
+    if (this.game.round.currentResponse === Action.FLOR) {
+      return "executeResponseFlor";
+    } else if (this.game.round.currentResponse === Action.ENVIDO) {
+      return "executeResponseEnvido";
+    } else {
+      return "executeResponseTruco";
+    }
   }
 
   handleMazoAction() {

@@ -26,6 +26,13 @@ export class ButtonHandler extends InputHandler {
       case "FaltaEnvido":
         this.handleEnvidoActions({ dataEnvido: target.dataset.envido });
         break;
+      case "flor":
+      case "conFlorQuiero":
+      case "conFlorMeAchico":
+      case "contraFlor":
+      case "contraFlorAlResto":
+        this.handleFlorActions({ dataFlor: target.dataset.flor });
+        break;
       case "truco":
       case "reTruco":
       case "vale4":
