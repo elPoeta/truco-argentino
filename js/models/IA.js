@@ -302,7 +302,7 @@ export class IA extends Player {
   statsEnvido(chants, whoSang, points) {
     if (chants !== undefined && chants !== null)
       for (var i in chants) {
-        if (whoSang[i] === "H")
+        if (whoSang[i] === Action.HUMAN)
           switch (chants[i]) {
             case Action.ENVIDO:
               this.envidoS.push(points);
@@ -326,11 +326,11 @@ export class IA extends Player {
     const possibleCards =
       this.game.round.savedPoints !== null
         ? this.probability
-            .deductCard({
-              points: this.game.round.savedPoints,
-              playedCards: this.game.humanPlayer.playedCards,
-            })
-            .sort((a, b) => b.value - a.value) // Can return null
+          .deductCard({
+            points: this.game.round.savedPoints,
+            playedCards: this.game.humanPlayer.playedCards,
+          })
+          .sort((a, b) => b.value - a.value) // Can return null
         : null;
 
     const IABoard =
@@ -643,8 +643,8 @@ export class IA extends Player {
               else {
                 if (
                   this.playedCards[0].value -
-                    this.game.humanPlayer.playedCards[0].value >
-                    3 &&
+                  this.game.humanPlayer.playedCards[0].value >
+                  3 &&
                   this.game.humanPlayer.playedCards[0].value > 7
                 )
                   return Action.NO_QUIERO;
@@ -662,8 +662,8 @@ export class IA extends Player {
               else {
                 if (
                   this.playedCards[0].value -
-                    this.game.humanPlayer.playedCards[0].value >
-                    3 &&
+                  this.game.humanPlayer.playedCards[0].value >
+                  3 &&
                   this.game.humanPlayer.playedCards[0].value > 7
                 )
                   if (random <= 66) return Action.NO_QUIERO;
