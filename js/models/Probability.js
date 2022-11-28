@@ -46,7 +46,6 @@ export class Probability {
     return sum / cards.length;
   }
 
-  // TODO IMPLEMENT
   deductCard({ points, playedCards }) {
     let posibleCards = [];
     if (points <= 7) {

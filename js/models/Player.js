@@ -49,7 +49,8 @@ export class Player {
               return b - a;
             });
           }
-          points = 20 + pair[prop][0] + pair[prop][1];
+          const withFlor = this.game.round.withFlor ? pair[prop][2] : 0;
+          points = 20 + pair[prop][0] + pair[prop][1] + withFlor;
           break;
         }
       }

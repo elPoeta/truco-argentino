@@ -46,8 +46,8 @@ export class InputHandler {
     this.game.round.playerFlor = this.game.round.waitingPlayer(
       this.game.humanPlayer
     );
-    const envidoButtons = document.querySelector("#flor-buttons");
-    envidoButtons.querySelectorAll("button").forEach((button) => {
+    const florButtons = document.querySelector("#flor-buttons");
+    florButtons.querySelectorAll("button").forEach((button) => {
       button.classList.add("hide");
     });
     this.game.round.continue();
@@ -86,8 +86,8 @@ export class InputHandler {
     florButtons.querySelectorAll("button").forEach((button) => {
       button.classList.add("hide");
     });
-    document.querySelector("#noQuiero").classList.remove("hide");
-    this.game.round.playFlor(Action.QUIERO);
+    //document.querySelector("#noQuiero").classList.remove("hide");
+    this.game.round.playFlor(dataResponse);
   }
 
   executeResponseEnvido(dataResponse) {

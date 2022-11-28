@@ -169,6 +169,33 @@ export class IA extends Player {
     return index;
   }
 
+  flor({ lastSang }) {
+    const points = this.getEnvidoPoints();
+    console.log("FLOR-POINTS ", points);
+    switch (lastSang) {
+      case Action.FLOR:
+        if (points >= 30) {
+          return Action.CONTRA_FLOR_AL_RESTO;
+        } else if (points >= 28) {
+          return Action.CONTRA_FLOR;
+        } else if (points >= 25) {
+          return Action.CON_FLOR_QUIERO;
+        } else {
+          return Action.CON_FLOR_ME_ACHICO;
+        }
+      case Action.CONTRA_FLOR:
+        if (points >= 30) {
+          return Action.CONTRA_FLOR_AL_RESTO;
+        } else if (points >= 28) {
+          return Action.QUIERO;
+        } else {
+          return Action.NO_QUIERO;
+        }
+      default:
+        return Action.QUIERO;
+    }
+  }
+
   envido({ lastSang, pointsAccumulate, lastCard }) {
     const points = this.getEnvidoPoints();
     const humanPoints = this.game.humanPlayer.score;
@@ -326,11 +353,11 @@ export class IA extends Player {
     const possibleCards =
       this.game.round.savedPoints !== null
         ? this.probability
-          .deductCard({
-            points: this.game.round.savedPoints,
-            playedCards: this.game.humanPlayer.playedCards,
-          })
-          .sort((a, b) => b.value - a.value) // Can return null
+            .deductCard({
+              points: this.game.round.savedPoints,
+              playedCards: this.game.humanPlayer.playedCards,
+            })
+            .sort((a, b) => b.value - a.value) // Can return null
         : null;
 
     const IABoard =
@@ -643,8 +670,8 @@ export class IA extends Player {
               else {
                 if (
                   this.playedCards[0].value -
-                  this.game.humanPlayer.playedCards[0].value >
-                  3 &&
+                    this.game.humanPlayer.playedCards[0].value >
+                    3 &&
                   this.game.humanPlayer.playedCards[0].value > 7
                 )
                   return Action.NO_QUIERO;
@@ -662,8 +689,8 @@ export class IA extends Player {
               else {
                 if (
                   this.playedCards[0].value -
-                  this.game.humanPlayer.playedCards[0].value >
-                  3 &&
+                    this.game.humanPlayer.playedCards[0].value >
+                    3 &&
                   this.game.humanPlayer.playedCards[0].value > 7
                 )
                   if (random <= 66) return Action.NO_QUIERO;
