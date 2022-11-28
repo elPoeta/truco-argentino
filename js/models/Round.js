@@ -142,7 +142,7 @@ export class Round {
       }
       roundDeck.splice(index, 1);
     }
-    // this.game.IAPlayer.changeSuit("Copa");
+    //this.game.IAPlayer.changeSuit("Copa");
     //this.game.humanPlayer.changeSuit("Oro");
   }
 
