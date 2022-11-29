@@ -413,7 +413,6 @@ export class Round {
 
     if (action === "") return false;
     this.canEnvido = false;
-    waiting = false;
     this.game.logMessage.show({
       player: Action.IA,
       action,
