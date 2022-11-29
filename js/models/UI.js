@@ -74,10 +74,16 @@ export class UI {
                 <h5>Puntos Envido: ${
                   this.game.humanPlayer.envidoWinnerPoints
                 }</h5>
+                ${
+                  this.game.round.withFlor
+                    ? ` <h5>Puntos Flor: ${this.game.humanPlayer.florWinnerPoints}</h5>`
+                    : ""
+                }
                 <h5>Puntos Truco: ${this.game.humanPlayer.trucoPoints}</h5>
                 <h5>Puntos Ronda: ${
                   this.game.humanPlayer.envidoWinnerPoints +
-                  this.game.humanPlayer.trucoPoints
+                  this.game.humanPlayer.trucoPoints +
+                  this.game.humanPlayer.florWinnerPoints
                 }</h5>
                 <h5>Puntos Totales: ${this.game.humanPlayer.score}</h5>
               </div>
@@ -94,10 +100,16 @@ export class UI {
               <h4>${iaMsg}</h4>
               <div>
                 <h5>Puntos Envido: ${this.game.IAPlayer.envidoWinnerPoints}</h5>
+                ${
+                  this.game.round.withFlor
+                    ? ` <h5>Puntos Flor: ${this.game.IAPlayer.florWinnerPoints}</h5>`
+                    : ""
+                }
                 <h5>Puntos Truco: ${this.game.IAPlayer.trucoPoints}</h5>
                 <h5>Puntos Ronda: ${
                   this.game.IAPlayer.envidoWinnerPoints +
-                  this.game.IAPlayer.trucoPoints
+                  this.game.IAPlayer.trucoPoints +
+                  this.game.IAPlayer.florWinnerPoints
                 }</h5>
                 <h5>Puntos Totales: ${this.game.IAPlayer.score}</h5>
               </div>
