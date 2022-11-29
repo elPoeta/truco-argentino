@@ -32,25 +32,29 @@ export class InputHandler {
   }
 
   handleFlorActions({ dataFlor }) {
-    //if (this.game.round.envidoBefore) this.game.round.cancelTruco();
-    //  const lastSang = this.game.round.getLastItem(this.game.round.flores);
-
     this.game.logMessage.show({
       player: Action.HUMAN,
       action: dataFlor,
     });
-    this.game.round.canFlor = false;
-    this.game.round.flores.push(dataFlor);
-    this.game.round.whoSang.push(Action.HUMAN);
-    this.game.round.waiting = false;
-    this.game.round.playerFlor = this.game.round.waitingPlayer(
-      this.game.humanPlayer
-    );
-    const florButtons = document.querySelector("#flor-buttons");
-    florButtons.querySelectorAll("button").forEach((button) => {
-      button.classList.add("hide");
-    });
-    this.game.round.continue();
+    if (
+      dataFlor === Action.CON_FLOR_QUIERO ||
+      dataFlor === Action.CON_FLOR_ME_ACHICO
+    ) {
+      this.executeResponseFlor(dataFlor);
+    } else {
+      this.game.round.canFlor = false;
+      this.game.round.flores.push(dataFlor);
+      this.game.round.whoSang.push(Action.HUMAN);
+      this.game.round.waiting = false;
+      this.game.round.playerFlor = this.game.round.waitingPlayer(
+        this.game.humanPlayer
+      );
+      const florButtons = document.querySelector("#flor-buttons");
+      florButtons.querySelectorAll("button").forEach((button) => {
+        button.classList.add("hide");
+      });
+      this.game.round.continue();
+    }
   }
 
   handleTrucoActions({ dataTruco }) {
@@ -78,10 +82,6 @@ export class InputHandler {
   }
 
   executeResponseFlor(dataResponse) {
-    this.game.logMessage.show({
-      player: Action.HUMAN,
-      action: dataResponse,
-    });
     const florButtons = document.querySelector("#flor-buttons");
     florButtons.querySelectorAll("button").forEach((button) => {
       button.classList.add("hide");

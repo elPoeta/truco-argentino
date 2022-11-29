@@ -171,7 +171,6 @@ export class IA extends Player {
 
   flor({ lastSang }) {
     const points = this.getEnvidoPoints();
-    console.log("FLOR-POINTS ", points);
     switch (lastSang) {
       case Action.FLOR:
         if (points >= 30) {
@@ -187,12 +186,12 @@ export class IA extends Player {
         if (points >= 30) {
           return Action.CONTRA_FLOR_AL_RESTO;
         } else if (points >= 28) {
-          return Action.QUIERO;
+          return Action.CON_FLOR_QUIERO;
         } else {
-          return Action.NO_QUIERO;
+          return Action.CON_FLOR_ME_ACHICO;
         }
       default:
-        return Action.QUIERO;
+        return Action.CON_FLOR_QUIERO;
     }
   }
 
