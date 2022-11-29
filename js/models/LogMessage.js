@@ -50,6 +50,14 @@ export class LogMessage {
         return { msg: "Falta Envido", clean: true };
       case Action.FLOR:
         return { msg: "Flor", clean: true };
+      case Action.CONTRA_FLOR:
+        return { msg: "Contra Flor", clean: true };
+      case Action.CONTRA_FLOR_AL_RESTO:
+        return { msg: "Contra Flor Al Resto", clean: true };
+      case Action.CON_FLOR_QUIERO:
+        return { msg: "Con Flor Quiero", clean: true };
+      case Action.CON_FLOR_ME_ACHICO:
+        return { msg: "Con Flor Me Achico", clean: true };
       case Action.TRUCO:
         return { msg: "Truco!", clean: true };
       case Action.RE_TRUCO:

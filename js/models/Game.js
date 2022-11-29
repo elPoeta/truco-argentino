@@ -63,7 +63,7 @@ export class Game {
     return generateRandomInteger(100) < 50;
   }
 
-  newGame({ playerName, scoreLimit, enableIAVoice }) {
+  newGame({ playerName, scoreLimit, enableIAVoice, withFlor }) {
     const randomHand = this.generateRandomHand();
     this.renderDashedArea = false;
     this.humanPlayer.setInitialValues({
@@ -78,13 +78,13 @@ export class Game {
     this.scoreLimit = scoreLimit;
     this.enableIAVoice = enableIAVoice;
     this.playedCards = [];
-    this.round.init({ withFlor: false });
+    this.round.init({ withFlor });
     this.round.start();
     this.pause = false;
     this.gameStarted = true;
   }
 
-  update() { }
+  update() {}
 
   draw(ctx) {
     this.drawDahedArea(ctx);

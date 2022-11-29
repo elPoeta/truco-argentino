@@ -49,7 +49,8 @@ export class Player {
               return b - a;
             });
           }
-          points = 20 + pair[prop][0] + pair[prop][1];
+          const withFlor = this.game.round.withFlor ? pair[prop][2] : 0;
+          points = 20 + pair[prop][0] + pair[prop][1] + withFlor;
           break;
         }
       }
@@ -64,16 +65,5 @@ export class Player {
       points = max;
     }
     return points;
-  }
-
-  changeSuit(suit) {
-    this.cards = this.cards.map((card) => {
-      card.suit = suit;
-      return card;
-    });
-    this.cardsInHand = this.cardsInHand.map((card) => {
-      card.suit = suit;
-      return card;
-    });
   }
 }

@@ -142,8 +142,6 @@ export class Round {
       }
       roundDeck.splice(index, 1);
     }
-    //this.game.IAPlayer.changeSuit("Copa");
-    //this.game.humanPlayer.changeSuit("Oro");
   }
 
   getCardCoords(handPlayer, player, count, i) {
@@ -330,9 +328,9 @@ export class Round {
         } else {
           console.log(
             "human: " +
-            this.game.humanPlayer.hands +
-            "IA: " +
-            this.game.IAPlayer.hands
+              this.game.humanPlayer.hands +
+              "IA: " +
+              this.game.IAPlayer.hands
           );
           return null;
         }
@@ -397,9 +395,9 @@ export class Round {
         return true;
       } else if (
         this.game.humanPlayer.cards[0].suit ===
-        this.game.humanPlayer.cards[1].suit &&
+          this.game.humanPlayer.cards[1].suit &&
         this.game.humanPlayer.cards[1].suit ===
-        this.game.humanPlayer.cards[2].suit
+          this.game.humanPlayer.cards[2].suit
       ) {
         return false;
       }
@@ -414,7 +412,7 @@ export class Round {
     });
 
     if (action === "") return false;
-    this.canEnvido = false; waiting = false;
+    this.canEnvido = false;
     this.game.logMessage.show({
       player: Action.IA,
       action,
@@ -455,8 +453,8 @@ export class Round {
     const card = !this.game.humanPlayer.cardsInHand.length
       ? null
       : this.game.humanPlayer.cardsInHand[
-      this.game.humanPlayer.cardsInHand.length - 1
-      ];
+          this.game.humanPlayer.cardsInHand.length - 1
+        ];
     const { winner } = this.calculateEnvidoPoints();
     let action = this.game.IAPlayer.envido({
       lastSang: this.getLastItem(this.chants),
@@ -573,13 +571,12 @@ export class Round {
     document.querySelector("#response-buttons").classList.add("hide");
   }
 
-  // RESPONSE FLOR
   humanCanSayFlor() {
     if (
       this.game.humanPlayer.cards[0].suit ===
-      this.game.humanPlayer.cards[1].suit &&
+        this.game.humanPlayer.cards[1].suit &&
       this.game.humanPlayer.cards[1].suit ===
-      this.game.humanPlayer.cards[2].suit
+        this.game.humanPlayer.cards[2].suit
     ) {
       this.canFlor = true;
       this.canEnvido = false;
@@ -618,19 +615,43 @@ export class Round {
   }
 
   humanFlorResponse() {
-    // const lastSang = this.getLastItem(this.flores);
-    // const florButtons = document.querySelector("#envido-buttons");
-    // const responseButtons = document.querySelector("#response-buttons");
-    // responseButtons.classList.remove("hide");
-    // responseButtons.querySelector("#noQuiero").classList.add("hide");
-    // this.currentResponse = Action.FLOR;
     if (
       this.game.humanPlayer.cards[0].suit ===
-      this.game.humanPlayer.cards[1].suit &&
+        this.game.humanPlayer.cards[1].suit &&
       this.game.humanPlayer.cards[1].suit ===
-      this.game.humanPlayer.cards[2].suit
+        this.game.humanPlayer.cards[2].suit
     ) {
-      //HANDLE FLOR RESPONSE
+      const lastSang = this.getLastItem(this.flores);
+      const florButtons = document.querySelector("#flor-buttons");
+      document.querySelector("#response-buttons").classList.add("hide");
+      this.currentResponse = Action.FLOR;
+      switch (lastSang) {
+        case Action.FLOR:
+          florButtons.querySelector("#conFlorQuiero").classList.remove("hide");
+          florButtons
+            .querySelector("#conFlorMeAchico")
+            .classList.remove("hide");
+          florButtons.querySelector("#contraFlor").classList.remove("hide");
+          florButtons
+            .querySelector("#contraFlorAlResto")
+            .classList.remove("hide");
+          break;
+        case Action.CONTRA_FLOR:
+          florButtons
+            .querySelector("#contraFlorAlResto")
+            .classList.remove("hide");
+          florButtons.querySelector("#conFlorQuiero").classList.remove("hide");
+          florButtons
+            .querySelector("#conFlorMeAchico")
+            .classList.remove("hide");
+          break;
+        case Action.CONTRA_FLOR_AL_RESTO:
+          florButtons.querySelector("#conFlorQuiero").classList.remove("hide");
+          florButtons
+            .querySelector("#conFlorMeAchico")
+            .classList.remove("hide");
+          break;
+      }
       this.waiting = true;
     } else {
       this.game.logMessage.show({
@@ -650,7 +671,26 @@ export class Round {
       this.game.IAPlayer.cards[0].suit === this.game.IAPlayer.cards[1].suit &&
       this.game.IAPlayer.cards[1].suit === this.game.IAPlayer.cards[2].suit
     ) {
-      //HANDLE FLOR RESPONSE
+      let action = this.game.IAPlayer.flor({
+        lastSang: this.getLastItem(this.flores),
+      });
+      this.game.logMessage.show({
+        player: Action.IA,
+        action,
+      });
+      switch (action) {
+        case Action.CON_FLOR_QUIERO:
+        case Action.CON_FLOR_ME_ACHICO:
+        case Action.QUIERO:
+          this.playFlor(action);
+          break;
+        default:
+          this.currentResponse = Action.FLOR;
+          this.flores.push(action);
+          this.whoSang.push(Action.IA);
+          this.playerFlor = this.waitingPlayer(this.game.IAPlayer);
+          break;
+      }
     } else {
       this.playFlor(Action.QUIERO);
     }
@@ -658,23 +698,105 @@ export class Round {
 
   playFlor(action) {
     const whoSang = this.getLastItem(this.whoSang);
-    switch (action) {
-      case Action.QUIERO:
-        if (whoSang === Action.HUMAN) {
-          this.game.humanPlayer.florWinnerPoints = 3;
-          this.game.humanPlayer.score += 3;
-        } else {
-          this.game.IAPlayer.florWinnerPoints = 3;
-          this.game.IAPlayer.score += 3;
-        }
-        break;
+    const lastSang = this.getLastItem(this.flores);
+    const { winner, points } = this.calculateFlorPoints(
+      lastSang,
+      action,
+      whoSang
+    );
 
-      default:
-        break;
+    if (winner === Action.HUMAN) {
+      this.game.humanPlayer.florWinnerPoints = points;
+      this.game.humanPlayer.score += points;
+    } else {
+      this.game.IAPlayer.florWinnerPoints = points;
+      this.game.IAPlayer.score += points;
     }
+
     this.canFlor = false;
     this.playerFlor = null;
     document.querySelector("#response-buttons").classList.add("hide");
+    const florButtons = document.querySelector("#flor-buttons");
+    florButtons.querySelectorAll("button").forEach((button) => {
+      button.classList.add("hide");
+    });
+    document.querySelector("#truco").classList.remove("hide");
+  }
+
+  calculateFlorPoints(lastSang, action, whoSang) {
+    const humanFlorPoints = this.game.humanPlayer.getEnvidoPoints(
+      this.game.humanPlayer.cards
+    );
+    const IAFlorPoints = this.game.IAPlayer.getEnvidoPoints(
+      this.game.IAPlayer.cards
+    );
+    switch (action) {
+      case Action.CON_FLOR_ME_ACHICO:
+      case Action.QUIERO:
+        switch (lastSang) {
+          case Action.FLOR:
+            return {
+              winner: whoSang,
+              points: 3,
+            };
+          case Action.CONTRA_FLOR:
+            return {
+              winner: whoSang,
+              points: 4,
+            };
+          case Action.CONTRA_FLOR_AL_RESTO:
+            return {
+              winner: whoSang,
+              points: 4,
+            };
+        }
+        break;
+      case Action.CON_FLOR_QUIERO:
+        switch (lastSang) {
+          case Action.FLOR:
+            if (humanFlorPoints > IAFlorPoints) {
+              return { winner: Action.HUMAN, points: 4 };
+            } else if (IAFlorPoints > humanFlorPoints) {
+              return { winner: Action.IA, points: 4 };
+            } else {
+              return {
+                winner: this.game.humanPlayer.itIsHand
+                  ? Action.HUMAN
+                  : Action.IA,
+                points: 4,
+              };
+            }
+          case Action.CONTRA_FLOR:
+            if (humanFlorPoints > IAFlorPoints) {
+              return { winner: Action.HUMAN, points: 6 };
+            } else if (IAFlorPoints > humanFlorPoints) {
+              return { winner: Action.IA, points: 6 };
+            } else {
+              return {
+                winner: this.game.humanPlayer.itIsHand
+                  ? Action.HUMAN
+                  : Action.IA,
+                points: 6,
+              };
+            }
+          case Action.CONTRA_FLOR_AL_RESTO:
+            if (humanFlorPoints > IAFlorPoints) {
+              return { winner: Action.HUMAN, points: this.game.scoreLimit };
+            } else if (IAFlorPoints > humanFlorPoints) {
+              return { winner: Action.IA, points: this.game.scoreLimit };
+            } else {
+              return {
+                winner: this.game.humanPlayer.itIsHand
+                  ? Action.HUMAN
+                  : Action.IA,
+                points: this.game.scoreLimit,
+              };
+            }
+        }
+        break;
+      default:
+        break;
+    }
   }
 
   humanCanSayTruco() {
