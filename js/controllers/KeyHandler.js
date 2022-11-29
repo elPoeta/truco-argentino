@@ -9,7 +9,7 @@ export class KeyHandler extends InputHandler {
   }
 
   handleKeydown(ev) {
-    if (document.querySelector('#closeMenuOverlay')) return;
+    if (document.querySelector("#closeMenuOverlay")) return;
     ev.preventDefault();
     const key = ev.key;
     switch (key) {
@@ -19,14 +19,26 @@ export class KeyHandler extends InputHandler {
         this.handlePlayCardsAction(key);
         break;
       case "F1":
+        if (!this.isNotEnableButton("flor")) {
+          this.handleFlorActions({ dataFlor: Action.FLOR });
+          break;
+        }
         if (this.isNotEnableButton("envido")) break;
         this.handleEnvidoActions({ dataEnvido: Action.ENVIDO });
         break;
       case "F2":
+        if (!this.isNotEnableButton("contraFlor")) {
+          this.handleFlorActions({ dataFlor: Action.CONTRA_FLOR });
+          break;
+        }
         if (this.isNotEnableButton("realEnvido")) break;
         this.handleEnvidoActions({ dataEnvido: Action.REAL_ENVIDO });
         break;
       case "F3":
+        if (!this.isNotEnableButton("contraFlorAlResto")) {
+          this.handleFlorActions({ dataFlor: Action.CONTRA_FLOR_AL_RESTO });
+          break;
+        }
         if (this.isNotEnableButton("faltaEnvido")) break;
         this.handleEnvidoActions({ dataEnvido: Action.FALTA_ENVIDO });
         break;
@@ -43,10 +55,18 @@ export class KeyHandler extends InputHandler {
         this.handleTrucoActions({ dataTruco: Action.VALE_4 });
         break;
       case "F7":
+        if (!this.isNotEnableButton("conFlorQuiero")) {
+          this.handleFlorActions({ dataFlor: Action.CON_FLOR_QUIERO });
+          break;
+        }
         if (this.isNotEnableButton("response-buttons")) break;
         this.handleResponseActions({ dataResponse: Action.QUIERO });
         break;
       case "F8":
+        if (!this.isNotEnableButton("conFlorMeAchico")) {
+          this.handleFlorActions({ dataFlor: Action.CON_FLOR_ME_ACHICO });
+          break;
+        }
         if (this.isNotEnableButton("response-buttons")) break;
         this.handleResponseActions({ dataResponse: Action.NO_QUIERO });
         break;
@@ -66,7 +86,7 @@ export class KeyHandler extends InputHandler {
         this.game.speechRecognition.run();
         break;
       default:
-        console.log()
+        console.log();
         break;
     }
   }

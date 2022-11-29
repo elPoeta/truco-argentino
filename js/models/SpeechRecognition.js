@@ -8,6 +8,11 @@ export class SpeechRecognition extends InputHandler {
       "envido",
       "real envido",
       "falta envido",
+      "flor",
+      "contra flor",
+      "contra flor al resto",
+      "con flor quiero",
+      "con flor me achico",
       "truco",
       "quiero retruco",
       "quiero vale cuatro",
@@ -26,6 +31,11 @@ export class SpeechRecognition extends InputHandler {
       envido: Action.ENVIDO,
       "real envido": Action.REAL_ENVIDO,
       "falta envido": Action.FALTA_ENVIDO,
+      flor: Action.FLOR,
+      "contra flor": Action.CONTRA_FLOR,
+      "contra flor al resto": Action.CONTRA_FLOR_AL_RESTO,
+      "con flor quiero": Action.CON_FLOR_QUIERO,
+      "con flor me achico": Action.CON_FLOR_ME_ACHICO,
       truco: Action.TRUCO,
       "quiero retruco": Action.RE_TRUCO,
       "quiero vale cuatro": Action.VALE_4,
@@ -103,6 +113,26 @@ export class SpeechRecognition extends InputHandler {
       case Action.FALTA_ENVIDO:
         if (this.isNotEnableButton("faltaEnvido")) break;
         this.handleEnvidoActions({ dataEnvido: Action.FALTA_ENVIDO });
+        break;
+      case Action.FLOR:
+        if (this.isNotEnableButton("flor")) break;
+        this.handleFlorActions({ dataFlor: Action.FLOR });
+        break;
+      case Action.CONTRA_FLOR:
+        if (this.isNotEnableButton("contraFlor")) break;
+        this.handleFlorActions({ dataFlor: Action.CONTRA_FLOR });
+        break;
+      case Action.CONTRA_FLOR_AL_RESTO:
+        if (this.isNotEnableButton("contraFlorAlResto")) break;
+        this.handleFlorActions({ dataFlor: Action.CONTRA_FLOR_AL_RESTO });
+        break;
+      case Action.CON_FLOR_QUIERO:
+        if (this.isNotEnableButton("conFlorQuiero")) break;
+        this.handleFlorActions({ dataFlor: Action.CON_FLOR_QUIERO });
+        break;
+      case Action.CON_FLOR_ME_ACHICO:
+        if (this.isNotEnableButton("conFlorMeAchico")) break;
+        this.handleFlorActions({ dataFlor: Action.CON_FLOR_ME_ACHICO });
         break;
       case Action.TRUCO:
         if (this.isNotEnableButton("truco")) break;
