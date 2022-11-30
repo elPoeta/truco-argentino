@@ -29,37 +29,67 @@ export class Help {
     <section id="keyboardContent" class="help-content">
       <h2>Controles de teclado</h2>
       <hr class="result-divide-line" style="margin: 10px 0;"/>
+      <h3>Para el Envido</h3>
       <p>Envido: <span>F1</span></p>
       <p>Real Envido: <span>F2</span></p>
       <p>Falta Envido: <span>F3</span></p>
+      <hr class="divide-inner-help"/>
+      <h3>Para la Flor</h3>
+      <p>Flor: <span>F1</span></p>
+      <p>Contra Flor: <span>F2</span></p>
+      <p>Contra Flor Al Resto: <span>F3</span></p>
+      <p>Con Flor Quiro: <span>F7</span></p>
+      <p>Con Flor Me Achico: <span>F8</span></p>
+      <hr class="divide-inner-help" />
+      <h3>Para el Truco</h3>
       <p>Truco: <span>F4</span></p>
       <p>Quiero Re-Truco: <span>F5</span></p>
       <p>Quiero Vale 4: <span>F6</span></p>
+      <hr class="divide-inner-help" />
+      <h3>Para Responder</h3>
       <p>Quiero: <span>F7</span></p>
       <p>No Quiero: <span>F8</span></p>
       <p>Me Voy Al Mazo: <span>F9</span></p>
-      <p>Fullscreen: <span>F11</span></p>
-      <p>Menu: <span>Esc</span></p>
-      <p>Comando de voz: <span>Barra espaciadora</span></p>
+      <hr class="divide-inner-help" />
+      <h3>Para las Cartas</h3>
       <p>Carta 1: <span>1</span></p>
       <p>Carta 2: <span>2</span></p>
       <p>Carta 3: <span>3</span></p>
+      <hr class="divide-inner-help" />
+      <h3>Para los controles</h3>
+      <p>Fullscreen: <span>F11</span></p>
+      <p>Menu: <span>Esc</span></p>
+      <p>Comando de voz: <span>Barra espaciadora</span></p>
     </section>
     <section id="voiceCommandContent" class="help-content">
       <h2>Controles de voz</h2>
       <hr class="result-divide-line" style="margin: 10px 0;"/>
+      <h3>Para el Envido</h3>
       <p>Envido: <span>Envido</span></p>
       <p>Real Envido: <span>Real Envido</span></p>
       <p>Falta Envido: <span>Falta Envido</span></p>
+      <hr class="divide-inner-help" />
+      <h3>Para la Flor</h3>
+      <p>Flor: <span>F1</span></p>
+      <p>Contra Flor: <span>F2</span></p>
+      <p>Contra Flor Al Resto: <span>F3</span></p>
+      <p>Con Flor Quiro: <span>F7</span></p>
+      <p>Con Flor Me Achico: <span>F8</span></p>
+      <hr class="divide-inner-help" />
+      <h3>Para el Truco</h3>
       <p>Truco: <span>Truco</span></p>
       <p>Quiero Re-Truco: <span>Quiero Retruco </span></p>
       <p>Quiero Vale 4: <span>Quiero Vale 4</span></p>
-      <p>Quiero: <span>Quiero</span></p>
-      <p>No Quiero: <span>No Quiero</span></p>
-      <p>Me Voy Al Mazo: <span>Me Voy Al Mazo</span></p>
+      <hr class="divide-inner-help" />
+      <h3>Para las Cartas</h3>
       <p>Carta 1: <span>Jugar Carta 1</span></p>
       <p>Carta 2: <span>Jugar Carta 2</span></p>
       <p>Carta 3: <span>Jugar Carta 3</span></p>
+      <hr class="divide-inner-help" />
+      <h3>Para Responder</h3>
+      <p>Quiero: <span>Quiero</span></p>
+      <p>No Quiero: <span>No Quiero</span></p>
+      <p>Me Voy Al Mazo: <span>Me Voy Al Mazo</span></p>
     </section>
     <section id="reglamentoContent" class="help-content">
       <iframe

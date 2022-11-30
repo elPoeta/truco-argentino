@@ -1,4 +1,4 @@
-.help-container{
+.help-container {
   width: 50vw;
   padding: 50px;
   margin: 0 auto;
@@ -19,6 +19,15 @@
   color: #fff;
   font-size: 1.6rem;
   letter-spacing: 1px;
+}
+
+.help-container h3 {
+  text-align: center;
+  margin: 20px 0 20px;
+  line-height: 1.5;
+  color: #59c1fe;
+  font-size: 1.5rem;
+  letter-spacing: 2px;
 }
 
 .help-content {
@@ -61,7 +70,6 @@
   margin-right: 10px;
 }
 
-
 .help-container label:hover {
   color: #888;
   cursor: pointer;
@@ -81,3 +89,13 @@
   display: block;
 }
 
+.divide-inner-help {
+  border: 0;
+  height: 1px;
+  background-image: linear-gradient(
+    to right,
+    rgba(0, 0, 0, 0),
+    #ffffff,
+    rgba(0, 0, 0, 0)
+  );
+}
