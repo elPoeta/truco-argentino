@@ -692,6 +692,10 @@ export class Round {
           break;
       }
     } else {
+      this.game.logMessage.show({
+        player: Action.IA,
+        action: `De suerte ${this.game.humanPlayer.name}`,
+      });
       this.playFlor(Action.QUIERO);
     }
   }
