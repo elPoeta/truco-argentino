@@ -38,7 +38,7 @@ export class Help {
       <p>Flor: <span>F1</span></p>
       <p>Contra Flor: <span>F2</span></p>
       <p>Contra Flor Al Resto: <span>F3</span></p>
-      <p>Con Flor Quiro: <span>F7</span></p>
+      <p>Con Flor Quiero: <span>F7</span></p>
       <p>Con Flor Me Achico: <span>F8</span></p>
       <hr class="divide-inner-help" />
       <h3>Para el Truco</h3>
@@ -73,7 +73,7 @@ export class Help {
       <p>Flor: <span>F1</span></p>
       <p>Contra Flor: <span>F2</span></p>
       <p>Contra Flor Al Resto: <span>F3</span></p>
-      <p>Con Flor Quiro: <span>F7</span></p>
+      <p>Con Flor Quiero: <span>F7</span></p>
       <p>Con Flor Me Achico: <span>F8</span></p>
       <hr class="divide-inner-help" />
       <h3>Para el Truco</h3>
